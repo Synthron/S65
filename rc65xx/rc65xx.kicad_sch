@@ -1,5 +1,165 @@
-(kicad_sch (version 20231120) (generator "eeschema") (generator_version "8.0")
-  (paper "A4")
-  (lib_symbols)
-  (symbol_instances)
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "74378d07-8494-4ccb-b3e2-8bcc17fc3fd3")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 62.23 81.28)
+		(size 16.51 52.07)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "1b72b4f7-5bb5-4e63-9761-cb9f88e3d8f5")
+		(property "Sheetname" "Clock"
+			(at 62.23 80.5684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "clock.kicad_sch"
+			(at 62.23 133.9346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "rc65xx"
+				(path "/74378d07-8494-4ccb-b3e2-8bcc17fc3fd3"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 21.59 81.28)
+		(size 15.24 52.07)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "63ecebcf-6236-405d-af7b-760d1af983b3")
+		(property "Sheetname" "ROM RAM Regs"
+			(at 21.59 80.5684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "romram.kicad_sch"
+			(at 21.59 133.9346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "rc65xx"
+				(path "/74378d07-8494-4ccb-b3e2-8bcc17fc3fd3"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 22.86 26.67)
+		(size 13.97 41.91)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "b28d59af-b2b3-49de-b804-f34e6a2aa295")
+		(property "Sheetname" "CPU"
+			(at 22.86 25.9584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "cpu.kicad_sch"
+			(at 22.86 69.1646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "rc65xx"
+				(path "/74378d07-8494-4ccb-b3e2-8bcc17fc3fd3"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 66.04 25.4)
+		(size 16.51 43.18)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "c0184331-b46b-4428-8158-7ff8b292681d")
+		(property "Sheetname" "Address Decode"
+			(at 66.04 24.6884 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "address.kicad_sch"
+			(at 66.04 69.1646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "rc65xx"
+				(path "/74378d07-8494-4ccb-b3e2-8bcc17fc3fd3"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
 )

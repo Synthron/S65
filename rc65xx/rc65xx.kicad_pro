@@ -381,6 +381,27 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "74378d07-8494-4ccb-b3e2-8bcc17fc3fd3",
+      "Root"
+    ],
+    [
+      "b28d59af-b2b3-49de-b804-f34e6a2aa295",
+      "CPU"
+    ],
+    [
+      "63ecebcf-6236-405d-af7b-760d1af983b3",
+      "ROM RAM Regs"
+    ],
+    [
+      "c0184331-b46b-4428-8158-7ff8b292681d",
+      "Address Decode"
+    ],
+    [
+      "1b72b4f7-5bb5-4e63-9761-cb9f88e3d8f5",
+      "Clock"
+    ]
+  ],
   "text_variables": {}
 }
