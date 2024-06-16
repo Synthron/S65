@@ -1,0 +1,29 @@
+Name     7seg-test ;
+PartNo   00 ;
+Date     7/7/2018 ;
+Revision 01 ;
+Designer Engineer ;
+Company  windows pc ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+PIN 1 = CLK;
+PIN 11 = GND;
+PIN [13..19]=[S0..6];
+PIN [2..5]=[E0..3];
+PIN 12 = DPO;
+PIN 6 = DPI;
+
+DPO.d = DPI;
+
+FIELD inputs = [E0..3] ;
+FIELD outputs = [S0..6] ;
+
+TABLE inputs => outputs.d {
+	0=>40;    1=>79;    2=>24;    3=>30;
+	4=>19;    5=>12;    6=>02;    7=>78;
+	8=>00;    9=>10;    A=>08;    B=>03;
+	C=>46;    D=>21;    E=>06;    F=>0E;
+}
+
