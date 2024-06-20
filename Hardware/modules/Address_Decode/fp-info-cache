@@ -1,4 +1,4 @@
-23673176719973270
+23674895631456593
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -56433,6 +56433,13 @@ CMS SOT
 0
 4
 3
+Eigene
+SPST_Edge
+
+
+0
+0
+0
 Eigene
 SRF3225TAC
 
