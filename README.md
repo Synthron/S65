@@ -42,3 +42,10 @@ Yet another 8bit Retro Computer
 - Serial Program Bootloader
 - File System (FAT?)
 - DOS-Like UI
+
+boot routine:
+- selftest
+  - RAM Check
+  - ROM Check + version
+- Load Kernel functions to RAM
+- Start Monitor

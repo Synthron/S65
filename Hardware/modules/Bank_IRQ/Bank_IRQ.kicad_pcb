@@ -2193,7 +2193,7 @@
 	(footprint "Symbol:OSHW-Logo2_9.8x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "4011163f-ba3f-4716-babe-cc92c512853d")
-		(at 109.728 99.568)
+		(at 174.752 114.3)
 		(descr "Open Source Hardware Symbol")
 		(tags "Logo Symbol OSHW")
 		(property "Reference" "REF**"
@@ -4481,7 +4481,7 @@
 	(footprint "Symbol:WEEE-Logo_5.6x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "5123ae0e-4bbb-4ece-936a-e6777b3c937a")
-		(at 109.728 90.678)
+		(at 174.752 105.41)
 		(descr "Waste Electrical and Electronic Equipment Directive")
 		(tags "Logo WEEE")
 		(property "Reference" "REF**"
@@ -4694,7 +4694,7 @@
 	(footprint "Symbol:ESD-Logo_8.9x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "5191fe9a-8b32-4005-8b6e-b4d362fc7e21")
-		(at 109.474 80.518)
+		(at 160.782 114.3)
 		(descr "Electrostatic discharge Logo")
 		(tags "Logo ESD")
 		(property "Reference" "REF**"
@@ -4872,7 +4872,7 @@
 	(footprint "Eigene:logo"
 		(layer "F.Cu")
 		(uuid "5f5affb9-d8ea-4cc6-8f66-c8142fa260a4")
-		(at 109.728 69.85)
+		(at 161.036 103.632)
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -10193,7 +10193,7 @@
 		(descr "PCI bus Edge Connector")
 		(tags "PCI bus Edge Connector")
 		(property "Reference" "J2"
-			(at 23.998 5.78 -180)
+			(at 23.998 5.78 180)
 			(layer "F.SilkS")
 			(uuid "57a15229-fa5a-4aee-80d2-be74b8ab5191")
 			(effects
@@ -12861,7 +12861,7 @@
 		(uuid "f4e0c21b-d621-45eb-a55c-12e103c821ed")
 	)
 	(gr_text "SY65\nBanks\nIRQ"
-		(at 151.13 74.676 0)
+		(at 103.632 79.502 0)
 		(layer "F.SilkS")
 		(uuid "58453de9-5a54-4cc5-9927-e57e5636cbcb")
 		(effects
@@ -12872,8 +12872,20 @@
 			(justify left bottom)
 		)
 	)
+	(gr_text "$BF00-$BF07"
+		(at 104.14 82.042 0)
+		(layer "F.SilkS")
+		(uuid "691e4fb0-6c06-40d0-93a1-cccdce663ace")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "65816-Mode:\ncut open JP1-JP16 as needed"
-		(at 155.702 104.648 0)
+		(at 151.384 67.31 0)
 		(layer "F.SilkS")
 		(uuid "73e54755-641f-4e50-a7de-49caf15c78cd")
 		(effects
