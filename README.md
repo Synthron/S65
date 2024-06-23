@@ -1,7 +1,7 @@
 # S65
 Yet another 8bit Retro Computer
 
----
+
 
 ## ToDo
 
@@ -32,3 +32,13 @@ Yet another 8bit Retro Computer
   - [ ] CF
   - [ ] SID
   - [x] Addr + RTC + Clock
+
+## Software Brainstorm
+
+- EhBasic
+  - maybe Microsoft Basic? See Ben Eater
+    - both in different banks
+- WozMon Main Boot
+- Serial Program Bootloader
+- File System (FAT?)
+- DOS-Like UI
