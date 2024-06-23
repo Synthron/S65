@@ -1364,7 +1364,7 @@
 	(footprint "Symbol:WEEE-Logo_5.6x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "33d485dd-f375-4ed9-9323-d880ae815205")
-		(at 163.83 100.584)
+		(at 167.005 98.425)
 		(descr "Waste Electrical and Electronic Equipment Directive")
 		(tags "Logo WEEE")
 		(property "Reference" "REF**"
@@ -1577,7 +1577,7 @@
 	(footprint "Eigene:logo"
 		(layer "F.Cu")
 		(uuid "38878cd4-cf51-4667-834b-51d7fe7d1c05")
-		(at 139.954 100.33)
+		(at 143.129 98.171)
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -2373,7 +2373,7 @@
 	(footprint "Symbol:ESD-Logo_8.9x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "5ba704c6-fa22-4f7c-8838-ea5d1ca84914")
-		(at 152.146 100.584)
+		(at 155.321 98.425)
 		(descr "Electrostatic discharge Logo")
 		(tags "Logo ESD")
 		(property "Reference" "REF**"
@@ -3749,7 +3749,7 @@
 	(footprint "Symbol:OSHW-Logo2_9.8x8mm_SilkScreen"
 		(layer "F.Cu")
 		(uuid "f624c62c-5fc7-4330-af31-b95e77764bd9")
-		(at 173.736 100.584)
+		(at 176.911 98.425)
 		(descr "Open Source Hardware Symbol")
 		(tags "Logo Symbol OSHW")
 		(property "Reference" "REF**"
@@ -4806,15 +4806,14 @@
 		(descr "PCI bus Edge Connector")
 		(tags "PCI bus Edge Connector")
 		(property "Reference" "J1"
-			(at -11.81 5.78 180)
-			(layer "B.SilkS")
+			(at 24.125 5.78 -180)
+			(layer "F.SilkS")
 			(uuid "716cf91c-7a22-4a11-972f-fd04c665a878")
 			(effects
 				(font
 					(size 1 1)
 					(thickness 0.15)
 				)
-				(justify mirror)
 			)
 		)
 		(property "Value" "Bus_PCI_6502"
