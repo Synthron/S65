@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "edge_pinheader")(type "KiCad")(uri "${KIPRJMOD}/edge_pinheader.pretty")(options "")(descr ""))
+)

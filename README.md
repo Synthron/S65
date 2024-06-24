@@ -13,6 +13,7 @@ Yet another 8bit Retro Computer
   - [x] LCD/IRQ
   - [x] SIO
   - [x] PIO
+  - [x] User Ports
   - [x] IDE
   - [x] CF
   - [x] SID
@@ -21,13 +22,16 @@ Yet another 8bit Retro Computer
 
 - [ ] Seperate Modules
   - [ ] Bus Board
+    - screw holes for card latches
+    - design card latches
   - [x] CPU
   - [x] ROM
   - [x] RAM
   - [x] Bank/IRQ
-  - [ ] LCD/IRQ
-  - [ ] SIO
+  - [x] LCD/IRQ
+  - [x] SIO
   - [x] PIO
+  - [x] User Ports
   - [ ] IDE
   - [ ] CF
   - [ ] SID
