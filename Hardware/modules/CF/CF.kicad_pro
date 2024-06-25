@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.25
+          "min_clearance": 0.5
         }
       },
       "diff_pair_dimensions": [
@@ -464,7 +464,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "RAM.kicad_pro",
+    "filename": "CF.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -510,6 +510,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
+    "bom_export_filename": "",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -565,7 +566,7 @@
       "group_symbols": true,
       "name": "Grouped By Value",
       "sort_asc": true,
-      "sort_field": "Referenz"
+      "sort_field": "Reference"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -608,8 +609,8 @@
   },
   "sheets": [
     [
-      "bd1fe73d-f8a9-4348-8266-6b95f5996cdd",
-      "Stammblatt"
+      "e8e328da-0be4-44ae-91cb-5c43ea9b32c8",
+      "Root"
     ]
   ],
   "text_variables": {}

@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 37,
+    "active_layer": 31,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_netclasses": [],
@@ -43,7 +43,6 @@
       16,
       17,
       18,
-      19,
       20,
       21,
       22,
@@ -63,8 +62,8 @@
       39,
       40
     ],
-    "visible_layers": "ff8ffff_fffffffb",
-    "zone_display_mode": 1
+    "visible_layers": "ffcffff_ffffffff",
+    "zone_display_mode": 0
   },
   "git": {
     "repo_password": "",
@@ -73,7 +72,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "LCD_IRQ.kicad_prl",
+    "filename": "Proto.kicad_prl",
     "version": 3
   },
   "project": {

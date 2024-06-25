@@ -464,7 +464,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "RAM.kicad_pro",
+    "filename": "SID.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -608,7 +608,7 @@
   },
   "sheets": [
     [
-      "bd1fe73d-f8a9-4348-8266-6b95f5996cdd",
+      "b6c912ed-1e8e-4e54-85f0-27dce4953db2",
       "Stammblatt"
     ]
   ],

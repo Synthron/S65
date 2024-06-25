@@ -464,7 +464,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "RAM.kicad_pro",
+    "filename": "IDE-Simple.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -510,6 +510,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
+    "bom_export_filename": "",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -608,8 +609,8 @@
   },
   "sheets": [
     [
-      "bd1fe73d-f8a9-4348-8266-6b95f5996cdd",
-      "Stammblatt"
+      "6555ffc8-6c1b-43e3-85dd-8b8a3124067a",
+      "Root"
     ]
   ],
   "text_variables": {}
