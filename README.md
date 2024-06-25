@@ -78,12 +78,12 @@ boot routine:
 
 General:
 
-| Start | End  | Usage      |
-|-------|------|------------|
-| 0000  | 7FFF | RAM        |
-| 8000  | BEFF | RAM Banked |
-| BF00  | BFFF | IO Space   | 
-| C000  | FFFF | ROM Banked |
+| Start | End  | Usage      | Size   |
+|-------|------|------------|--------|
+| 0000  | 7FFF | RAM        | 32.768 |
+| 8000  | BEFF | RAM Banked | 16.128 |
+| BF00  | BFFF | IO Space   |    256 |
+| C000  | FFFF | ROM Banked | 16.384 |
 
 IO Space:
 
