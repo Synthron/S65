@@ -91,7 +91,8 @@ IO Space:
 |-------|------|---------------|----|
 | BF00  | BF07 | Bank & IRQ    | 8  |
 | BF08  | BF0F | TPI IDE       | 8  |
-| BF10  | BF1B | ---           | 12 |
+| BF10  | BF12 | LPT           | 3  |
+| BF13  | BF1B | ---           | 9  |
 | BF1C  | BF1F | PIA LEDs      | 4  |
 | BF20  | BF2F | VIA 1 LCD IRQ | 16 |
 | BF30  | BF3F | VIA 2         | 16 |
