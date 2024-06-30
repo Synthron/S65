@@ -22,26 +22,8 @@ Completely bloated, overkill and fully hackable!
 
 ## Hardware
 
-- Overview System Schematic
-  - [x] CPU
-  - [x] ROM
-  - [x] RAM
-  - [x] Bank/IRQ
-  - [x] LCD/IRQ
-  - [x] SIO
-  - [x] PIO
-  - [x] User Ports
-  - [x] IDE
-  - [x] Simple-IDE
-  - [x] CF
-  - [x] SID
-  - [x] Addr + RTC + Clock
-  - [x] LPT Interface
-  - [ ] MyCPU Graphics Unit Interface
-
----
-
-- Revise Schematics
+- Modules
+  - [x] Backplane Bus
   - [x] CPU
   - [x] ROM
   - [x] RAM
