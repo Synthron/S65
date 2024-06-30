@@ -1,4 +1,4 @@
-23674895631502977
+23676615136802428
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -56391,6 +56391,13 @@ LQFP QFP Midmount
 0
 32
 32
+Eigene
+Pin_Header_2x12
+
+
+0
+24
+24
 Eigene
 SK-03
 
