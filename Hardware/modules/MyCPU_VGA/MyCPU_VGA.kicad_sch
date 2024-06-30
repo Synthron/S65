@@ -12389,6 +12389,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR072")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -12451,6 +12457,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR059")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR059")
 					(unit 1)
 				)
@@ -12559,6 +12571,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U8")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -12623,6 +12641,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR039")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR039")
 					(unit 1)
 				)
@@ -12694,6 +12718,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR013")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -12757,6 +12787,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR081")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR081")
 					(unit 1)
 				)
@@ -12829,6 +12865,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR037")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -12893,6 +12935,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR08")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR08")
 					(unit 1)
 				)
@@ -12964,6 +13012,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13026,6 +13080,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR074")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR074")
 					(unit 1)
 				)
@@ -13093,6 +13153,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR056")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR056")
 					(unit 1)
 				)
@@ -13201,6 +13267,12 @@
 					(unit 3)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U7")
+					(unit 3)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13269,6 +13341,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR018")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13332,6 +13410,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR077")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR077")
 					(unit 1)
 				)
@@ -13447,6 +13531,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U2")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13510,6 +13600,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR048")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR048")
 					(unit 1)
 				)
@@ -13582,6 +13678,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR02")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13650,6 +13752,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13713,6 +13821,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR054")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR054")
 					(unit 1)
 				)
@@ -13786,6 +13900,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C1")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13853,6 +13973,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR062")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -13915,6 +14041,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR055")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR055")
 					(unit 1)
 				)
@@ -13986,6 +14118,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR011")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14050,6 +14188,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR016")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR016")
 					(unit 1)
 				)
@@ -14178,6 +14322,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U4")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14240,6 +14390,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR069")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR069")
 					(unit 1)
 				)
@@ -14311,6 +14467,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR089")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14378,6 +14540,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR021")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14440,6 +14608,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR080")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR080")
 					(unit 1)
 				)
@@ -14568,6 +14742,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U6")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14635,6 +14815,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR088")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14698,6 +14884,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR017")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR017")
 					(unit 1)
 				)
@@ -14807,6 +14999,12 @@
 					(unit 4)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U8")
+					(unit 4)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14876,6 +15074,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C2")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14939,6 +15143,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR079")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR079")
 					(unit 1)
 				)
@@ -15012,6 +15222,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C3")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15074,6 +15290,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR076")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR076")
 					(unit 1)
 				)
@@ -15145,6 +15367,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR036")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15208,6 +15436,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR073")
 					(unit 1)
 				)
@@ -15279,6 +15513,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR064")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15341,6 +15581,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR065")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR065")
 					(unit 1)
 				)
@@ -15599,6 +15845,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "J2")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15666,6 +15918,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR019")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15729,6 +15987,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR053")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR053")
 					(unit 1)
 				)
@@ -15801,6 +16065,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR026")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -15864,6 +16134,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR031")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR031")
 					(unit 1)
 				)
@@ -15933,6 +16209,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "C4")
 					(unit 1)
 				)
@@ -16041,6 +16323,12 @@
 					(unit 4)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U7")
+					(unit 4)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16104,6 +16392,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR042")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR042")
 					(unit 1)
 				)
@@ -16175,6 +16469,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR07")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16238,6 +16538,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR066")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR066")
 					(unit 1)
 				)
@@ -16346,6 +16652,12 @@
 					(unit 3)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U8")
+					(unit 3)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16411,6 +16723,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "C7")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "C7")
 					(unit 1)
 				)
@@ -16482,6 +16800,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16544,6 +16868,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR078")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR078")
 					(unit 1)
 				)
@@ -16616,6 +16946,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR041")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16678,6 +17014,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR050")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR050")
 					(unit 1)
 				)
@@ -17104,6 +17446,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "J1")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -17166,6 +17514,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR057")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR057")
 					(unit 1)
 				)
@@ -17233,6 +17587,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR063")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR063")
 					(unit 1)
 				)
@@ -17361,6 +17721,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U3")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -17465,6 +17831,12 @@
 					(unit 2)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U7")
+					(unit 2)
+				)
+			)
 		)
 	)
 	(symbol
@@ -17527,6 +17899,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR084")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR084")
 					(unit 1)
 				)
@@ -17598,6 +17976,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR087")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -17661,6 +18045,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR086")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR086")
 					(unit 1)
 				)
@@ -17729,6 +18119,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR030")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR030")
 					(unit 1)
 				)
@@ -17802,6 +18198,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C6")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -17865,6 +18267,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR075")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR075")
 					(unit 1)
 				)
@@ -17974,6 +18382,12 @@
 					(unit 5)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U8")
+					(unit 5)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18037,6 +18451,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR040")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR040")
 					(unit 1)
 				)
@@ -18109,6 +18529,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR024")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18176,6 +18602,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR045")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18238,6 +18670,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR068")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR068")
 					(unit 1)
 				)
@@ -18311,6 +18749,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C8")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18372,6 +18816,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR070")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR070")
 					(unit 1)
 				)
@@ -18442,6 +18892,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR082")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18505,6 +18961,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR029")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR029")
 					(unit 1)
 				)
@@ -18578,6 +19040,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "C5")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18640,6 +19108,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR071")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR071")
 					(unit 1)
 				)
@@ -18711,6 +19185,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR049")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18774,6 +19254,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR060")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR060")
 					(unit 1)
 				)
@@ -18845,6 +19331,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR067")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -18909,6 +19401,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR014")
 					(unit 1)
 				)
@@ -19017,6 +19515,12 @@
 					(unit 2)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U8")
+					(unit 2)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19118,6 +19622,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "U7")
+					(unit 5)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "U7")
 					(unit 5)
 				)
@@ -19233,6 +19743,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U1")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19297,6 +19813,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR04")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR04")
 					(unit 1)
 				)
@@ -19405,6 +19927,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U7")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19473,6 +20001,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR012")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19536,6 +20070,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR05")
 					(unit 1)
 				)
@@ -19608,6 +20148,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR035")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19675,6 +20221,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR015")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19737,6 +20289,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR052")
 					(unit 1)
 				)
@@ -19809,6 +20367,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR010")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -19872,6 +20436,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR058")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR058")
 					(unit 1)
 				)
@@ -19943,6 +20513,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR09")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20006,6 +20582,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR047")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR047")
 					(unit 1)
 				)
@@ -20134,6 +20716,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "U5")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20196,6 +20784,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR083")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR083")
 					(unit 1)
 				)
@@ -20268,6 +20862,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR06")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20330,6 +20930,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR061")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR061")
 					(unit 1)
 				)
@@ -20402,6 +21008,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR028")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20466,6 +21078,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR022")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR022")
 					(unit 1)
 				)
@@ -20537,6 +21155,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR025")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20599,6 +21223,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR051")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR051")
 					(unit 1)
 				)
@@ -20670,6 +21300,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR027")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20733,6 +21369,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR046")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR046")
 					(unit 1)
 				)
@@ -20803,6 +21445,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR085")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -20866,6 +21514,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR044")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR044")
 					(unit 1)
 				)
@@ -20938,6 +21592,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -21001,6 +21661,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR023")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR023")
 					(unit 1)
 				)
@@ -21073,6 +21739,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR020")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -21136,6 +21808,12 @@
 		(instances
 			(project "MyCPU_VGA"
 				(path "/a4923233-1c4c-4e1d-9008-74c5ba3f8885"
+					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
 					(reference "#PWR03")
 					(unit 1)
 				)
@@ -21208,6 +21886,12 @@
 					(unit 1)
 				)
 			)
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR043")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -21275,11 +21959,12 @@
 					(unit 1)
 				)
 			)
-		)
-	)
-	(sheet_instances
-		(path "/"
-			(page "1")
+			(project "MyCPU_VGA"
+				(path "/d089b465-4030-4a56-8ca5-06694b1f0979/b227def5-3a74-453f-9865-7807ba242f89"
+					(reference "#PWR038")
+					(unit 1)
+				)
+			)
 		)
 	)
 )

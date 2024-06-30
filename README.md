@@ -1,5 +1,7 @@
-# S65
+# S65xx Computer System
 Yet another 8bit Retro Computer
+
+Completely bloated, overkill and fully hackable!
 
 ## ToDo
 
@@ -21,20 +23,20 @@ Yet another 8bit Retro Computer
 ## Hardware
 
 - Overview System Schematic
-  - [ ] CPU
-  - [ ] ROM
-  - [ ] RAM
-  - [ ] Bank/IRQ
-  - [ ] LCD/IRQ
-  - [ ] SIO
-  - [ ] PIO
-  - [ ] User Ports
-  - [ ] IDE
-  - [ ] Simple-IDE
-  - [ ] CF
-  - [ ] SID
-  - [ ] Addr + RTC + Clock
-  - [ ] LPT Interface
+  - [x] CPU
+  - [x] ROM
+  - [x] RAM
+  - [x] Bank/IRQ
+  - [x] LCD/IRQ
+  - [x] SIO
+  - [x] PIO
+  - [x] User Ports
+  - [x] IDE
+  - [x] Simple-IDE
+  - [x] CF
+  - [x] SID
+  - [x] Addr + RTC + Clock
+  - [x] LPT Interface
   - [ ] MyCPU Graphics Unit Interface
 
 ---
