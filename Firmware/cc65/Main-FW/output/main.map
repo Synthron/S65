@@ -1,7 +1,7 @@
 Modules list:
 -------------
 main.s.o:
-    CODE              Offs=000000  Size=000037  Align=00001  Fill=0000
+    CODE              Offs=000000  Size=000041  Align=00001  Fill=0000
     RODATA            Offs=000000  Size=000116  Align=00001  Fill=0000
     BSS               Offs=000000  Size=000100  Align=00001  Fill=0000
     KERNEL_ROM        Offs=000000  Size=000033  Align=00001  Fill=0000
@@ -18,10 +18,10 @@ Name                   Start     End    Size  Align
 BSS                   000200  0002FF  000100  00001
 EHBASIC               00C000  00E84C  00284D  00001
 KERNEL_ROM            00C000  00C032  000033  00001
-CODE                  00C033  00C069  000037  00001
-ISRS                  00C06A  00C078  00000F  00001
-MONITOR               00C079  00C15D  0000E5  00001
-RODATA                00C15E  00C273  000116  00001
+CODE                  00C033  00C073  000041  00001
+ISRS                  00C074  00C082  00000F  00001
+MONITOR               00C083  00C167  0000E5  00001
+RODATA                00C168  00C27D  000116  00001
 VECTORS               00FFFA  00FFFF  000006  00001
 
 

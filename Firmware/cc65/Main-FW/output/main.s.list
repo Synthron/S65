@@ -161,6 +161,7 @@ Current file: main.s
 000068r 2               .import __ACIA4_START__
 000068r 2               
 000068r 2               
+000068r 2               
 000068r 2               ; Registers ACIA1
 000068r 2               COM1_DATA  = __ACIA1_START__ + 0
 000068r 2               COM1_STAT  = __ACIA1_START__ + 1
@@ -445,18 +446,23 @@ Current file: main.s
 000023r 1  A2 00            ldx #0              ; prepare X register
 000025r 1               @print_mot:
 000025r 1  BD rr rr         lda BOOT_MSG,X      ; get boot message character
-000028r 1  F0 07            beq MAIN_LOOP
+000028r 1  F0 07            beq PREPRAM
 00002Ar 1  20 rr rr         jsr COM1_TRANSMIT
 00002Dr 1  E8               inx
 00002Er 1  4C rr rr         jmp @print_mot
 000031r 1               
-000031r 1               
-000031r 1               
-000031r 1               MAIN_LOOP:
-000031r 1  4C rr rr         jmp RESET_MONITOR
-000034r 1  4C rr rr         jmp MAIN_LOOP
-000037r 1               
-000037r 1               .segment "ISRS"
+000031r 1               PREPRAM:
+000031r 1  A9 rr            lda #<COM1_TRANSMIT ; jump address for transmit in RAM
+000033r 1  8D 00 03         sta $300
+000036r 1  A9 rr            lda #>COM1_TRANSMIT
+000038r 1  8D 01 03         sta $301
+00003Br 1               
+00003Br 1               
+00003Br 1               MAIN_LOOP:
+00003Br 1  4C rr rr         jmp RESET_MONITOR
+00003Er 1  4C rr rr         jmp MAIN_LOOP
+000041r 1               
+000041r 1               .segment "ISRS"
 000000r 1               
 000000r 1               ISR:
 000000r 1                   ; for now just assume COM1 is the only Interrupt Source

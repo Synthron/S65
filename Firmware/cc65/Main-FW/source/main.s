@@ -22,12 +22,17 @@ PRINT_MOT:
     ldx #0              ; prepare X register
 @print_mot:
     lda BOOT_MSG,X      ; get boot message character
-    beq MAIN_LOOP
+    beq PREPRAM
     jsr COM1_TRANSMIT
     inx
     jmp @print_mot
     
-    
+PREPRAM:
+    lda #<COM1_TRANSMIT ; jump address for transmit in RAM
+    sta $300
+    lda #>COM1_TRANSMIT
+    sta $301
+
 
 MAIN_LOOP:
     jmp RESET_MONITOR
