@@ -1534,9 +1534,9 @@ LAB_15B3:
                              
 ; *** begin patch  2.22p5.3   potential return address -$100 (page not incremented) ***
 ; *** add
-   .IF [* & $FF] == $FD
+;   .IF [* & $FF] == $FD
       NOP                     ; return address of JSR +1 (on  next page)
-   .ENDIF  
+;   .ENDIF  
 ; *** end   patch  2.22p5.3   potential return address -$100 (page not incremented) ***
       JSR   LAB_1B5B          ; push sign, round FAC1 and put on stack
       LDA   Frnxth            ; get var pointer for FOR/NEXT high byte
@@ -1613,7 +1613,7 @@ LAB_1602:
       JMP   LAB_LET           ; else go do implied LET
 
 LAB_1609:
-      CMP   #[TK_TAB-$80]*2   ; compare normalised token * 2 with TAB
+      CMP   #$56 ;#[TK_TAB-$80]*2   ; compare normalised token * 2 with TAB
       BCS   LAB_15D9          ; branch if A>=TAB (do syntax error then warm start)
                               ; only tokens before TAB can start a line
       TAY                     ; copy to index
@@ -3088,9 +3088,9 @@ LAB_1B43:
                               ; now push sign, round FAC1 and put on stack
 ; *** begin patch  2.22p5.3   potential return address -$100 (page not incremented) ***
 ; *** add
-   .IF [* & $FF] == $FD
+;   .IF [* & $FF] == $FD
       NOP                     ; return address of JSR +1 (on  next page)
-   .ENDIF  
+;   .ENDIF  
 ; *** end   patch  2.22p5.3   potential return address -$100 (page not incremented) ***
       JSR   LAB_1B5B          ; function will return here, then the next RTS will call
                               ; the function
@@ -3325,9 +3325,9 @@ LAB_1C13:
 ; *** with
       TAX                     ; save to trap concatenate
       PLA                     ; dump return address high byte
-      CPX   #<[LAB_224Da+2]   ; from concatenate low return address?
+      CPX   #<(LAB_224Da+2)   ; from concatenate low return address?
       BNE   LAB_1C13b         ; No - continue!
-      CMP   #>[LAB_224Da+2]   ; from concatenate high return address?
+      CMP   #>(LAB_224Da+2)   ; from concatenate high return address?
       BEQ   LAB_1C13a         ; Yes - error!
 LAB_1C13b:
       JMP   LAB_1B1D          ; execute function then continue evaluation
