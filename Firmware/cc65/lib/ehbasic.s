@@ -1534,9 +1534,9 @@ LAB_15B3:
                              
 ; *** begin patch  2.22p5.3   potential return address -$100 (page not incremented) ***
 ; *** add
-;   .IF [* & $FF] == $FD
+   .IF <* = $FD
       NOP                     ; return address of JSR +1 (on  next page)
-;   .ENDIF  
+   .ENDIF  
 ; *** end   patch  2.22p5.3   potential return address -$100 (page not incremented) ***
       JSR   LAB_1B5B          ; push sign, round FAC1 and put on stack
       LDA   Frnxth            ; get var pointer for FOR/NEXT high byte
@@ -3088,9 +3088,9 @@ LAB_1B43:
                               ; now push sign, round FAC1 and put on stack
 ; *** begin patch  2.22p5.3   potential return address -$100 (page not incremented) ***
 ; *** add
-;   .IF [* & $FF] == $FD
+   .IF <* = $FD
       NOP                     ; return address of JSR +1 (on  next page)
-;   .ENDIF  
+   .ENDIF  
 ; *** end   patch  2.22p5.3   potential return address -$100 (page not incremented) ***
       JSR   LAB_1B5B          ; function will return here, then the next RTS will call
                               ; the function
@@ -8875,3 +8875,8 @@ LAB_REDO:    .byte " Redo from start",$0D,$0A,$00
 .asciiz "Derived from EhBASIC"
 
 AA_end_basic:
+
+.segment "VEC_EHB"
+.word NMI
+.word RESET
+.word ISR

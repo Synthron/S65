@@ -1,72 +1,42 @@
 Modules list:
 -------------
 main.s.o:
-    CODE              Offs=000000  Size=000041  Align=00001  Fill=0000
-    RODATA            Offs=000000  Size=000116  Align=00001  Fill=0000
-    BSS               Offs=000000  Size=000100  Align=00001  Fill=0000
-    KERNEL_ROM        Offs=000000  Size=000033  Align=00001  Fill=0000
-    ISRS              Offs=000000  Size=00000F  Align=00001  Fill=0000
+    CODE              Offs=000000  Size=000089  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000126  Align=00001  Fill=0000
+    KERNEL_RAM        Offs=000000  Size=000093  Align=00001  Fill=0000
+    INPUT_BUF         Offs=000000  Size=000100  Align=00001  Fill=0000
+    JP_TBLE           Offs=000000  Size=00000A  Align=00001  Fill=0000
     MONITOR           Offs=000000  Size=0000E5  Align=00001  Fill=0000
     VECTORS           Offs=000000  Size=000006  Align=00001  Fill=0000
-    EHBASIC           Offs=000000  Size=00284D  Align=00001  Fill=0000
+    EHBASIC           Offs=000000  Size=00284B  Align=00001  Fill=0000
+    VEC_EHB           Offs=000000  Size=000006  Align=00001  Fill=0000
 
 
 Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
-BSS                   000200  0002FF  000100  00001
-EHBASIC               00C000  00E84C  00284D  00001
-KERNEL_ROM            00C000  00C032  000033  00001
-CODE                  00C033  00C073  000041  00001
-ISRS                  00C074  00C082  00000F  00001
-MONITOR               00C083  00C167  0000E5  00001
-RODATA                00C168  00C27D  000116  00001
+INPUT_BUF             000200  0002FF  000100  00001
+KERNEL_RAM            000300  000392  000093  00001
+EHBASIC               00C000  00E84A  00284B  00001
+CODE                  00C100  00C188  000089  00001
+JP_TBLE               00C200  00C209  00000A  00001
+MONITOR               00C20A  00C2EE  0000E5  00001
+RODATA                00C2EF  00C414  000126  00001
 VECTORS               00FFFA  00FFFF  000006  00001
+VEC_EHB               00FFFA  00FFFF  000006  00001
 
 
 Exports list by name:
 ---------------------
-__ACIA1_START__           00BF50 RLA    __ACIA2_START__           00BF54 RLA    
-__ACIA3_START__           00BF58 RLA    __ACIA4_START__           00BF5C RLA    
-__IDE1_START__            00BF08 RLA    __PIA_START__             00BF1C RLA    
-__SID_START__             00BF60 RLA    __TPI1_START__            00BF00 RLA    
-__VIA1_START__            00BF20 RLA    __VIA2_START__            00BF30 RLA    
-__VIA3_START__            00BF40 RLA    
+
 
 
 Exports list by value:
 ----------------------
-__TPI1_START__            00BF00 RLA    __IDE1_START__            00BF08 RLA    
-__PIA_START__             00BF1C RLA    __VIA1_START__            00BF20 RLA    
-__VIA2_START__            00BF30 RLA    __VIA3_START__            00BF40 RLA    
-__ACIA1_START__           00BF50 RLA    __ACIA2_START__           00BF54 RLA    
-__ACIA3_START__           00BF58 RLA    __ACIA4_START__           00BF5C RLA    
-__SID_START__             00BF60 RLA    
+
 
 
 Imports list:
 -------------
-__ACIA1_START__ ([linker generated]):
-    main.s.o                  ../../lib/acia.s(1)
-__ACIA2_START__ ([linker generated]):
-    main.s.o                  ../../lib/acia.s(2)
-__ACIA3_START__ ([linker generated]):
-    main.s.o                  ../../lib/acia.s(3)
-__ACIA4_START__ ([linker generated]):
-    main.s.o                  ../../lib/acia.s(4)
-__IDE1_START__ ([linker generated]):
-    main.s.o                  ../../lib/tpi.s(2)
-__PIA_START__ ([linker generated]):
-    main.s.o                  ../../lib/pia.s(1)
-__SID_START__ ([linker generated]):
-    main.s.o                  ../../lib/sid.s(1)
-__TPI1_START__ ([linker generated]):
-    main.s.o                  ../../lib/tpi.s(1)
-__VIA1_START__ ([linker generated]):
-    main.s.o                  ../../lib/via.s(1)
-__VIA2_START__ ([linker generated]):
-    main.s.o                  ../../lib/via.s(2)
-__VIA3_START__ ([linker generated]):
-    main.s.o                  ../../lib/via.s(3)
 

@@ -1,31 +1,27 @@
-.import __VIA1_START__
-.import __VIA2_START__
-.import __VIA3_START__
-
 ;initialize VIA1 with IRQ and LCD
-PORTB1   = __VIA1_START__ + 0
-PORTA1   = __VIA1_START__ + 1
-DDRB1    = __VIA1_START__ + 2
-DDRA1    = __VIA1_START__ + 3
-VIA1_PCR = __VIA1_START__ + 12
-VIA1_IFR = __VIA1_START__ + 13
-VIA1_IER = __VIA1_START__ + 14
+PORTB1   = VIA1 + 0
+PORTA1   = VIA1 + 1
+DDRB1    = VIA1 + 2
+DDRA1    = VIA1 + 3
+VIA1_PCR = VIA1 + 12
+VIA1_IFR = VIA1 + 13
+VIA1_IER = VIA1 + 14
 ;initialize VIA2 
-PORTB2   = __VIA2_START__ + 0
-PORTA2   = __VIA2_START__ + 1
-DDRB2    = __VIA2_START__ + 2
-DDRA2    = __VIA2_START__ + 3
-VIA2_PCR = __VIA2_START__ + 12
-VIA2_IFR = __VIA2_START__ + 13
-VIA2_IER = __VIA2_START__ + 14
+PORTB2   = VIA2 + 0
+PORTA2   = VIA2 + 1
+DDRB2    = VIA2 + 2
+DDRA2    = VIA2 + 3
+VIA2_PCR = VIA2 + 12
+VIA2_IFR = VIA2 + 13
+VIA2_IER = VIA2 + 14
 ;initialize VIA3 
-PORTB3   = __VIA3_START__ + 0
-PORTA3   = __VIA3_START__ + 1
-DDRB3    = __VIA3_START__ + 2
-DDRA3    = __VIA3_START__ + 3
-VIA3_PCR = __VIA3_START__ + 12
-VIA3_IFR = __VIA3_START__ + 13
-VIA3_IER = __VIA3_START__ + 14
+PORTB3   = VIA3 + 0
+PORTA3   = VIA3 + 1
+DDRB3    = VIA3 + 2
+DDRA3    = VIA3 + 3
+VIA3_PCR = VIA3 + 12
+VIA3_IFR = VIA3 + 13
+VIA3_IER = VIA3 + 14
 ; PCR
 ; bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
 ; |    CB2     | CB1  |    CA2     | CA1

@@ -1,23 +1,20 @@
-.import __TPI1_START__
-.import __IDE1_START__
+TPI1_PRA   = TPI1 + 0
+TPI1_PRB   = TPI1 + 1
+TPI1_PRC   = TPI1 + 2
+TPI1_DDRA  = TPI1 + 3
+TPI1_DDRB  = TPI1 + 4
+TPI1_DDRC  = TPI1 + 5
+TPI1_CR    = TPI1 + 6
+TPI1_AIR   = TPI1 + 7
 
-TPI1_PRA   = __TPI1_START__ + 0
-TPI1_PRB   = __TPI1_START__ + 0
-TPI1_PRC   = __TPI1_START__ + 0
-TPI1_DDRA  = __TPI1_START__ + 0
-TPI1_DDRB  = __TPI1_START__ + 0
-TPI1_DDRC  = __TPI1_START__ + 0
-TPI1_CR    = __TPI1_START__ + 0
-TPI1_AIR   = __TPI1_START__ + 0
-
-IDE1_PRA   = __IDE1_START__ + 0
-IDE1_PRB   = __IDE1_START__ + 0
-IDE1_PRC   = __IDE1_START__ + 0
-IDE1_DDRA  = __IDE1_START__ + 0
-IDE1_DDRB  = __IDE1_START__ + 0
-IDE1_DDRC  = __IDE1_START__ + 0
-IDE1_CR    = __IDE1_START__ + 0
-IDE1_AIR   = __IDE1_START__ + 0
+IDE1_PRA   = IDE1 + 0
+IDE1_PRB   = IDE1 + 1
+IDE1_PRC   = IDE1 + 2
+IDE1_DDRA  = IDE1 + 3
+IDE1_DDRB  = IDE1 + 4
+IDE1_DDRC  = IDE1 + 5
+IDE1_CR    = IDE1 + 6
+IDE1_AIR   = IDE1 + 7
 
 TPI_INIT:
     lda #0          ; reset Bank Registers

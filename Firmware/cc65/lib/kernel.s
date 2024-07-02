@@ -8,14 +8,14 @@
 READ_PTR = $EC
 WRITE_PTR = $ED
 
-.segment "BSS"
+.segment "INPUT_BUF"
 
 INPUT_BUFFER:   .res $100
 
 
-.segment "KERNEL_ROM"
+.segment "KERNEL_RAM"
 
-; ------------------------------------------------------------------------
+; ----------------------------f--------------------------------------------
 ; Input Buffer Code
 ; ------------------------------------------------------------------------
 
@@ -90,3 +90,32 @@ CHRIN:
 CHROUT:
     jsr COM1_TRANSMIT
     rts
+
+; Output a string (Pointer at ZP $EC $ED)
+;
+; Modifies: A, Y, flags
+PRINT_MSG:
+    phy
+    ldy #0              ; prepare Y register
+PRINT_LOOP:
+    lda ($EC),y      ; get string vector, y indexed
+    beq @end
+    jsr COM1_TRANSMIT
+    iny
+    jmp PRINT_LOOP
+@end:
+    ply
+    rts
+
+; ------------------------------------------------------------------------
+; Page Handling
+; ------------------------------------------------------------------------
+
+; switch ROM bank and start executing at $C000
+; new ROM bank indicated in A register
+;
+; Modifies: A
+SW_ROMBANK:
+    sta TPI1_PRB
+    jmp $C000
+

@@ -1,30 +1,23 @@
-.import __ACIA1_START__
-.import __ACIA2_START__
-.import __ACIA3_START__
-.import __ACIA4_START__
-
-
-
 ; Registers ACIA1
-COM1_DATA  = __ACIA1_START__ + 0
-COM1_STAT  = __ACIA1_START__ + 1
-COM1_CMD   = __ACIA1_START__ + 2
-COM1_CTRL  = __ACIA1_START__ + 3
+COM1_DATA  = ACIA1 + 0
+COM1_STAT  = ACIA1 + 1
+COM1_CMD   = ACIA1 + 2
+COM1_CTRL  = ACIA1 + 3
 ; Registers ACIA2
-COM2_DATA  = __ACIA2_START__ + 0
-COM2_STAT  = __ACIA2_START__ + 1
-COM2_CMD   = __ACIA2_START__ + 2
-COM2_CTRL  = __ACIA2_START__ + 3
+COM2_DATA  = ACIA2 + 0
+COM2_STAT  = ACIA2 + 1
+COM2_CMD   = ACIA2 + 2
+COM2_CTRL  = ACIA2 + 3
 ; Registers ACIA3
-COM3_DATA  = __ACIA3_START__ + 0
-COM3_STAT  = __ACIA3_START__ + 1
-COM3_CMD   = __ACIA3_START__ + 2
-COM3_CTRL  = __ACIA3_START__ + 3
+COM3_DATA  = ACIA3 + 0
+COM3_STAT  = ACIA3 + 1
+COM3_CMD   = ACIA3 + 2
+COM3_CTRL  = ACIA3 + 3
 ; Registers ACIA4
-COM4_DATA  = __ACIA4_START__ + 0
-COM4_STAT  = __ACIA4_START__ + 1
-COM4_CMD   = __ACIA4_START__ + 2
-COM4_CTRL  = __ACIA4_START__ + 3
+COM4_DATA  = ACIA4 + 0
+COM4_STAT  = ACIA4 + 1
+COM4_CMD   = ACIA4 + 2
+COM4_CTRL  = ACIA4 + 3
 
 ; ZeroPage Variable for TxReady-Check
 ZP_WAIT = $E2
@@ -98,6 +91,8 @@ COM4_INIT:
     lda #%00011110  ; setup 8N1 communication at 9600 Baud
     sta COM4_CTRL    
     rts
+
+.segment "KERNEL_RAM"
 
 COM1_TRANSMIT:
     pha
