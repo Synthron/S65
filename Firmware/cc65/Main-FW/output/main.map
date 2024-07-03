@@ -3,6 +3,7 @@ Modules list:
 main.s.o:
     CODE              Offs=000000  Size=000089  Align=00001  Fill=0000
     RODATA            Offs=000000  Size=000126  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000078  Align=00001  Fill=0000
     KERNEL_RAM        Offs=000000  Size=000093  Align=00001  Fill=0000
     INPUT_BUF         Offs=000000  Size=000100  Align=00001  Fill=0000
     JP_TBLE           Offs=000000  Size=00000A  Align=00001  Fill=0000
@@ -10,21 +11,40 @@ main.s.o:
     VECTORS           Offs=000000  Size=000006  Align=00001  Fill=0000
     EHBASIC           Offs=000000  Size=00284B  Align=00001  Fill=0000
     VEC_EHB           Offs=000000  Size=000006  Align=00001  Fill=0000
+    MSBHEADER         Offs=000000  Size=000003  Align=00001  Fill=0000
+    MSBVECTORS        Offs=000000  Size=000084  Align=00001  Fill=0000
+    MSBKEYWORDS       Offs=000000  Size=0000E1  Align=00001  Fill=0000
+    MSBDUMMY          Offs=000000  Size=000045  Align=00001  Fill=0000
+    MSBERROR          Offs=000000  Size=0000F0  Align=00001  Fill=0000
+    MSBCODE           Offs=000000  Size=001C9E  Align=00001  Fill=0000
+    MSBCHRGET         Offs=000000  Size=00001D  Align=00001  Fill=0000
+    MSBINIT           Offs=000000  Size=000199  Align=00001  Fill=0000
+    VEC_MSB           Offs=000000  Size=000006  Align=00001  Fill=0000
 
 
 Segment list:
 -------------
 Name                   Start     End    Size  Align
 ----------------------------------------------------
+ZEROPAGE              000000  000077  000078  00001
 INPUT_BUF             000200  0002FF  000100  00001
 KERNEL_RAM            000300  000392  000093  00001
+MSBDUMMY              008000  008044  000045  00001
 EHBASIC               00C000  00E84A  00284B  00001
+MSBHEADER             00C000  00C002  000003  00001
+MSBVECTORS            00C003  00C086  000084  00001
+MSBKEYWORDS           00C087  00C167  0000E1  00001
 CODE                  00C100  00C188  000089  00001
+MSBERROR              00C168  00C257  0000F0  00001
 JP_TBLE               00C200  00C209  00000A  00001
 MONITOR               00C20A  00C2EE  0000E5  00001
+MSBCODE               00C258  00DEF5  001C9E  00001
 RODATA                00C2EF  00C414  000126  00001
+MSBCHRGET             00DEF6  00DF12  00001D  00001
+MSBINIT               00DF13  00E0AB  000199  00001
 VECTORS               00FFFA  00FFFF  000006  00001
 VEC_EHB               00FFFA  00FFFF  000006  00001
+VEC_MSB               00FFFA  00FFFF  000006  00001
 
 
 Exports list by name:

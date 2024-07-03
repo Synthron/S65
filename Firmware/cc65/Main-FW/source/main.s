@@ -136,3 +136,5 @@ EHBASIC_TABLE_END:
 ; load vector           $0809 $080A
 ; save vector           $080B $080C
 .include "ehbasic.s"
+
+.include "msbasic.s"
