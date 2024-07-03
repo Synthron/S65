@@ -9883,9 +9883,7 @@ Current file: main.s
 00E851  3               .endmacro
 00E851  3               
 00E851  2               
-00E851  2               ;.include "msbasic_defines.s"
-00E851  2               
-00E851  2               
+00E851  2               ; MS BASIC Defines (copied from CBM2-Defines)
 00E851  2               
 00E851  2               ;CONFIG_DATAFLG := 1
 00E851  2               CONFIG_EASTER_EGG := 1
@@ -9896,13 +9894,7 @@ Current file: main.s
 00E851  2               ;CONFIG_PEEK_SAVE_LINNUM := 1
 00E851  2               CONFIG_SCRTCH_ORDER := 2
 00E851  2               
-00E851  2               ; zero page CBM2
-00E851  2               ;ZP_START1 = $00
-00E851  2               ;ZP_START2 = $0D
-00E851  2               ;ZP_START3 = $03
-00E851  2               ;ZP_START4 = $13
 00E851  2               
-00E851  2               ; zero page Ben Eater
 00E851  2               ZP_START0 = $00
 00E851  2               ZP_START1 = $02
 00E851  2               ZP_START2 = $0C
@@ -9989,6 +9981,8 @@ Current file: main.s
 00E851  2               CRLF_2 := LF
 00E851  2               .endif
 00E851  2               
+00E851  2               ; Macros included for MS BASIC
+00E851  2               
 00E851  2               ; htasc - set the hi bit on the last byte of a string for termination
 00E851  2               ; (by Tom Greene)
 00E851  2               .macro htasc str
@@ -10067,7 +10061,7 @@ Current file: main.s
 00E851  2               	.endrep
 00E851  2               .endmacro
 00E851  2               
-00E851  2               ;.include "msbasic_zeropage.s"
+00E851  2               ; MS BASIC ZP definitions
 00E851  2               
 00E851  2               .feature org_per_seg
 000006r 2               .zeropage
@@ -10240,20 +10234,8 @@ Current file: main.s
 0000C8  2               FACEXTENSION = STRNG1+1
 0000C8  2               STRNG2:
 0000C8  2  xx xx        	.res 2
-0000CA  2               .ifdef AIM65
-0000CA  2               ATN:
-0000CA  2               	.res 3
-0000CA  2               ZBE:
-0000CA  2               	.res 1
-0000CA  2               .endif
-0000CA  2               .ifdef SYM1
-0000CA  2               USR1:
-0000CA  2               	.res 3
-0000CA  2               USR2:
-0000CA  2               	.res 3
-0000CA  2               USR3:
-0000CA  2               	.res 3
-0000CA  2               .endif
+0000CA  2               
+0000CA  2               
 0000CA  2               CHRGET:
 0000CA  2               TXTPTR = <(GENERIC_TXTPTR-GENERIC_CHRGET + CHRGET)
 0000CA  2               CHRGOT = <(GENERIC_CHRGOT-GENERIC_CHRGET + CHRGET)
@@ -10785,18 +10767,8 @@ Current file: main.s
 0000EFr 2               ; WARM RESTART ENTRY
 0000EFr 2               ; ----------------------------------------------------------------------------
 0000EFr 2               RESTART:
-0000EFr 2               .ifdef KBD
-0000EFr 2                       jsr     CRDO
-0000EFr 2                       nop
-0000EFr 2               L2351X:
-0000EFr 2                       jsr     OKPRT
-0000EFr 2               L2351:
-0000EFr 2                       jsr     INLIN
-0000EFr 2               LE28E:
-0000EFr 2                       bpl     RESTART
-0000EFr 2               .else
+0000EFr 2               
 0000EFr 2  46 6C                lsr     Z14
-0000F1r 2                .ifndef AIM65
 0000F1r 2  A9 rr                lda     #<QT_OK
 0000F3r 2  A0 rr                ldy     #>QT_OK
 0000F5r 2                 .ifdef CONFIG_CBM_ALL
@@ -10804,12 +10776,8 @@ Current file: main.s
 0000F5r 2                 .else
 0000F5r 2  20 05 00             jsr     GOSTROUT
 0000F8r 2                 .endif
-0000F8r 2                .else
-0000F8r 2                       jsr     GORESTART
-0000F8r 2                .endif
 0000F8r 2               L2351:
 0000F8r 2  20 rr rr             jsr     INLIN
-0000FBr 2               .endif
 0000FBr 2  86 D1                stx     TXTPTR
 0000FDr 2  84 D2                sty     TXTPTR+1
 0000FFr 2  20 CA 00             jsr     CHRGET
@@ -17221,13 +17189,11 @@ Current file: main.s
 00012Br 2                 .endif
 00012Br 2               QT_WRITTEN_BY:
 00012Br 2                 .ifndef CONFIG_CBM_ALL
-00012Br 2                 .if !(.def(AIM65) || .def(SYM1))
 00012Br 2  0D 0A 0C             .byte   CR,LF,$0C ; FORM FEED
 00012Er 2  57 52 49 54          .byte   "WRITTEN BY WEILAND & GATES"
 000132r 2  54 45 4E 20  
 000136r 2  42 59 20 57  
 000148r 2  0D 0A 00             .byte   CR,LF,0
-00014Br 2                   .endif
 00014Br 2                  .endif
 00014Br 2               QT_MEMORY_SIZE:
 00014Br 2  4D 45 4D 4F          .byte   "MEMORY SIZE"

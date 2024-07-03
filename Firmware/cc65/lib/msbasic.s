@@ -20,9 +20,7 @@
 ;.setcpu "6502"
 .macpack longbranch
 
-;.include "msbasic_defines.s"
-
-
+; MS BASIC Defines (copied from CBM2-Defines)
 
 ;CONFIG_DATAFLG := 1
 CONFIG_EASTER_EGG := 1
@@ -33,13 +31,7 @@ CONFIG_NO_CR := 1; terminal doesn't need explicit CRs on line ends
 ;CONFIG_PEEK_SAVE_LINNUM := 1
 CONFIG_SCRTCH_ORDER := 2
 
-; zero page CBM2
-;ZP_START1 = $00
-;ZP_START2 = $0D
-;ZP_START3 = $03
-;ZP_START4 = $13
 
-; zero page Ben Eater
 ZP_START0 = $00
 ZP_START1 = $02
 ZP_START2 = $0C
@@ -126,6 +118,8 @@ CRLF_1 := CR
 CRLF_2 := LF
 .endif
 
+; Macros included for MS BASIC
+
 ; htasc - set the hi bit on the last byte of a string for termination
 ; (by Tom Greene)
 .macro htasc str
@@ -204,7 +198,7 @@ ERROR_MESSAGES:
 	.endrep
 .endmacro
 
-;.include "msbasic_zeropage.s"
+; MS BASIC ZP definitions
 
 .feature org_per_seg
 .zeropage
@@ -372,20 +366,8 @@ SGNCPR = STRNG1
 FACEXTENSION = STRNG1+1
 STRNG2:
 	.res 2
-.ifdef AIM65
-ATN:
-	.res 3
-ZBE:
-	.res 1
-.endif
-.ifdef SYM1
-USR1:
-	.res 3
-USR2:
-	.res 3
-USR3:
-	.res 3
-.endif
+
+
 CHRGET:
 TXTPTR = <(GENERIC_TXTPTR-GENERIC_CHRGET + CHRGET)
 CHRGOT = <(GENERIC_CHRGOT-GENERIC_CHRGET + CHRGET)
@@ -824,18 +806,8 @@ PRINT_ERROR_LINNUM:
 ; WARM RESTART ENTRY
 ; ----------------------------------------------------------------------------
 RESTART:
-.ifdef KBD
-        jsr     CRDO
-        nop
-L2351X:
-        jsr     OKPRT
-L2351:
-        jsr     INLIN
-LE28E:
-        bpl     RESTART
-.else
+
         lsr     Z14
- .ifndef AIM65
         lda     #<QT_OK
         ldy     #>QT_OK
   .ifdef CONFIG_CBM_ALL
@@ -843,12 +815,8 @@ LE28E:
   .else
         jsr     GOSTROUT
   .endif
- .else
-        jsr     GORESTART
- .endif
 L2351:
         jsr     INLIN
-.endif
         stx     TXTPTR
         sty     TXTPTR+1
         jsr     CHRGET
@@ -7209,11 +7177,9 @@ QT_WANT:
   .endif
 QT_WRITTEN_BY:
   .ifndef CONFIG_CBM_ALL
-  .if !(.def(AIM65) || .def(SYM1))
         .byte   CR,LF,$0C ; FORM FEED
         .byte   "WRITTEN BY WEILAND & GATES"
         .byte   CR,LF,0
-    .endif
    .endif
 QT_MEMORY_SIZE:
         .byte   "MEMORY SIZE"
