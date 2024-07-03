@@ -5,6 +5,18 @@ Current file: main.s
 000000r 1               .setcpu "65c02"
 000000r 1               .debuginfo
 000000r 1               
+000000r 1               .include "macros.s"
+000000r 2               ; ---------------------------------------------
+000000r 2               ; Macro to write the String Pointer for the
+000000r 2               ; PRINT_MSG function to Zero Page
+000000r 2               ; ---------------------------------------------
+000000r 2               .macro cpt addr
+000000r 2                   lda #<addr   ; low byte
+000000r 2                   sta $EC
+000000r 2                   lda #>addr   ; high byte
+000000r 2                   sta $ED
+000000r 2               .endmacro
+000000r 2               
 000000r 1               .include "io.s"
 000000r 2               ; IO Space base addresses
 000000r 2               
@@ -479,17 +491,13 @@ Current file: main.s
 000025r 1  58               cli                 ; clear interrupt disable flag
 000026r 1               
 000026r 1               ; print Boot Messagr
-000026r 1  A9 rr            lda #<BOOT_MSG
-000028r 1  85 EC            sta $EC
-00002Ar 1  A9 rr            lda #>BOOT_MSG
-00002Cr 1  85 ED            sta $ED
+000026r 1  A9 rr 85 EC      cpt BOOT_MSG
+00002Ar 1  A9 rr 85 ED  
 00002Er 1  20 rr rr         jsr PRINT_MSG
 000031r 1               
 000031r 1               ; print Kernel Transfer Messagr
-000031r 1  A9 rr            lda #<BOOT_TKERN
-000033r 1  85 EC            sta $EC
-000035r 1  A9 rr            lda #>BOOT_TKERN
-000037r 1  85 ED            sta $ED
+000031r 1  A9 rr 85 EC      cpt BOOT_TKERN
+000035r 1  A9 rr 85 ED  
 000039r 1  20 rr rr         jsr PRINT_MSG
 00003Cr 1               
 00003Cr 1               
@@ -529,17 +537,13 @@ Current file: main.s
 00006Dr 1               @end:
 00006Dr 1               
 00006Dr 1               ; print Kernel Transfer done
-00006Dr 1  A9 rr            lda #<MSG_DONE
-00006Fr 1  85 EC            sta $EC
-000071r 1  A9 rr            lda #>MSG_DONE
-000073r 1  85 ED            sta $ED
+00006Dr 1  A9 rr 85 EC      cpt MSG_DONE
+000071r 1  A9 rr 85 ED  
 000075r 1  20 rr rr         jsr PRINT_MSG
 000078r 1               
 000078r 1               ; print WozMon Start Message
-000078r 1  A9 rr            lda #<MSG_MONITOR
-00007Ar 1  85 EC            sta $EC
-00007Cr 1  A9 rr            lda #>MSG_MONITOR
-00007Er 1  85 ED            sta $ED
+000078r 1  A9 rr 85 EC      cpt MSG_MONITOR
+00007Cr 1  A9 rr 85 ED  
 000080r 1  20 rr rr         jsr PRINT_MSG
 000083r 1               
 000083r 1               MAIN_LOOP:

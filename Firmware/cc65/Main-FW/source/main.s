@@ -1,6 +1,7 @@
 .setcpu "65c02"
 .debuginfo
 
+.include "macros.s"
 .include "io.s"
 .include "pia.s"
 .include "via.s"
@@ -22,17 +23,11 @@ BOOT:
     cli                 ; clear interrupt disable flag
     
 ; print Boot Messagr
-    lda #<BOOT_MSG
-    sta $EC
-    lda #>BOOT_MSG
-    sta $ED
+    cpt BOOT_MSG
     jsr PRINT_MSG
 
 ; print Kernel Transfer Messagr
-    lda #<BOOT_TKERN
-    sta $EC
-    lda #>BOOT_TKERN
-    sta $ED
+    cpt BOOT_TKERN
     jsr PRINT_MSG
 
 
@@ -72,17 +67,11 @@ CPY_KERNEL_LOOP:
 @end:
 
 ; print Kernel Transfer done
-    lda #<MSG_DONE
-    sta $EC
-    lda #>MSG_DONE
-    sta $ED
+    cpt MSG_DONE
     jsr PRINT_MSG
 
 ; print WozMon Start Message
-    lda #<MSG_MONITOR
-    sta $EC
-    lda #>MSG_MONITOR
-    sta $ED
+    cpt MSG_MONITOR
     jsr PRINT_MSG
 
 MAIN_LOOP:
@@ -123,7 +112,6 @@ HELLO_WORLD: .asciiz "Hello World\n"
 BOOT_MSG:    .asciiz "Welcome to the S65xx Computer System!\n\n"
 BOOT_TKERN:  .asciiz "Transfer KERNEL to RAM... "
 MSG_MONITOR: .asciiz "Starting up WozMon:\n"
-
 MSG_DONE:    .asciiz "done!\n"
 
 EHBASIC_TABLE_START:
