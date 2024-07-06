@@ -1,5 +1,4 @@
-
-; Enhanced BASIC to assemble under 6502 simulator, $ver 2.22p5
+; Enhanced BASIC to assemble under 6502 simulator, $ver 2.23
 
 ; $E7E1 $E7CF $E7C6 $E7D3 $E7D1 $E7D5 $E7CF $E81E $E825
 
@@ -40,7 +39,11 @@
 ;      5.5     garbage collection may cause an overlap with temporary strings
 ;      5.6     floating point multiply rounding bug
 ;      5.7     VAL() may cause string variables to be trashed
-; 2.23      port over to use ca65 and compile for S65xx Computer System
+; 2.23      S65xx Port by Synthron
+;             - refactor to compile with ca65
+;             - port to S65xx Computer System
+;             (cleanup ZP space)
+;             - Investigate and simplify Decssp1 addresses?
 
 ; zero page use ..
 
@@ -7983,7 +7986,7 @@ LAB_MSZM:
 
 LAB_SMSG:
       .byte " Bytes free",$0D,$0A,$0A
-      .byte "Enhanced BASIC 2.22p5",$0A,$00
+      .byte "Enhanced BASIC 2.23",$0A,$00
 
 ; numeric constants and series
 

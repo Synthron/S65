@@ -8,7 +8,7 @@
 ;     - Investigate CONFIG_CBM_ALL
 ; Done:
 ;   - remove CONFIG_SMALL code reductions
-;   - applied all CONFIG_2C and lower (most recent MS BASIC version)
+;   - applied all CONFIG_2C and lower (most recent MS BASIC version of the repo)
 ;
 ; Goal:
 ; have MS Basic on a working stand as a single file to include. 
