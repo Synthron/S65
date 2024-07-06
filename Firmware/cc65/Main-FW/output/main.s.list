@@ -806,8 +806,7 @@ Current file: main.s
 000000r 1               ; load vector           $0809 $080A
 000000r 1               ; save vector           $080B $080C
 000000r 1               .include "ehbasic.s"
-000000r 2               
-000000r 2               ; Enhanced BASIC to assemble under 6502 simulator, $ver 2.22p5
+000000r 2               ; Enhanced BASIC to assemble under 6502 simulator, $ver 2.23
 000000r 2               
 000000r 2               ; $E7E1 $E7CF $E7C6 $E7D3 $E7D1 $E7D5 $E7CF $E81E $E825
 000000r 2               
@@ -848,7 +847,11 @@ Current file: main.s
 000000r 2               ;      5.5     garbage collection may cause an overlap with temporary strings
 000000r 2               ;      5.6     floating point multiply rounding bug
 000000r 2               ;      5.7     VAL() may cause string variables to be trashed
-000000r 2               ; 2.23      port over to use ca65 and compile for S65xx Computer System
+000000r 2               ; 2.23      S65xx Port by Synthron
+000000r 2               ;             - refactor to compile with ca65
+000000r 2               ;             - port to S65xx Computer System
+000000r 2               ;             (cleanup ZP space)
+000000r 2               ;             - Investigate and simplify Decssp1 addresses?
 000000r 2               
 000000r 2               ; zero page use ..
 000000r 2               
@@ -1603,12 +1606,12 @@ Current file: main.s
 00C13F  2               LAB_XERR:
 00C13F  2  20 93 C8           JSR   LAB_CRLF          ; print CR/LF
 00C142  2               
-00C142  2  BD BA E6           LDA   LAB_BAER,X        ; get error message pointer low byte
-00C145  2  BC BB E6           LDY   LAB_BAER+1,X      ; get error message pointer high byte
+00C142  2  BD B8 E6           LDA   LAB_BAER,X        ; get error message pointer low byte
+00C145  2  BC B9 E6           LDY   LAB_BAER+1,X      ; get error message pointer high byte
 00C148  2  20 D4 C8           JSR   LAB_18C3          ; print null terminated string from memory
 00C14B  2               
 00C14B  2  20 8C C3           JSR   LAB_1491          ; flush stack and clear continue flag
-00C14E  2  A9 F7              LDA   #<LAB_EMSG        ; point to " Error" low addr
+00C14E  2  A9 F5              LDA   #<LAB_EMSG        ; point to " Error" low addr
 00C150  2  A0 E7              LDY   #>LAB_EMSG        ; point to " Error" high addr
 00C152  2               LAB_1269:
 00C152  2  20 D4 C8           JSR   LAB_18C3          ; print null terminated string from memory
@@ -1627,7 +1630,7 @@ Current file: main.s
 00C15D  2  A9 00              LDA   #$00              ; clear A
 00C15F  2  85 DF              STA   IrqBase           ; clear enabled byte
 00C161  2  85 DC              STA   NmiBase           ; clear enabled byte
-00C163  2  A9 08              LDA   #<LAB_RMSG        ; point to "Ready" message low byte
+00C163  2  A9 06              LDA   #<LAB_RMSG        ; point to "Ready" message low byte
 00C165  2  A0 E8              LDY   #>LAB_RMSG        ; point to "Ready" message high byte
 00C167  2               
 00C167  2  20 D4 C8           JSR   LAB_18C3          ; go do print string
@@ -1896,7 +1899,7 @@ Current file: main.s
 00C2AA  2               
 00C2AA  2  86 78              STX   TempB             ; save buffer read index
 00C2AC  2  84 BA              STY   csidx             ; copy buffer save index
-00C2AE  2  A0 21              LDY   #<TAB_1STC        ; get keyword first character table low address
+00C2AE  2  A0 1F              LDY   #<TAB_1STC        ; get keyword first character table low address
 00C2B0  2  84 73              STY   ut2_pl            ; save pointer low byte
 00C2B2  2  A0 E3              LDY   #>TAB_1STC        ; get keyword first character table high address
 00C2B4  2  84 74              STY   ut2_ph            ; save pointer high byte
@@ -1918,9 +1921,9 @@ Current file: main.s
 00C2C1  2  98                 TYA                     ; copy matching index
 00C2C2  2  0A                 ASL                     ; *2 (bytes per pointer)
 00C2C3  2  AA                 TAX                     ; copy to new index
-00C2C4  2  BD 3F E3           LDA   TAB_CHRT,X        ; get keyword table pointer low byte
+00C2C4  2  BD 3D E3           LDA   TAB_CHRT,X        ; get keyword table pointer low byte
 00C2C7  2  85 73              STA   ut2_pl            ; save pointer low byte
-00C2C9  2  BD 40 E3           LDA   TAB_CHRT+1,X      ; get keyword table pointer high byte
+00C2C9  2  BD 3E E3           LDA   TAB_CHRT+1,X      ; get keyword table pointer high byte
 00C2CC  2  85 74              STA   ut2_ph            ; save pointer high byte
 00C2CE  2               
 00C2CE  2  A0 FF              LDY   #$FF              ; clear table pointer (make -1 for start)
@@ -2242,7 +2245,7 @@ Current file: main.s
 00C425  2  E8                 INX                     ; else increment high byte
 00C426  2  18                 CLC                     ; clear carry for add
 00C427  2               LAB_152F:
-00C427  2  69 22              ADC   #<LAB_KEYT        ; add low byte
+00C427  2  69 20              ADC   #<LAB_KEYT        ; add low byte
 00C429  2  90 01              BCC   LAB_1530          ; branch if no carry
 00C42B  2               
 00C42B  2  E8                 INX                     ; else increment high byte
@@ -2319,7 +2322,7 @@ Current file: main.s
 00C498  2  4C 87 CB           JMP   LAB_1B66          ; round FAC1 and put on stack (returns to next instruction)
 00C49B  2               
 00C49B  2               LAB_159F:
-00C49B  2  A9 F1              LDA   #<LAB_259C        ; set 1 pointer low addr (default step size)
+00C49B  2  A9 EF              LDA   #<LAB_259C        ; set 1 pointer low addr (default step size)
 00C49D  2  A0 E1              LDY   #>LAB_259C        ; set 1 pointer high addr
 00C49F  2  20 8A D8           JSR   LAB_UFAC          ; unpack memory (AY) into FAC1
 00C4A2  2  20 C2 00           JSR   LAB_GBYT          ; scan memory
@@ -2425,9 +2428,9 @@ Current file: main.s
 00C508  2  B0 CE              BCS   LAB_15D9          ; branch if A>=TAB (do syntax error then warm start)
 00C50A  2                                             ; only tokens before TAB can start a line
 00C50A  2  A8                 TAY                     ; copy to index
-00C50B  2  B9 19 E2           LDA   LAB_CTBL+1,Y      ; get vector high byte
+00C50B  2  B9 17 E2           LDA   LAB_CTBL+1,Y      ; get vector high byte
 00C50E  2  48                 PHA                     ; onto stack
-00C50F  2  B9 18 E2           LDA   LAB_CTBL,Y        ; get vector low byte
+00C50F  2  B9 16 E2           LDA   LAB_CTBL,Y        ; get vector low byte
 00C512  2  48                 PHA                     ; onto stack
 00C513  2  4C BC 00           JMP   LAB_IGBY          ; jump to increment and scan memory
 00C516  2                                             ; then "return" to vector
@@ -2477,7 +2480,7 @@ Current file: main.s
 00C532  2  90 07              BCC   LAB_165E          ; if was program end just do warm start
 00C534  2               
 00C534  2                                             ; else ..
-00C534  2  A9 EF              LDA   #<LAB_BMSG        ; point to "Break" low byte
+00C534  2  A9 ED              LDA   #<LAB_BMSG        ; point to "Break" low byte
 00C536  2  A0 E7              LDY   #>LAB_BMSG        ; point to "Break" high byte
 00C538  2  4C 52 C1           JMP   LAB_1269          ; print "Break" and do warm start
 00C53B  2               
@@ -3057,13 +3060,13 @@ Current file: main.s
 00C787  2               ; perform DEC
 00C787  2               
 00C787  2               LAB_DEC:
-00C787  2  A9 F5              LDA   #<LAB_2AFD        ; set -1 pointer low byte
+00C787  2  A9 F3              LDA   #<LAB_2AFD        ; set -1 pointer low byte
 00C789  2  2C                 .byte $2C               ; BIT abs to skip the LDA below
 00C78A  2               
 00C78A  2               ; perform INC
 00C78A  2               
 00C78A  2               LAB_INC:
-00C78A  2  A9 F1              LDA   #<LAB_259C        ; set 1 pointer low byte
+00C78A  2  A9 EF              LDA   #<LAB_259C        ; set 1 pointer low byte
 00C78C  2               LAB_17B5:
 00C78C  2  48                 PHA                     ; save +/-1 pointer low byte
 00C78D  2               LAB_17B7:
@@ -3442,7 +3445,7 @@ Current file: main.s
 00C938  2               
 00C938  2                                             ; mode was INPUT
 00C938  2               LAB_1913:
-00C938  2  A9 23              LDA   #<LAB_REDO        ; point to redo message (low addr)
+00C938  2  A9 21              LDA   #<LAB_REDO        ; point to redo message (low addr)
 00C93A  2  A0 E8              LDY   #>LAB_REDO        ; point to redo message (high addr)
 00C93C  2  20 D4 C8           JSR   LAB_18C3          ; print null terminated string from memory
 00C93F  2  A5 8B              LDA   Cpntrl            ; get continue pointer low byte
@@ -3621,7 +3624,7 @@ Current file: main.s
 00CA30  2               
 00CA30  2                                             ; user typed too much
 00CA30  2               LAB_1A1B:
-00CA30  2  A9 12              LDA   #<LAB_IMSG        ; point to extra ignored message (low addr)
+00CA30  2  A9 10              LDA   #<LAB_IMSG        ; point to extra ignored message (low addr)
 00CA32  2  A0 E8              LDY   #>LAB_IMSG        ; point to extra ignored message (high addr)
 00CA34  2  4C D4 C8           JMP   LAB_18C3          ; print null terminated string from memory and return
 00CA37  2               
@@ -3847,7 +3850,7 @@ Current file: main.s
 00CB2F  2  A8                 TAY                     ; copy to index
 00CB30  2               LAB_1B13:
 00CB30  2  68                 PLA                     ; pull previous precedence
-00CB31  2  D9 FA E2           CMP   LAB_OPPT,Y        ; compare with precedence byte
+00CB31  2  D9 F8 E2           CMP   LAB_OPPT,Y        ; compare with precedence byte
 00CB34  2  B0 65              BCS   LAB_1B7D          ; branch if A >=
 00CB36  2               
 00CB36  2  20 D0 CA           JSR   LAB_CTNM          ; check if source is numeric, else do type mismatch
@@ -3881,7 +3884,7 @@ Current file: main.s
 00CB59  2  D0 D5              BNE   LAB_1B13          ; branch always
 00CB5B  2               
 00CB5B  2               LAB_1B3C:
-00CB5B  2  D9 FA E2           CMP   LAB_OPPT,Y        ;.compare with stacked function precedence
+00CB5B  2  D9 F8 E2           CMP   LAB_OPPT,Y        ;.compare with stacked function precedence
 00CB5E  2  B0 44              BCS   LAB_1B86          ; branch if A >=, pop FAC2 and return
 00CB60  2               
 00CB60  2  90 D7              BCC   LAB_1B1C          ; branch always
@@ -3889,9 +3892,9 @@ Current file: main.s
 00CB62  2               ;.get vector, execute function then continue evaluation
 00CB62  2               
 00CB62  2               LAB_1B43:
-00CB62  2  B9 FC E2           LDA   LAB_OPPT+2,Y      ; get function vector high byte
+00CB62  2  B9 FA E2           LDA   LAB_OPPT+2,Y      ; get function vector high byte
 00CB65  2  48                 PHA                     ; onto stack
-00CB66  2  B9 FB E2           LDA   LAB_OPPT+1,Y      ; get function vector low byte
+00CB66  2  B9 F9 E2           LDA   LAB_OPPT+1,Y      ; get function vector low byte
 00CB69  2  48                 PHA                     ; onto stack
 00CB6A  2                                             ; now push sign, round FAC1 and put on stack
 00CB6A  2               ; *** begin patch  2.22p5.3   potential return address -$100 (page not incremented) ***
@@ -3904,7 +3907,7 @@ Current file: main.s
 00CB6D  2                                             ; the function
 00CB6D  2  A5 9B              LDA   comp_f            ; get compare function flag
 00CB6F  2  48                 PHA                     ; push compare evaluation byte
-00CB70  2  B9 FA E2           LDA   LAB_OPPT,Y        ; get precedence byte
+00CB70  2  B9 F8 E2           LDA   LAB_OPPT,Y        ; get precedence byte
 00CB73  2  4C EB CA           JMP   LAB_1ACC          ; continue evaluating expression
 00CB76  2               
 00CB76  2               LAB_1B53:
@@ -4182,16 +4185,16 @@ Current file: main.s
 00CC58  2  0A                 ASL                     ; *2 (2 bytes per function address)
 00CC59  2  A8                 TAY                     ; copy to index
 00CC5A  2               
-00CC5A  2  B9 B5 E2           LDA   LAB_FTBM,Y        ; get function jump vector high byte
+00CC5A  2  B9 B3 E2           LDA   LAB_FTBM,Y        ; get function jump vector high byte
 00CC5D  2  48                 PHA                     ; push functions jump vector high byte
-00CC5E  2  B9 B4 E2           LDA   LAB_FTBL,Y        ; get function jump vector low byte
+00CC5E  2  B9 B2 E2           LDA   LAB_FTBL,Y        ; get function jump vector low byte
 00CC61  2  48                 PHA                     ; push functions jump vector low byte
 00CC62  2               
-00CC62  2  B9 6F E2           LDA   LAB_FTPM,Y        ; get function pre process vector high byte
+00CC62  2  B9 6D E2           LDA   LAB_FTPM,Y        ; get function pre process vector high byte
 00CC65  2  F0 05              BEQ   LAB_1C56          ; skip pre process if null vector
 00CC67  2               
 00CC67  2  48                 PHA                     ; push functions pre process vector high byte
-00CC68  2  B9 6E E2           LDA   LAB_FTPL,Y        ; get function pre process vector low byte
+00CC68  2  B9 6C E2           LDA   LAB_FTPL,Y        ; get function pre process vector low byte
 00CC6B  2  48                 PHA                     ; push functions pre process vector low byte
 00CC6C  2               
 00CC6C  2               LAB_1C56:
@@ -4633,7 +4636,7 @@ Current file: main.s
 00CE46  2               ; below)
 00CE46  2               
 00CE46  2                                             ; else return dummy null value
-00CE46  2  A9 F2              LDA   #<LAB_1D96        ; low byte point to $00,$00
+00CE46  2  A9 F0              LDA   #<LAB_1D96        ; low byte point to $00,$00
 00CE48  2                                             ; (uses part of misc constants table)
 00CE48  2  A0 E1              LDY   #>LAB_1D96        ; high byte point to $00,$00
 00CE4A  2  60                 RTS
@@ -4729,7 +4732,7 @@ Current file: main.s
 00CEB6  2  C9 90              CMP   #$90              ; compare with exponent = 2^16 (n>2^15)
 00CEB8  2  90 09              BCC   LAB_1E14          ; branch if n<2^16 (is ok)
 00CEBA  2               
-00CEBA  2  A9 F9              LDA   #<LAB_1DF7        ; set pointer low byte to -32768
+00CEBA  2  A9 F7              LDA   #<LAB_1DF7        ; set pointer low byte to -32768
 00CEBC  2  A0 E1              LDY   #>LAB_1DF7        ; set pointer high byte to -32768
 00CEBE  2  20 24 D9           JSR   LAB_27F8          ; compare FAC1 with (AY)
 00CEC1  2               LAB_1E12:
@@ -6297,7 +6300,7 @@ Current file: main.s
 00D5C7  2               ; add 0.5 to FAC1
 00D5C7  2               
 00D5C7  2               LAB_244E:
-00D5C7  2  A9 FA              LDA   #<LAB_2A96        ; set 0.5 pointer low byte
+00D5C7  2  A9 F8              LDA   #<LAB_2A96        ; set 0.5 pointer low byte
 00D5C9  2  A0 E1              LDY   #>LAB_2A96        ; set 0.5 pointer high byte
 00D5CB  2               
 00D5CB  2               ; add (AY) to FAC1
@@ -6602,24 +6605,24 @@ Current file: main.s
 00D716  2  48                 PHA                     ; save it
 00D717  2  A9 80              LDA   #$80              ; set exponent to zero
 00D719  2  85 AC              STA   FAC1_e            ; save FAC1 exponent
-00D71B  2  A9 7A              LDA   #<LAB_25AD        ; set 1/root2 pointer low byte
+00D71B  2  A9 78              LDA   #<LAB_25AD        ; set 1/root2 pointer low byte
 00D71D  2  A0 E1              LDY   #>LAB_25AD        ; set 1/root2 pointer high byte
 00D71F  2  20 CB D5           JSR   LAB_246C          ; add (AY) to FAC1 (1/root2)
-00D722  2  A9 7E              LDA   #<LAB_25B1        ; set root2 pointer low byte
+00D722  2  A9 7C              LDA   #<LAB_25B1        ; set root2 pointer low byte
 00D724  2  A0 E1              LDY   #>LAB_25B1        ; set root2 pointer high byte
 00D726  2  20 0E D8           JSR   LAB_26CA          ; convert AY and do (AY)/FAC1 (root2/(x+(1/root2)))
-00D729  2  A9 F1              LDA   #<LAB_259C        ; set 1 pointer low byte
+00D729  2  A9 EF              LDA   #<LAB_259C        ; set 1 pointer low byte
 00D72B  2  A0 E1              LDY   #>LAB_259C        ; set 1 pointer high byte
 00D72D  2  20 B0 D5           JSR   LAB_2455          ; subtract (AY) from FAC1 ((root2/(x+(1/root2)))-1)
-00D730  2  A9 6D              LDA   #<LAB_25A0        ; set pointer low byte to counter
+00D730  2  A9 6B              LDA   #<LAB_25A0        ; set pointer low byte to counter
 00D732  2  A0 E1              LDY   #>LAB_25A0        ; set pointer high byte to counter
 00D734  2  20 5E DC           JSR   LAB_2B6E          ; ^2 then series evaluation
-00D737  2  A9 82              LDA   #<LAB_25B5        ; set -0.5 pointer low byte
+00D737  2  A9 80              LDA   #<LAB_25B5        ; set -0.5 pointer low byte
 00D739  2  A0 E1              LDY   #>LAB_25B5        ; set -0.5 pointer high byte
 00D73B  2  20 CB D5           JSR   LAB_246C          ; add (AY) to FAC1
 00D73E  2  68                 PLA                     ; restore FAC1 exponent
 00D73F  2  20 52 DA           JSR   LAB_2912          ; evaluate new ASCII digit
-00D742  2  A9 86              LDA   #<LAB_25B9        ; set LOG(2) pointer low byte
+00D742  2  A9 84              LDA   #<LAB_25B9        ; set LOG(2) pointer low byte
 00D744  2  A0 E1              LDY   #>LAB_25B9        ; set LOG(2) pointer high byte
 00D746  2               
 00D746  2               ; do convert AY, FCA1*(AY)
@@ -6780,7 +6783,7 @@ Current file: main.s
 00D7FD  2               
 00D7FD  2               LAB_26B9:
 00D7FD  2  20 D7 D8           JSR   LAB_27AB          ; round and copy FAC1 to FAC2
-00D800  2  A9 02              LDA   #<LAB_26B5        ; set pointer to 10d low addr
+00D800  2  A9 00              LDA   #<LAB_26B5        ; set pointer to 10d low addr
 00D802  2  A0 E2              LDY   #>LAB_26B5        ; set pointer to 10d high addr
 00D804  2  A2 00              LDX   #$00              ; clear sign
 00D806  2               
@@ -7366,7 +7369,7 @@ Current file: main.s
 00DA84  2               ; print " in line [LINE #]"
 00DA84  2               
 00DA84  2               LAB_2953:
-00DA84  2  A9 FE              LDA   #<LAB_LMSG        ; point to " in line " message low byte
+00DA84  2  A9 FC              LDA   #<LAB_LMSG        ; point to " in line " message low byte
 00DA86  2  A0 E7              LDY   #>LAB_LMSG        ; point to " in line " message high byte
 00DA88  2  20 D4 C8           JSR   LAB_18C3          ; print null terminated string from memory
 00DA8B  2               
@@ -7418,14 +7421,14 @@ Current file: main.s
 00DAC1  2  B0 09              BCS   LAB_299A          ; branch if FAC1=>1
 00DAC3  2               
 00DAC3  2                                             ; FAC1<1
-00DAC3  2  A9 92              LDA   #<LAB_294F        ; set pointer low byte to 1,000,000
+00DAC3  2  A9 90              LDA   #<LAB_294F        ; set pointer low byte to 1,000,000
 00DAC5  2  A0 E1              LDY   #>LAB_294F        ; set pointer high byte to 1,000,000
 00DAC7  2  20 46 D7           JSR   LAB_25FB          ; do convert AY, FCA1*(AY)
 00DACA  2  A9 FA              LDA   #$FA              ; set number exponent count (-6)
 00DACC  2               LAB_299A:
 00DACC  2  85 A8              STA   numexp            ; save number exponent count
 00DACE  2               LAB_299C:
-00DACE  2  A9 8E              LDA   #<LAB_294B        ; set pointer low byte to 999999.4375 (max before sci note)
+00DACE  2  A9 8C              LDA   #<LAB_294B        ; set pointer low byte to 999999.4375 (max before sci note)
 00DAD0  2  A0 E1              LDY   #>LAB_294B        ; set pointer high byte to 999999.4375
 00DAD2  2  20 24 D9           JSR   LAB_27F8          ; compare FAC1 with (AY)
 00DAD5  2  F0 1E              BEQ   LAB_29C3          ; exit if FAC1 = (AY)
@@ -7434,7 +7437,7 @@ Current file: main.s
 00DAD9  2               
 00DAD9  2                                             ; FAC1 < (AY)
 00DAD9  2               LAB_29A7:
-00DAD9  2  A9 8A              LDA   #<LAB_2947        ; set pointer low byte to 99999.9375
+00DAD9  2  A9 88              LDA   #<LAB_2947        ; set pointer low byte to 99999.9375
 00DADB  2  A0 E1              LDY   #>LAB_2947        ; set pointer high byte to 99999.9375
 00DADD  2  20 24 D9           JSR   LAB_27F8          ; compare FAC1 with (AY)
 00DAE0  2  F0 02              BEQ   LAB_29B2          ; branch if FAC1 = (AY) (allow decimal places)
@@ -7501,13 +7504,13 @@ Current file: main.s
 00DB2D  2               LAB_29FB:
 00DB2D  2  A5 AF              LDA   FAC1_3            ; get FAC1 mantissa3
 00DB2F  2  18                 CLC                     ; clear carry for add
-00DB30  2  79 08 E2           ADC   LAB_2A9C,Y        ; add -ve LSB
+00DB30  2  79 06 E2           ADC   LAB_2A9C,Y        ; add -ve LSB
 00DB33  2  85 AF              STA   FAC1_3            ; save FAC1 mantissa3
 00DB35  2  A5 AE              LDA   FAC1_2            ; get FAC1 mantissa2
-00DB37  2  79 07 E2           ADC   LAB_2A9B,Y        ; add -ve NMSB
+00DB37  2  79 05 E2           ADC   LAB_2A9B,Y        ; add -ve NMSB
 00DB3A  2  85 AE              STA   FAC1_2            ; save FAC1 mantissa2
 00DB3C  2  A5 AD              LDA   FAC1_1            ; get FAC1 mantissa1
-00DB3E  2  79 06 E2           ADC   LAB_2A9A,Y        ; add -ve MSB
+00DB3E  2  79 04 E2           ADC   LAB_2A9A,Y        ; add -ve MSB
 00DB41  2  85 AD              STA   FAC1_1            ; save FAC1 mantissa1
 00DB43  2  E8                 INX                     ;
 00DB44  2  B0 04              BCS   LAB_2A18          ;
@@ -7673,7 +7676,7 @@ Current file: main.s
 00DC0C  2               ; perform EXP()   (x^e)
 00DC0C  2               
 00DC0C  2               LAB_EXP:
-00DC0C  2  A9 96              LDA   #<LAB_2AFA        ; set 1.443 pointer low byte
+00DC0C  2  A9 94              LDA   #<LAB_2AFA        ; set 1.443 pointer low byte
 00DC0E  2  A0 E1              LDY   #>LAB_2AFA        ; set 1.443 pointer high byte
 00DC10  2  20 46 D7           JSR   LAB_25FB          ; do convert AY, FCA1*(AY)
 00DC13  2  A5 B9              LDA   FAC1_r            ; get FAC1 rounding byte
@@ -7715,7 +7718,7 @@ Current file: main.s
 00DC47  2  85 B9              STA   FAC1_r            ; save as FAC1 rounding byte
 00DC49  2  20 B3 D5           JSR   LAB_SUBTRACT      ; perform subtraction, FAC2 from FAC1
 00DC4C  2  20 01 DC           JSR   LAB_GTHAN         ; do - FAC1
-00DC4F  2  A9 9A              LDA   #<LAB_2AFE        ; set counter pointer low byte
+00DC4F  2  A9 98              LDA   #<LAB_2AFE        ; set counter pointer low byte
 00DC51  2  A0 E1              LDY   #>LAB_2AFE        ; set counter pointer high byte
 00DC53  2  20 74 DC           JSR   LAB_2B84          ; go do series evaluation
 00DC56  2  A9 00              LDA   #$00              ; clear A
@@ -7832,7 +7835,7 @@ Current file: main.s
 00DCDE  2               ; perform COS()
 00DCDE  2               
 00DCDE  2               LAB_COS:
-00DCDE  2  A9 B7              LDA   #<LAB_2C78        ; set (pi/2) pointer low byte
+00DCDE  2  A9 B5              LDA   #<LAB_2C78        ; set (pi/2) pointer low byte
 00DCE0  2  A0 E1              LDY   #>LAB_2C78        ; set (pi/2) pointer high byte
 00DCE2  2  20 CB D5           JSR   LAB_246C          ; add (AY) to FAC1
 00DCE5  2               
@@ -7840,7 +7843,7 @@ Current file: main.s
 00DCE5  2               
 00DCE5  2               LAB_SIN:
 00DCE5  2  20 D7 D8           JSR   LAB_27AB          ; round and copy FAC1 to FAC2
-00DCE8  2  A9 CC              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
+00DCE8  2  A9 CA              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
 00DCEA  2  A0 E1              LDY   #>LAB_2C7C        ; set (2*pi) pointer high byte
 00DCEC  2  A6 B7              LDX   FAC2_s            ; get FAC2 sign (b7)
 00DCEE  2  20 06 D8           JSR   LAB_26C2          ; divide by (AY) (X=sign)
@@ -7849,7 +7852,7 @@ Current file: main.s
 00DCF7  2  A9 00              LDA   #$00              ; clear byte
 00DCF9  2  85 B8              STA   FAC_sc            ; clear sign compare (FAC1 EOR FAC2)
 00DCFB  2  20 B3 D5           JSR   LAB_SUBTRACT      ; perform subtraction, FAC2 from FAC1
-00DCFE  2  A9 FE              LDA   #<LAB_2C80        ; set 0.25 pointer low byte
+00DCFE  2  A9 FC              LDA   #<LAB_2C80        ; set 0.25 pointer low byte
 00DD00  2  A0 E1              LDY   #>LAB_2C80        ; set 0.25 pointer high byte
 00DD02  2  20 B0 D5           JSR   LAB_2455          ; perform subtraction, (AY) from FAC1
 00DD05  2  A5 B0              LDA   FAC1_s            ; get FAC1 sign (b7)
@@ -7867,7 +7870,7 @@ Current file: main.s
 00DD17  2               LAB_2C35:
 00DD17  2  20 01 DC           JSR   LAB_GTHAN         ; do - FAC1
 00DD1A  2               LAB_2C38:
-00DD1A  2  A9 FE              LDA   #<LAB_2C80        ; set 0.25 pointer low byte
+00DD1A  2  A9 FC              LDA   #<LAB_2C80        ; set 0.25 pointer low byte
 00DD1C  2  A0 E1              LDY   #>LAB_2C80        ; set 0.25 pointer high byte
 00DD1E  2  20 CB D5           JSR   LAB_246C          ; add (AY) to FAC1
 00DD21  2  68                 PLA                     ; restore FAC1 sign
@@ -7876,7 +7879,7 @@ Current file: main.s
 00DD24  2                                             ; else correct FAC1
 00DD24  2  20 01 DC           JSR   LAB_GTHAN         ; do - FAC1
 00DD27  2               LAB_2C45:
-00DD27  2  A9 BB              LDA   #<LAB_2C84        ; set pointer low byte to counter
+00DD27  2  A9 B9              LDA   #<LAB_2C84        ; set pointer low byte to counter
 00DD29  2  A0 E1              LDY   #>LAB_2C84        ; set pointer high byte to counter
 00DD2B  2  4C 5E DC           JMP   LAB_2B6E          ; ^2 then series evaluation and return
 00DD2E  2               
@@ -7926,18 +7929,18 @@ Current file: main.s
 00DD6B  2  C9 81              CMP   #$81              ; compare with 1
 00DD6D  2  90 07              BCC   LAB_2CAF          ; branch if FAC1<1
 00DD6F  2               
-00DD6F  2  A9 F1              LDA   #<LAB_259C        ; set 1 pointer low byte
+00DD6F  2  A9 EF              LDA   #<LAB_259C        ; set 1 pointer low byte
 00DD71  2  A0 E1              LDY   #>LAB_259C        ; set 1 pointer high byte
 00DD73  2  20 0E D8           JSR   LAB_26CA          ; convert AY and do (AY)/FAC1
 00DD76  2               LAB_2CAF:
-00DD76  2  A9 D0              LDA   #<LAB_2CC9        ; set pointer low byte to counter
+00DD76  2  A9 CE              LDA   #<LAB_2CC9        ; set pointer low byte to counter
 00DD78  2  A0 E1              LDY   #>LAB_2CC9        ; set pointer high byte to counter
 00DD7A  2  20 5E DC           JSR   LAB_2B6E          ; ^2 then series evaluation
 00DD7D  2  68                 PLA                     ; restore old FAC1 exponent
 00DD7E  2  C9 81              CMP   #$81              ; compare with 1
 00DD80  2  90 07              BCC   LAB_2CC2          ; branch if FAC1<1
 00DD82  2               
-00DD82  2  A9 B7              LDA   #<LAB_2C78        ; set (pi/2) pointer low byte
+00DD82  2  A9 B5              LDA   #<LAB_2C78        ; set (pi/2) pointer low byte
 00DD84  2  A0 E1              LDY   #>LAB_2C78        ; set (pi/2) pointer high byte
 00DD86  2  20 B0 D5           JSR   LAB_2455          ; perform subtraction, (AY) from FAC1
 00DD89  2               LAB_2CC2:
@@ -8683,7 +8686,7 @@ Current file: main.s
 00E0E8  2               ; perform PI
 00E0E8  2               
 00E0E8  2               LAB_PI:
-00E0E8  2  A9 CC              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
+00E0E8  2  A9 CA              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
 00E0EA  2  A0 E1              LDY   #>LAB_2C7C        ; set (2*pi) pointer high byte
 00E0EC  2  20 8A D8           JSR   LAB_UFAC          ; unpack memory (AY) into FAC1
 00E0EF  2  C6 AC              DEC   FAC1_e            ; make result = PI
@@ -8692,7 +8695,7 @@ Current file: main.s
 00E0F2  2               ; perform TWOPI
 00E0F2  2               
 00E0F2  2               LAB_TWOPI:
-00E0F2  2  A9 CC              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
+00E0F2  2  A9 CA              LDA   #<LAB_2C7C        ; set (2*pi) pointer low byte
 00E0F4  2  A0 E1              LDY   #>LAB_2C7C        ; set (2*pi) pointer high byte
 00E0F6  2  4C 8A D8           JMP   LAB_UFAC          ; unpack memory (AY) into FAC1 and return
 00E0F9  2               
@@ -8795,1275 +8798,1275 @@ Current file: main.s
 00E148  2  20 42 79 74        .byte " Bytes free",$0D,$0A,$0A
 00E14C  2  65 73 20 66  
 00E150  2  72 65 65 0D  
-00E156  2  45 6E 68 61        .byte "Enhanced BASIC 2.22p5",$0A,$00
+00E156  2  45 6E 68 61        .byte "Enhanced BASIC 2.23",$0A,$00
 00E15A  2  6E 63 65 64  
 00E15E  2  20 42 41 53  
-00E16D  2               
-00E16D  2               ; numeric constants and series
-00E16D  2               
-00E16D  2                                             ; constants and series for LOG(n)
-00E16D  2               LAB_25A0:
-00E16D  2  02                 .byte $02               ; counter
-00E16E  2  80 19 56 62        .byte $80,$19,$56,$62   ; 0.59898
-00E172  2  80 76 22 F3        .byte $80,$76,$22,$F3   ; 0.96147
-00E176  2               ;##   .byte $80,$76,$22,$F1   ; 0.96147
-00E176  2  82 38 AA 40        .byte $82,$38,$AA,$40   ; 2.88539
-00E17A  2               ;##   .byte $82,$38,$AA,$45   ; 2.88539
-00E17A  2               
-00E17A  2               LAB_25AD:
-00E17A  2  80 35 04 F3        .byte $80,$35,$04,$F3   ; 0.70711   1/root 2
-00E17E  2               LAB_25B1:
-00E17E  2  81 35 04 F3        .byte $81,$35,$04,$F3   ; 1.41421   root 2
-00E182  2               LAB_25B5:
-00E182  2  80 80 00 00        .byte $80,$80,$00,$00   ; -0.5
-00E186  2               LAB_25B9:
-00E186  2  80 31 72 18        .byte $80,$31,$72,$18   ; 0.69315   LOG(2)
-00E18A  2               
-00E18A  2                                             ; numeric PRINT constants
-00E18A  2               LAB_2947:
-00E18A  2  91 43 4F F8        .byte $91,$43,$4F,$F8   ; 99999.9375 (max value with at least one decimal)
-00E18E  2               LAB_294B:
-00E18E  2  94 74 23 F7        .byte $94,$74,$23,$F7   ; 999999.4375 (max value before scientific notation)
-00E192  2               LAB_294F:
-00E192  2  94 74 24 00        .byte $94,$74,$24,$00   ; 1000000
-00E196  2               
-00E196  2                                             ; EXP(n) constants and series
-00E196  2               LAB_2AFA:
-00E196  2  81 38 AA 3B        .byte $81,$38,$AA,$3B   ; 1.4427    (1/LOG base 2 e)
-00E19A  2               LAB_2AFE:
-00E19A  2  06                 .byte $06               ; counter
-00E19B  2  74 63 90 8C        .byte $74,$63,$90,$8C   ; 2.17023e-4
-00E19F  2  77 23 0C AB        .byte $77,$23,$0C,$AB   ; 0.00124
-00E1A3  2  7A 1E 94 00        .byte $7A,$1E,$94,$00   ; 0.00968
-00E1A7  2  7C 63 42 80        .byte $7C,$63,$42,$80   ; 0.05548
-00E1AB  2  7E 75 FE D0        .byte $7E,$75,$FE,$D0   ; 0.24023
-00E1AF  2  80 31 72 15        .byte $80,$31,$72,$15   ; 0.69315
-00E1B3  2  81 00 00 00        .byte $81,$00,$00,$00   ; 1.00000
-00E1B7  2               
-00E1B7  2               ;##   .byte $07               ; counter
-00E1B7  2               ;##   .byte $74,$94,$2E,$40   ; -1/7! (-1/5040)
-00E1B7  2               ;##   .byte $77,$2E,$4F,$70   ;  1/6! ( 1/720)
-00E1B7  2               ;##   .byte $7A,$88,$02,$6E   ; -1/5! (-1/120)
-00E1B7  2               ;##   .byte $7C,$2A,$A0,$E6   ;  1/4! ( 1/24)
-00E1B7  2               ;##   .byte $7E,$AA,$AA,$50   ; -1/3! (-1/6)
-00E1B7  2               ;##   .byte $7F,$7F,$FF,$FF   ;  1/2! ( 1/2)
-00E1B7  2               ;##   .byte $81,$80,$00,$00   ; -1/1! (-1/1)
-00E1B7  2               ;##   .byte $81,$00,$00,$00   ;  1/0! ( 1/1)
-00E1B7  2               
-00E1B7  2                                             ; trigonometric constants and series
-00E1B7  2               LAB_2C78:
-00E1B7  2  81 49 0F DB        .byte $81,$49,$0F,$DB   ; 1.570796371 (pi/2) as floating #
-00E1BB  2               LAB_2C84:
-00E1BB  2  04                 .byte $04               ; counter
-00E1BC  2  86 1E D7 FB        .byte $86,$1E,$D7,$FB   ; 39.7109
-00E1C0  2               ;##   .byte $86,$1E,$D7,$BA   ; 39.7109
-00E1C0  2  87 99 26 65        .byte $87,$99,$26,$65   ;-76.575
-00E1C4  2               ;##   .byte $87,$99,$26,$64   ;-76.575
-00E1C4  2  87 23 34 58        .byte $87,$23,$34,$58   ; 81.6022
-00E1C8  2  86 A5 5D E1        .byte $86,$A5,$5D,$E1   ;-41.3417
-00E1CC  2               ;##   .byte $86,$A5,$5D,$E0   ;-41.3417
-00E1CC  2               LAB_2C7C:
-00E1CC  2  83 49 0F DB        .byte $83,$49,$0F,$DB   ; 6.28319 (2*pi) as floating #
-00E1D0  2               ;##   .byte $83,$49,$0F,$DA   ; 6.28319 (2*pi) as floating #
-00E1D0  2               
-00E1D0  2               LAB_2CC9:
-00E1D0  2  08                 .byte $08               ; counter
-00E1D1  2  78 3A C5 37        .byte $78,$3A,$C5,$37   ; 0.00285
-00E1D5  2  7B 83 A2 5C        .byte $7B,$83,$A2,$5C   ;-0.0160686
-00E1D9  2  7C 2E DD 4D        .byte $7C,$2E,$DD,$4D   ; 0.0426915
-00E1DD  2  7D 99 B0 1E        .byte $7D,$99,$B0,$1E   ;-0.0750429
-00E1E1  2  7D 59 ED 24        .byte $7D,$59,$ED,$24   ; 0.106409
-00E1E5  2  7E 91 72 00        .byte $7E,$91,$72,$00   ;-0.142036
-00E1E9  2  7E 4C B9 73        .byte $7E,$4C,$B9,$73   ; 0.199926
-00E1ED  2  7F AA AA 53        .byte $7F,$AA,$AA,$53   ;-0.333331
-00E1F1  2               
-00E1F1  2               ;##   .byte $08               ; counter
-00E1F1  2               ;##   .byte $78,$3B,$D7,$4A   ; 1/17
-00E1F1  2               ;##   .byte $7B,$84,$6E,$02   ;-1/15
-00E1F1  2               ;##   .byte $7C,$2F,$C1,$FE   ; 1/13
-00E1F1  2               ;##   .byte $7D,$9A,$31,$74   ;-1/11
-00E1F1  2               ;##   .byte $7D,$5A,$3D,$84   ; 1/9
-00E1F1  2               ;##   .byte $7E,$91,$7F,$C8   ;-1/7
-00E1F1  2               ;##   .byte $7E,$4C,$BB,$E4   ; 1/5
-00E1F1  2               ;##   .byte $7F,$AA,$AA,$6C   ;-1/3
-00E1F1  2               
-00E1F1  2               LAB_1D96    = *+1             ; $00,$00 used for undefined variables
-00E1F1  2               LAB_259C:
-00E1F1  2  81 00 00 00        .byte $81,$00,$00,$00   ; 1.000000, used for INC
-00E1F5  2               LAB_2AFD:
-00E1F5  2  81 80 00 00        .byte $81,$80,$00,$00   ; -1.00000, used for DEC. must be on the same page as +1.00
-00E1F9  2               
-00E1F9  2                                             ; misc constants
-00E1F9  2               LAB_1DF7:
-00E1F9  2  90                 .byte $90               ;-32768 (uses first three bytes from 0.5)
-00E1FA  2               LAB_2A96:
-00E1FA  2  80 00 00 00        .byte $80,$00,$00,$00   ; 0.5
-00E1FE  2               LAB_2C80:
-00E1FE  2  7F 00 00 00        .byte $7F,$00,$00,$00   ; 0.25
-00E202  2               LAB_26B5:
-00E202  2  84 20 00 00        .byte $84,$20,$00,$00   ; 10.0000 divide by 10 constant
-00E206  2               
-00E206  2               ; This table is used in converting numbers to ASCII.
-00E206  2               
-00E206  2               LAB_2A9A:
-00E206  2               LAB_2A9B = LAB_2A9A+1
-00E206  2               LAB_2A9C = LAB_2A9B+1
-00E206  2  FE 79 60           .byte $FE,$79,$60       ; -100000
-00E209  2  00 27 10           .byte $00,$27,$10       ; 10000
-00E20C  2  FF FC 18           .byte $FF,$FC,$18       ; -1000
-00E20F  2  00 00 64           .byte $00,$00,$64       ; 100
-00E212  2  FF FF F6           .byte $FF,$FF,$F6       ; -10
-00E215  2  00 00 01           .byte $00,$00,$01       ; 1
-00E218  2               
-00E218  2               LAB_CTBL:
-00E218  2  1C C5              .word LAB_END-1         ; END
-00E21A  2  58 C4              .word LAB_FOR-1         ; FOR
-00E21C  2  64 CA              .word LAB_NEXT-1        ; NEXT
-00E21E  2  89 C6              .word LAB_DATA-1        ; DATA
-00E220  2  47 C9              .word LAB_INPUT-1       ; INPUT
-00E222  2  6C CD              .word LAB_DIM-1         ; DIM
-00E224  2  66 C9              .word LAB_READ-1        ; READ
-00E226  2  B4 C7              .word LAB_LET-1         ; LET
-00E228  2  86 C7              .word LAB_DEC-1         ; DEC             new command
-00E22A  2  E8 C5              .word LAB_GOTO-1        ; GOTO
-00E22C  2  A7 C5              .word LAB_RUN-1         ; RUN
-00E22E  2  B7 C6              .word LAB_IF-1          ; IF
-00E230  2  3D C5              .word LAB_RESTORE-1     ; RESTORE         modified command
-00E232  2  CB C5              .word LAB_GOSUB-1       ; GOSUB
-00E234  2  73 DF              .word LAB_RETIRQ-1      ; RETIRQ          new command
-00E236  2  7F DF              .word LAB_RETNMI-1      ; RETNMI          new command
-00E238  2  74 C6              .word LAB_RETURN-1      ; RETURN
-00E23A  2  1E C7              .word LAB_REM-1         ; REM
-00E23C  2  1A C5              .word LAB_STOP-1        ; STOP
-00E23E  2  27 C7              .word LAB_ON-1          ; ON              modified command
-00E240  2  7B C5              .word LAB_NULL-1        ; NULL            modified command
-00E242  2  89 C7              .word LAB_INC-1         ; INC             new command
-00E244  2  95 D5              .word LAB_WAIT-1        ; WAIT
-00E246  2  FE E0              .word V_LOAD-1          ; LOAD
-00E248  2  01 E1              .word V_SAVE-1          ; SAVE
-00E24A  2  81 D0              .word LAB_DEF-1         ; DEF
-00E24C  2  1A D5              .word LAB_POKE-1        ; POKE
-00E24E  2  36 D5              .word LAB_DOKE-1        ; DOKE            new command
-00E250  2  83 D5              .word LAB_CALL-1        ; CALL            new command
-00E252  2  B1 C5              .word LAB_DO-1          ; DO              new command
-00E254  2  1A C6              .word LAB_LOOP-1        ; LOOP            new command
-00E256  2  55 C8              .word LAB_PRINT-1       ; PRINT
-00E258  2  81 C5              .word LAB_CONT-1        ; CONT
-00E25A  2  A3 C3              .word LAB_LIST-1        ; LIST
-00E25C  2  A0 C3              .word LAB_CLEAR-1       ; CLEAR
-00E25E  2  50 C3              .word LAB_NEW-1         ; NEW
-00E260  2  F4 DF              .word LAB_WDTH-1        ; WIDTH           new command
-00E262  2  24 C8              .word LAB_GET-1         ; GET             new command
-00E264  2  5B D5              .word LAB_SWAP-1        ; SWAP            new command
-00E266  2  8E DD              .word LAB_BITSET-1      ; BITSET          new command
-00E268  2  A2 DD              .word LAB_BITCLR-1      ; BITCLR          new command
-00E26A  2  22 DF              .word LAB_IRQ-1         ; IRQ             new command
-00E26C  2  25 DF              .word LAB_NMI-1         ; NMI             new command
-00E26E  2               
-00E26E  2               ; function pre process routine table
-00E26E  2               
-00E26E  2               LAB_FTPL:
-00E26E  2               LAB_FTPM    = LAB_FTPL+$01
-00E26E  2  72 CC              .word LAB_PPFN-1        ; SGN(n)    process numeric expression in ()
-00E270  2  72 CC              .word LAB_PPFN-1        ; INT(n)          "
-00E272  2  72 CC              .word LAB_PPFN-1        ; ABS(n)          "
-00E274  2  E8 CA              .word LAB_EVEZ-1        ; USR(x)    process any expression
-00E276  2  EB CB              .word LAB_1BF7-1        ; FRE(x)          "
-00E278  2  EB CB              .word LAB_1BF7-1        ; POS(x)          "
-00E27A  2  72 CC              .word LAB_PPFN-1        ; SQR(n)    process numeric expression in ()
-00E27C  2  72 CC              .word LAB_PPFN-1        ; RND(n)          "
-00E27E  2  72 CC              .word LAB_PPFN-1        ; LOG(n)          "
-00E280  2  72 CC              .word LAB_PPFN-1        ; EXP(n)          "
-00E282  2  72 CC              .word LAB_PPFN-1        ; COS(n)          "
-00E284  2  72 CC              .word LAB_PPFN-1        ; SIN(n)          "
-00E286  2  72 CC              .word LAB_PPFN-1        ; TAN(n)          "
-00E288  2  72 CC              .word LAB_PPFN-1        ; ATN(n)          "
-00E28A  2  72 CC              .word LAB_PPFN-1        ; PEEK(n)         "
-00E28C  2  72 CC              .word LAB_PPFN-1        ; DEEK(n)         "
-00E28E  2  00 00              .word $0000             ; SADD()    none
-00E290  2  6C CC              .word LAB_PPFS-1        ; LEN($)    process string expression in ()
-00E292  2  72 CC              .word LAB_PPFN-1        ; STR$(n)   process numeric expression in ()
-00E294  2  6C CC              .word LAB_PPFS-1        ; VAL($)    process string expression in ()
-00E296  2  6C CC              .word LAB_PPFS-1        ; ASC($)          "
-00E298  2  6C CC              .word LAB_PPFS-1        ; UCASE$($)       "
-00E29A  2  6C CC              .word LAB_PPFS-1        ; LCASE$($)       "
-00E29C  2  72 CC              .word LAB_PPFN-1        ; CHR$(n)   process numeric expression in ()
-00E29E  2  99 CC              .word LAB_BHSS-1        ; HEX$(n)         "
-00E2A0  2  99 CC              .word LAB_BHSS-1        ; BIN$(n)         "
-00E2A2  2  00 00              .word $0000             ; BITTST()  none
-00E2A4  2  8B DF              .word LAB_MMPP-1        ; MAX()     process numeric expression
-00E2A6  2  8B DF              .word LAB_MMPP-1        ; MIN()           "
-00E2A8  2  78 CC              .word LAB_PPBI-1        ; PI        advance pointer
-00E2AA  2  78 CC              .word LAB_PPBI-1        ; TWOPI           "
-00E2AC  2  00 00              .word $0000             ; VARPTR()  none
-00E2AE  2  7D CC              .word LAB_LRMS-1        ; LEFT$()   process string expression
-00E2B0  2  7D CC              .word LAB_LRMS-1        ; RIGHT$()        "
-00E2B2  2  7D CC              .word LAB_LRMS-1        ; MID$()          "
-00E2B4  2               
-00E2B4  2               ; action addresses for functions
-00E2B4  2               
-00E2B4  2               LAB_FTBL:
-00E2B4  2               LAB_FTBM    = LAB_FTBL+$01
-00E2B4  2  03 D9              .word LAB_SGN-1         ; SGN()
-00E2B6  2  8D D9              .word LAB_INT-1         ; INT()
-00E2B8  2  20 D9              .word LAB_ABS-1         ; ABS()
-00E2BA  2  59 DD              .word LAB_USR-1         ; USR()
-00E2BC  2  52 D0              .word LAB_FRE-1         ; FRE()
-00E2BE  2  71 D0              .word LAB_POS-1         ; POS()
-00E2C0  2  4A E0              .word LAB_SQR-1         ; SQR()
-00E2C2  2  A9 DC              .word LAB_RND-1         ; RND()           modified function
-00E2C4  2  07 D7              .word LAB_LOG-1         ; LOG()
-00E2C6  2  0B DC              .word LAB_EXP-1         ; EXP()
-00E2C8  2  DD DC              .word LAB_COS-1         ; COS()
-00E2CA  2  E4 DC              .word LAB_SIN-1         ; SIN()
-00E2CC  2  2D DD              .word LAB_TAN-1         ; TAN()
-00E2CE  2  5F DD              .word LAB_ATN-1         ; ATN()
-00E2D0  2  0F D5              .word LAB_PEEK-1        ; PEEK()
-00E2D2  2  23 D5              .word LAB_DEEK-1        ; DEEK()          new function
-00E2D4  2  68 D4              .word LAB_SADD-1        ; SADD()          new function
-00E2D6  2  81 D4              .word LAB_LENS-1        ; LEN()
-00E2D8  2  33 D1              .word LAB_STRS-1        ; STR$()
-00E2DA  2  AE D4              .word LAB_VAL-1         ; VAL()
-00E2DC  2  8C D4              .word LAB_ASC-1         ; ASC()
-00E2DE  2  46 D4              .word LAB_UCASE-1       ; UCASE$()        new function
-00E2E0  2  25 D4              .word LAB_LCASE-1       ; LCASE$()        new function
-00E2E2  2  97 D3              .word LAB_CHRS-1        ; CHR$()
-00E2E4  2  2F DE              .word LAB_HEXS-1        ; HEX$()          new function
-00E2E6  2  E0 DD              .word LAB_BINS-1        ; BIN$()          new function
-00E2E8  2  B8 DD              .word LAB_BTST-1        ; BITTST()        new function
-00E2EA  2  91 DF              .word LAB_MAX-1         ; MAX()           new function
-00E2EC  2  A1 DF              .word LAB_MIN-1         ; MIN()           new function
-00E2EE  2  E7 E0              .word LAB_PI-1          ; PI              new function
-00E2F0  2  F1 E0              .word LAB_TWOPI-1       ; TWOPI           new function
-00E2F2  2  D7 E0              .word LAB_VARPTR-1      ; VARPTR()        new function
-00E2F4  2  A9 D3              .word LAB_LEFT-1        ; LEFT$()
-00E2F6  2  B2 D3              .word LAB_RIGHT-1       ; RIGHT$()
-00E2F8  2  E1 D3              .word LAB_MIDS-1        ; MID$()
-00E2FA  2               
-00E2FA  2               ; hierarchy and action addresses for operator
-00E2FA  2               
-00E2FA  2               LAB_OPPT:
-00E2FA  2  79                 .byte $79               ; +
-00E2FB  2  CD D5              .word LAB_ADD-1
-00E2FD  2  79                 .byte $79               ; -
-00E2FE  2  B2 D5              .word LAB_SUBTRACT-1
-00E300  2  7B                 .byte $7B               ; *
-00E301  2  48 D7              .word LAB_MULTIPLY-1
-00E303  2  7B                 .byte $7B               ; /
-00E304  2  10 D8              .word LAB_DIVIDE-1
-00E306  2  7F                 .byte $7F               ; ^
-00E307  2  C7 DB              .word LAB_POWER-1
-00E309  2  50                 .byte $50               ; AND
-00E30A  2  E2 CC              .word LAB_AND-1
-00E30C  2  46                 .byte $46               ; EOR             new operator
-00E30D  2  C8 CC              .word LAB_EOR-1
-00E30F  2  46                 .byte $46               ; OR
-00E310  2  D5 CC              .word LAB_OR-1
-00E312  2  56                 .byte $56               ; >>              new operator
-00E313  2  8E CD              .word LAB_RSHIFT-1
-00E315  2  56                 .byte $56               ; <<              new operator
-00E316  2  76 CD              .word LAB_LSHIFT-1
-00E318  2  7D                 .byte $7D               ; >
-00E319  2  00 DC              .word LAB_GTHAN-1
-00E31B  2  5A                 .byte $5A               ; =
-00E31C  2  16 CC              .word LAB_EQUAL-1
-00E31E  2  64                 .byte $64               ; <
-00E31F  2  03 CD              .word LAB_LTHAN-1
-00E321  2               
-00E321  2               ; keywords start with ..
-00E321  2               ; this is the first character table and must be in alphabetic order
-00E321  2               
-00E321  2               TAB_1STC:
-00E321  2  2A                 .byte "*"
-00E322  2  2B                 .byte "+"
-00E323  2  2D                 .byte "-"
-00E324  2  2F                 .byte "/"
-00E325  2  3C                 .byte "<"
-00E326  2  3D                 .byte "="
-00E327  2  3E                 .byte ">"
-00E328  2  3F                 .byte "?"
-00E329  2  41                 .byte "A"
-00E32A  2  42                 .byte "B"
-00E32B  2  43                 .byte "C"
-00E32C  2  44                 .byte "D"
-00E32D  2  45                 .byte "E"
-00E32E  2  46                 .byte "F"
-00E32F  2  47                 .byte "G"
-00E330  2  48                 .byte "H"
-00E331  2  49                 .byte "I"
-00E332  2  4C                 .byte "L"
-00E333  2  4D                 .byte "M"
-00E334  2  4E                 .byte "N"
-00E335  2  4F                 .byte "O"
-00E336  2  50                 .byte "P"
-00E337  2  52                 .byte "R"
-00E338  2  53                 .byte "S"
-00E339  2  54                 .byte "T"
-00E33A  2  55                 .byte "U"
-00E33B  2  56                 .byte "V"
-00E33C  2  57                 .byte "W"
-00E33D  2  5E                 .byte "^"
-00E33E  2  00                 .byte $00               ; table terminator
-00E33F  2               
-00E33F  2               ; pointers to keyword tables
-00E33F  2               
-00E33F  2               TAB_CHRT:
-00E33F  2  79 E3              .word TAB_STAR          ; table for "*"
-00E341  2  7B E3              .word TAB_PLUS          ; table for "+"
-00E343  2  7D E3              .word TAB_MNUS          ; table for "-"
-00E345  2  7F E3              .word TAB_SLAS          ; table for "/"
-00E347  2  81 E3              .word TAB_LESS          ; table for "<"
-00E349  2  85 E3              .word TAB_EQUL          ; table for "="
-00E34B  2  87 E3              .word TAB_MORE          ; table for ">"
-00E34D  2  8B E3              .word TAB_QEST          ; table for "?"
-00E34F  2  8D E3              .word TAB_ASCA          ; table for "A"
-00E351  2  9D E3              .word TAB_ASCB          ; table for "B"
-00E353  2  B6 E3              .word TAB_ASCC          ; table for "C"
-00E355  2  CD E3              .word TAB_ASCD          ; table for "D"
-00E357  2  E6 E3              .word TAB_ASCE          ; table for "E"
-00E359  2  F5 E3              .word TAB_ASCF          ; table for "F"
-00E35B  2  FF E3              .word TAB_ASCG          ; table for "G"
-00E35D  2  0C E4              .word TAB_ASCH          ; table for "H"
-00E35F  2  12 E4              .word TAB_ASCI          ; table for "I"
-00E361  2  24 E4              .word TAB_ASCL          ; table for "L"
-00E363  2  49 E4              .word TAB_ASCM          ; table for "M"
-00E365  2  57 E4              .word TAB_ASCN          ; table for "N"
-00E367  2  69 E4              .word TAB_ASCO          ; table for "O"
-00E369  2  71 E4              .word TAB_ASCP          ; table for "P"
-00E36B  2  86 E4              .word TAB_ASCR          ; table for "R"
-00E36D  2  B5 E4              .word TAB_ASCS          ; table for "S"
-00E36F  2  E0 E4              .word TAB_ASCT          ; table for "T"
-00E371  2  F4 E4              .word TAB_ASCU          ; table for "U"
-00E373  2  05 E5              .word TAB_ASCV          ; table for "V"
-00E375  2  11 E5              .word TAB_ASCW          ; table for "W"
-00E377  2  20 E5              .word TAB_POWR          ; table for "^"
-00E379  2               
-00E379  2               ; tables for each start character, note if a longer keyword with the same start
-00E379  2               ; letters as a shorter one exists then it must come first, else the list is in
-00E379  2               ; alphabetical order as follows ..
-00E379  2               
-00E379  2               ; [keyword,token
-00E379  2               ; [keyword,token]]
-00E379  2               ; end marker (#$00)
-00E379  2               
-00E379  2               TAB_STAR:
-00E379  2  B8 00              .byte TK_MUL,$00        ; *
-00E37B  2               TAB_PLUS:
-00E37B  2  B6 00              .byte TK_PLUS,$00       ; +
-00E37D  2               TAB_MNUS:
-00E37D  2  B7 00              .byte TK_MINUS,$00      ; -
-00E37F  2               TAB_SLAS:
-00E37F  2  B9 00              .byte TK_DIV,$00        ; /
-00E381  2               TAB_LESS:
-00E381  2               LBB_LSHIFT:
-00E381  2  3C BF              .byte "<",TK_LSHIFT     ; <<  note - "<<" must come before "<"
-00E383  2  C2                 .byte TK_LT             ; <
-00E384  2  00                 .byte $00
-00E385  2               TAB_EQUL:
-00E385  2  C1 00              .byte TK_EQUAL,$00      ; =
-00E387  2               TAB_MORE:
-00E387  2               LBB_RSHIFT:
-00E387  2  3E BE              .byte ">",TK_RSHIFT     ; >>  note - ">>" must come before ">"
-00E389  2  C0                 .byte TK_GT             ; >
-00E38A  2  00                 .byte $00
-00E38B  2               TAB_QEST:
-00E38B  2  9F 00              .byte TK_PRINT,$00      ; ?
-00E38D  2               TAB_ASCA:
-00E38D  2               LBB_ABS:
-00E38D  2  42 53 28 C5        .byte "BS(",TK_ABS      ; ABS(
-00E391  2               LBB_AND:
-00E391  2  4E 44 BB           .byte "ND",TK_AND       ; AND
-00E394  2               LBB_ASC:
-00E394  2  53 43 28 D7        .byte "SC(",TK_ASC      ; ASC(
-00E398  2               LBB_ATN:
-00E398  2  54 4E 28 D0        .byte "TN(",TK_ATN      ; ATN(
-00E39C  2  00                 .byte $00
-00E39D  2               TAB_ASCB:
-00E39D  2               LBB_BINS:
-00E39D  2  49 4E 24 28        .byte "IN$(",TK_BINS    ; BIN$(
-00E3A1  2  DC           
-00E3A2  2               LBB_BITCLR:
-00E3A2  2  49 54 43 4C        .byte "ITCLR",TK_BITCLR ; BITCLR
-00E3A6  2  52 A8        
-00E3A8  2               LBB_BITSET:
-00E3A8  2  49 54 53 45        .byte "ITSET",TK_BITSET ; BITSET
-00E3AC  2  54 A7        
-00E3AE  2               LBB_BITTST:
-00E3AE  2  49 54 54 53        .byte "ITTST(",TK_BITTST
-00E3B2  2  54 28 DD     
-00E3B5  2                                             ; BITTST(
-00E3B5  2  00                 .byte $00
-00E3B6  2               TAB_ASCC:
-00E3B6  2               LBB_CALL:
-00E3B6  2  41 4C 4C 9C        .byte "ALL",TK_CALL     ; CALL
-00E3BA  2               LBB_CHRS:
-00E3BA  2  48 52 24 28        .byte "HR$(",TK_CHRS    ; CHR$(
-00E3BE  2  DA           
-00E3BF  2               LBB_CLEAR:
-00E3BF  2  4C 45 41 52        .byte "LEAR",TK_CLEAR   ; CLEAR
-00E3C3  2  A2           
-00E3C4  2               LBB_CONT:
-00E3C4  2  4F 4E 54 A0        .byte "ONT",TK_CONT     ; CONT
-00E3C8  2               LBB_COS:
-00E3C8  2  4F 53 28 CD        .byte "OS(",TK_COS      ; COS(
-00E3CC  2  00                 .byte $00
-00E3CD  2               TAB_ASCD:
-00E3CD  2               LBB_DATA:
-00E3CD  2  41 54 41 83        .byte "ATA",TK_DATA     ; DATA
-00E3D1  2               LBB_DEC:
-00E3D1  2  45 43 88           .byte "EC",TK_DEC       ; DEC
-00E3D4  2               LBB_DEEK:
-00E3D4  2  45 45 4B 28        .byte "EEK(",TK_DEEK    ; DEEK(
-00E3D8  2  D2           
-00E3D9  2               LBB_DEF:
-00E3D9  2  45 46 99           .byte "EF",TK_DEF       ; DEF
-00E3DC  2               LBB_DIM:
-00E3DC  2  49 4D 85           .byte "IM",TK_DIM       ; DIM
-00E3DF  2               LBB_DOKE:
-00E3DF  2  4F 4B 45 9B        .byte "OKE",TK_DOKE     ; DOKE note - "DOKE" must come before "DO"
-00E3E3  2               LBB_DO:
-00E3E3  2  4F 9D              .byte "O",TK_DO         ; DO
-00E3E5  2  00                 .byte $00
-00E3E6  2               TAB_ASCE:
-00E3E6  2               LBB_ELSE:
-00E3E6  2  4C 53 45 AC        .byte "LSE",TK_ELSE     ; ELSE
-00E3EA  2               LBB_END:
-00E3EA  2  4E 44 80           .byte "ND",TK_END       ; END
-00E3ED  2               LBB_EOR:
-00E3ED  2  4F 52 BC           .byte "OR",TK_EOR       ; EOR
-00E3F0  2               LBB_EXP:
-00E3F0  2  58 50 28 CC        .byte "XP(",TK_EXP      ; EXP(
-00E3F4  2  00                 .byte $00
-00E3F5  2               TAB_ASCF:
-00E3F5  2               LBB_FN:
-00E3F5  2  4E AE              .byte "N",TK_FN         ; FN
-00E3F7  2               LBB_FOR:
-00E3F7  2  4F 52 81           .byte "OR",TK_FOR       ; FOR
-00E3FA  2               LBB_FRE:
-00E3FA  2  52 45 28 C7        .byte "RE(",TK_FRE      ; FRE(
-00E3FE  2  00                 .byte $00
-00E3FF  2               TAB_ASCG:
-00E3FF  2               LBB_GET:
-00E3FF  2  45 54 A5           .byte "ET",TK_GET       ; GET
-00E402  2               LBB_GOSUB:
-00E402  2  4F 53 55 42        .byte "OSUB",TK_GOSUB   ; GOSUB
-00E406  2  8D           
-00E407  2               LBB_GOTO:
-00E407  2  4F 54 4F 89        .byte "OTO",TK_GOTO     ; GOTO
-00E40B  2  00                 .byte $00
-00E40C  2               TAB_ASCH:
-00E40C  2               LBB_HEXS:
-00E40C  2  45 58 24 28        .byte "EX$(",TK_HEXS    ; HEX$(
-00E410  2  DB           
-00E411  2  00                 .byte $00
-00E412  2               TAB_ASCI:
-00E412  2               LBB_IF:
-00E412  2  46 8B              .byte "F",TK_IF         ; IF
-00E414  2               LBB_INC:
-00E414  2  4E 43 95           .byte "NC",TK_INC       ; INC
-00E417  2               LBB_INPUT:
-00E417  2  4E 50 55 54        .byte "NPUT",TK_INPUT   ; INPUT
-00E41B  2  84           
-00E41C  2               LBB_INT:
-00E41C  2  4E 54 28 C4        .byte "NT(",TK_INT      ; INT(
-00E420  2               LBB_IRQ:
-00E420  2  52 51 A9           .byte "RQ",TK_IRQ       ; IRQ
-00E423  2  00                 .byte $00
-00E424  2               TAB_ASCL:
-00E424  2               LBB_LCASES:
-00E424  2  43 41 53 45        .byte "CASE$(",TK_LCASES
-00E428  2  24 28 D9     
-00E42B  2                                             ; LCASE$(
-00E42B  2               LBB_LEFTS:
-00E42B  2  45 46 54 24        .byte "EFT$(",TK_LEFTS  ; LEFT$(
-00E42F  2  28 E3        
-00E431  2               LBB_LEN:
-00E431  2  45 4E 28 D4        .byte "EN(",TK_LEN      ; LEN(
-00E435  2               LBB_LET:
-00E435  2  45 54 87           .byte "ET",TK_LET       ; LET
-00E438  2               LBB_LIST:
-00E438  2  49 53 54 A1        .byte "IST",TK_LIST     ; LIST
-00E43C  2               LBB_LOAD:
-00E43C  2  4F 41 44 97        .byte "OAD",TK_LOAD     ; LOAD
-00E440  2               LBB_LOG:
-00E440  2  4F 47 28 CB        .byte "OG(",TK_LOG      ; LOG(
-00E444  2               LBB_LOOP:
-00E444  2  4F 4F 50 9E        .byte "OOP",TK_LOOP     ; LOOP
-00E448  2  00                 .byte $00
-00E449  2               TAB_ASCM:
-00E449  2               LBB_MAX:
-00E449  2  41 58 28 DE        .byte "AX(",TK_MAX      ; MAX(
-00E44D  2               LBB_MIDS:
-00E44D  2  49 44 24 28        .byte "ID$(",TK_MIDS    ; MID$(
-00E451  2  E5           
-00E452  2               LBB_MIN:
-00E452  2  49 4E 28 DF        .byte "IN(",TK_MIN      ; MIN(
-00E456  2  00                 .byte $00
-00E457  2               TAB_ASCN:
-00E457  2               LBB_NEW:
-00E457  2  45 57 A3           .byte "EW",TK_NEW       ; NEW
-00E45A  2               LBB_NEXT:
-00E45A  2  45 58 54 82        .byte "EXT",TK_NEXT     ; NEXT
-00E45E  2               LBB_NMI:
-00E45E  2  4D 49 AA           .byte "MI",TK_NMI       ; NMI
-00E461  2               LBB_NOT:
-00E461  2  4F 54 B1           .byte "OT",TK_NOT       ; NOT
-00E464  2               LBB_NULL:
-00E464  2  55 4C 4C 94        .byte "ULL",TK_NULL     ; NULL
-00E468  2  00                 .byte $00
-00E469  2               TAB_ASCO:
-00E469  2               LBB_OFF:
-00E469  2  46 46 B5           .byte "FF",TK_OFF       ; OFF
-00E46C  2               LBB_ON:
-00E46C  2  4E 93              .byte "N",TK_ON         ; ON
-00E46E  2               LBB_OR:
-00E46E  2  52 BD              .byte "R",TK_OR         ; OR
-00E470  2  00                 .byte $00
-00E471  2               TAB_ASCP:
-00E471  2               LBB_PEEK:
-00E471  2  45 45 4B 28        .byte "EEK(",TK_PEEK    ; PEEK(
-00E475  2  D1           
-00E476  2               LBB_PI:
-00E476  2  49 E0              .byte "I",TK_PI         ; PI
-00E478  2               LBB_POKE:
-00E478  2  4F 4B 45 9A        .byte "OKE",TK_POKE     ; POKE
-00E47C  2               LBB_POS:
-00E47C  2  4F 53 28 C8        .byte "OS(",TK_POS      ; POS(
-00E480  2               LBB_PRINT:
-00E480  2  52 49 4E 54        .byte "RINT",TK_PRINT   ; PRINT
-00E484  2  9F           
-00E485  2  00                 .byte $00
-00E486  2               TAB_ASCR:
-00E486  2               LBB_READ:
-00E486  2  45 41 44 86        .byte "EAD",TK_READ     ; READ
-00E48A  2               LBB_REM:
-00E48A  2  45 4D 91           .byte "EM",TK_REM       ; REM
-00E48D  2               LBB_RESTORE:
-00E48D  2  45 53 54 4F        .byte "ESTORE",TK_RESTORE
-00E491  2  52 45 8C     
-00E494  2                                             ; RESTORE
-00E494  2               LBB_RETIRQ:
-00E494  2  45 54 49 52        .byte "ETIRQ",TK_RETIRQ ; RETIRQ
-00E498  2  51 8E        
-00E49A  2               LBB_RETNMI:
-00E49A  2  45 54 4E 4D        .byte "ETNMI",TK_RETNMI ; RETNMI
-00E49E  2  49 8F        
-00E4A0  2               LBB_RETURN:
-00E4A0  2  45 54 55 52        .byte "ETURN",TK_RETURN ; RETURN
-00E4A4  2  4E 90        
-00E4A6  2               LBB_RIGHTS:
-00E4A6  2  49 47 48 54        .byte "IGHT$(",TK_RIGHTS
-00E4AA  2  24 28 E4     
-00E4AD  2                                             ; RIGHT$(
-00E4AD  2               LBB_RND:
-00E4AD  2  4E 44 28 CA        .byte "ND(",TK_RND      ; RND(
-00E4B1  2               LBB_RUN:
-00E4B1  2  55 4E 8A           .byte "UN",TK_RUN       ; RUN
-00E4B4  2  00                 .byte $00
-00E4B5  2               TAB_ASCS:
-00E4B5  2               LBB_SADD:
-00E4B5  2  41 44 44 28        .byte "ADD(",TK_SADD    ; SADD(
-00E4B9  2  D3           
-00E4BA  2               LBB_SAVE:
-00E4BA  2  41 56 45 98        .byte "AVE",TK_SAVE     ; SAVE
-00E4BE  2               LBB_SGN:
-00E4BE  2  47 4E 28 C3        .byte "GN(",TK_SGN      ; SGN(
-00E4C2  2               LBB_SIN:
-00E4C2  2  49 4E 28 CE        .byte "IN(",TK_SIN      ; SIN(
-00E4C6  2               LBB_SPC:
-00E4C6  2  50 43 28 AF        .byte "PC(",TK_SPC      ; SPC(
-00E4CA  2               LBB_SQR:
-00E4CA  2  51 52 28 C9        .byte "QR(",TK_SQR      ; SQR(
-00E4CE  2               LBB_STEP:
-00E4CE  2  54 45 50 B2        .byte "TEP",TK_STEP     ; STEP
-00E4D2  2               LBB_STOP:
-00E4D2  2  54 4F 50 92        .byte "TOP",TK_STOP     ; STOP
-00E4D6  2               LBB_STRS:
-00E4D6  2  54 52 24 28        .byte "TR$(",TK_STRS    ; STR$(
-00E4DA  2  D5           
-00E4DB  2               LBB_SWAP:
-00E4DB  2  57 41 50 A6        .byte "WAP",TK_SWAP     ; SWAP
-00E4DF  2  00                 .byte $00
-00E4E0  2               TAB_ASCT:
-00E4E0  2               LBB_TAB:
-00E4E0  2  41 42 28 AB        .byte "AB(",TK_TAB      ; TAB(
-00E4E4  2               LBB_TAN:
-00E4E4  2  41 4E 28 CF        .byte "AN(",TK_TAN      ; TAN(
-00E4E8  2               LBB_THEN:
-00E4E8  2  48 45 4E B0        .byte "HEN",TK_THEN     ; THEN
-00E4EC  2               LBB_TO:
-00E4EC  2  4F AD              .byte "O",TK_TO         ; TO
-00E4EE  2               LBB_TWOPI:
-00E4EE  2  57 4F 50 49        .byte "WOPI",TK_TWOPI   ; TWOPI
-00E4F2  2  E1           
-00E4F3  2  00                 .byte $00
-00E4F4  2               TAB_ASCU:
-00E4F4  2               LBB_UCASES:
-00E4F4  2  43 41 53 45        .byte "CASE$(",TK_UCASES
-00E4F8  2  24 28 D8     
-00E4FB  2                                             ; UCASE$(
-00E4FB  2               LBB_UNTIL:
-00E4FB  2  4E 54 49 4C        .byte "NTIL",TK_UNTIL   ; UNTIL
-00E4FF  2  B3           
-00E500  2               LBB_USR:
-00E500  2  53 52 28 C6        .byte "SR(",TK_USR      ; USR(
-00E504  2  00                 .byte $00
-00E505  2               TAB_ASCV:
-00E505  2               LBB_VAL:
-00E505  2  41 4C 28 D6        .byte "AL(",TK_VAL      ; VAL(
-00E509  2               LBB_VPTR:
-00E509  2  41 52 50 54        .byte "ARPTR(",TK_VPTR  ; VARPTR(
-00E50D  2  52 28 E2     
-00E510  2  00                 .byte $00
-00E511  2               TAB_ASCW:
-00E511  2               LBB_WAIT:
-00E511  2  41 49 54 96        .byte "AIT",TK_WAIT     ; WAIT
-00E515  2               LBB_WHILE:
-00E515  2  48 49 4C 45        .byte "HILE",TK_WHILE   ; WHILE
-00E519  2  B4           
-00E51A  2               LBB_WIDTH:
-00E51A  2  49 44 54 48        .byte "IDTH",TK_WIDTH   ; WIDTH
-00E51E  2  A4           
-00E51F  2  00                 .byte $00
-00E520  2               TAB_POWR:
-00E520  2  BA 00              .byte TK_POWER,$00      ; ^
-00E522  2               
-00E522  2               ; new decode table for LIST
-00E522  2               ; Table is ..
-00E522  2               ; byte - keyword length, keyword first character
-00E522  2               ; word - pointer to rest of keyword from dictionary
-00E522  2               
-00E522  2               ; note if length is 1 then the pointer is ignored
-00E522  2               
-00E522  2               LAB_KEYT:
-00E522  2  03 45              .byte 3,'E'
-00E524  2  EA E3              .word LBB_END           ; END
-00E526  2  03 46              .byte 3,'F'
-00E528  2  F7 E3              .word LBB_FOR           ; FOR
-00E52A  2  04 4E              .byte 4,'N'
-00E52C  2  5A E4              .word LBB_NEXT          ; NEXT
-00E52E  2  04 44              .byte 4,'D'
-00E530  2  CD E3              .word LBB_DATA          ; DATA
-00E532  2  05 49              .byte 5,'I'
-00E534  2  17 E4              .word LBB_INPUT         ; INPUT
-00E536  2  03 44              .byte 3,'D'
-00E538  2  DC E3              .word LBB_DIM           ; DIM
-00E53A  2  04 52              .byte 4,'R'
-00E53C  2  86 E4              .word LBB_READ          ; READ
-00E53E  2  03 4C              .byte 3,'L'
-00E540  2  35 E4              .word LBB_LET           ; LET
-00E542  2  03 44              .byte 3,'D'
-00E544  2  D1 E3              .word LBB_DEC           ; DEC
-00E546  2  04 47              .byte 4,'G'
-00E548  2  07 E4              .word LBB_GOTO          ; GOTO
-00E54A  2  03 52              .byte 3,'R'
-00E54C  2  B1 E4              .word LBB_RUN           ; RUN
-00E54E  2  02 49              .byte 2,'I'
-00E550  2  12 E4              .word LBB_IF            ; IF
-00E552  2  07 52              .byte 7,'R'
-00E554  2  8D E4              .word LBB_RESTORE       ; RESTORE
-00E556  2  05 47              .byte 5,'G'
-00E558  2  02 E4              .word LBB_GOSUB         ; GOSUB
-00E55A  2  06 52              .byte 6,'R'
-00E55C  2  94 E4              .word LBB_RETIRQ        ; RETIRQ
-00E55E  2  06 52              .byte 6,'R'
-00E560  2  9A E4              .word LBB_RETNMI        ; RETNMI
-00E562  2  06 52              .byte 6,'R'
-00E564  2  A0 E4              .word LBB_RETURN        ; RETURN
-00E566  2  03 52              .byte 3,'R'
-00E568  2  8A E4              .word LBB_REM           ; REM
-00E56A  2  04 53              .byte 4,'S'
-00E56C  2  D2 E4              .word LBB_STOP          ; STOP
-00E56E  2  02 4F              .byte 2,'O'
-00E570  2  6C E4              .word LBB_ON            ; ON
-00E572  2  04 4E              .byte 4,'N'
-00E574  2  64 E4              .word LBB_NULL          ; NULL
-00E576  2  03 49              .byte 3,'I'
-00E578  2  14 E4              .word LBB_INC           ; INC
-00E57A  2  04 57              .byte 4,'W'
-00E57C  2  11 E5              .word LBB_WAIT          ; WAIT
-00E57E  2  04 4C              .byte 4,'L'
-00E580  2  3C E4              .word LBB_LOAD          ; LOAD
-00E582  2  04 53              .byte 4,'S'
-00E584  2  BA E4              .word LBB_SAVE          ; SAVE
-00E586  2  03 44              .byte 3,'D'
-00E588  2  D9 E3              .word LBB_DEF           ; DEF
-00E58A  2  04 50              .byte 4,'P'
-00E58C  2  78 E4              .word LBB_POKE          ; POKE
-00E58E  2  04 44              .byte 4,'D'
-00E590  2  DF E3              .word LBB_DOKE          ; DOKE
-00E592  2  04 43              .byte 4,'C'
-00E594  2  B6 E3              .word LBB_CALL          ; CALL
-00E596  2  02 44              .byte 2,'D'
-00E598  2  E3 E3              .word LBB_DO            ; DO
-00E59A  2  04 4C              .byte 4,'L'
-00E59C  2  44 E4              .word LBB_LOOP          ; LOOP
-00E59E  2  05 50              .byte 5,'P'
-00E5A0  2  80 E4              .word LBB_PRINT         ; PRINT
-00E5A2  2  04 43              .byte 4,'C'
-00E5A4  2  C4 E3              .word LBB_CONT          ; CONT
-00E5A6  2  04 4C              .byte 4,'L'
-00E5A8  2  38 E4              .word LBB_LIST          ; LIST
-00E5AA  2  05 43              .byte 5,'C'
-00E5AC  2  BF E3              .word LBB_CLEAR         ; CLEAR
-00E5AE  2  03 4E              .byte 3,'N'
-00E5B0  2  57 E4              .word LBB_NEW           ; NEW
-00E5B2  2  05 57              .byte 5,'W'
-00E5B4  2  1A E5              .word LBB_WIDTH         ; WIDTH
-00E5B6  2  03 47              .byte 3,'G'
-00E5B8  2  FF E3              .word LBB_GET           ; GET
-00E5BA  2  04 53              .byte 4,'S'
-00E5BC  2  DB E4              .word LBB_SWAP          ; SWAP
-00E5BE  2  06 42              .byte 6,'B'
-00E5C0  2  A8 E3              .word LBB_BITSET        ; BITSET
-00E5C2  2  06 42              .byte 6,'B'
-00E5C4  2  A2 E3              .word LBB_BITCLR        ; BITCLR
-00E5C6  2  03 49              .byte 3,'I'
-00E5C8  2  20 E4              .word LBB_IRQ           ; IRQ
-00E5CA  2  03 4E              .byte 3,'N'
-00E5CC  2  5E E4              .word LBB_NMI           ; NMI
-00E5CE  2               
-00E5CE  2               ; secondary commands (can't start a statement)
-00E5CE  2               
-00E5CE  2  04 54              .byte 4,'T'
-00E5D0  2  E0 E4              .word LBB_TAB           ; TAB
-00E5D2  2  04 45              .byte 4,'E'
-00E5D4  2  E6 E3              .word LBB_ELSE          ; ELSE
-00E5D6  2  02 54              .byte 2,'T'
-00E5D8  2  EC E4              .word LBB_TO            ; TO
-00E5DA  2  02 46              .byte 2,'F'
-00E5DC  2  F5 E3              .word LBB_FN            ; FN
-00E5DE  2  04 53              .byte 4,'S'
-00E5E0  2  C6 E4              .word LBB_SPC           ; SPC
-00E5E2  2  04 54              .byte 4,'T'
-00E5E4  2  E8 E4              .word LBB_THEN          ; THEN
-00E5E6  2  03 4E              .byte 3,'N'
-00E5E8  2  61 E4              .word LBB_NOT           ; NOT
-00E5EA  2  04 53              .byte 4,'S'
-00E5EC  2  CE E4              .word LBB_STEP          ; STEP
-00E5EE  2  05 55              .byte 5,'U'
-00E5F0  2  FB E4              .word LBB_UNTIL         ; UNTIL
-00E5F2  2  05 57              .byte 5,'W'
-00E5F4  2  15 E5              .word LBB_WHILE         ; WHILE
-00E5F6  2  03 4F              .byte 3,'O'
-00E5F8  2  69 E4              .word LBB_OFF           ; OFF
-00E5FA  2               
-00E5FA  2               ; opperators
-00E5FA  2               
-00E5FA  2  01 2B              .byte 1,'+'
-00E5FC  2  00 00              .word $0000             ; +
-00E5FE  2  01 2D              .byte 1,'-'
-00E600  2  00 00              .word $0000             ; -
-00E602  2  01 2A              .byte 1,'*'
-00E604  2  00 00              .word $0000             ; *
-00E606  2  01 2F              .byte 1,'/'
-00E608  2  00 00              .word $0000             ; /
-00E60A  2  01 5E              .byte 1,'^'
-00E60C  2  00 00              .word $0000             ; ^
-00E60E  2  03 41              .byte 3,'A'
-00E610  2  91 E3              .word LBB_AND           ; AND
-00E612  2  03 45              .byte 3,'E'
-00E614  2  ED E3              .word LBB_EOR           ; EOR
-00E616  2  02 4F              .byte 2,'O'
-00E618  2  6E E4              .word LBB_OR            ; OR
-00E61A  2  02 3E              .byte 2,'>'
-00E61C  2  87 E3              .word LBB_RSHIFT        ; >>
-00E61E  2  02 3C              .byte 2,'<'
-00E620  2  81 E3              .word LBB_LSHIFT        ; <<
-00E622  2  01 3E              .byte 1,'>'
-00E624  2  00 00              .word $0000             ; >
-00E626  2  01 3D              .byte 1,'='
-00E628  2  00 00              .word $0000             ; =
-00E62A  2  01 3C              .byte 1,'<'
-00E62C  2  00 00              .word $0000             ; <
-00E62E  2               
-00E62E  2               ; functions
-00E62E  2               
-00E62E  2  04 53              .byte 4,'S'             ;
-00E630  2  BE E4              .word LBB_SGN           ; SGN
-00E632  2  04 49              .byte 4,'I'             ;
-00E634  2  1C E4              .word LBB_INT           ; INT
-00E636  2  04 41              .byte 4,'A'             ;
-00E638  2  8D E3              .word LBB_ABS           ; ABS
-00E63A  2  04 55              .byte 4,'U'             ;
-00E63C  2  00 E5              .word LBB_USR           ; USR
-00E63E  2  04 46              .byte 4,'F'             ;
-00E640  2  FA E3              .word LBB_FRE           ; FRE
-00E642  2  04 50              .byte 4,'P'             ;
-00E644  2  7C E4              .word LBB_POS           ; POS
-00E646  2  04 53              .byte 4,'S'             ;
-00E648  2  CA E4              .word LBB_SQR           ; SQR
-00E64A  2  04 52              .byte 4,'R'             ;
-00E64C  2  AD E4              .word LBB_RND           ; RND
-00E64E  2  04 4C              .byte 4,'L'             ;
-00E650  2  40 E4              .word LBB_LOG           ; LOG
-00E652  2  04 45              .byte 4,'E'             ;
-00E654  2  F0 E3              .word LBB_EXP           ; EXP
-00E656  2  04 43              .byte 4,'C'             ;
-00E658  2  C8 E3              .word LBB_COS           ; COS
-00E65A  2  04 53              .byte 4,'S'             ;
-00E65C  2  C2 E4              .word LBB_SIN           ; SIN
-00E65E  2  04 54              .byte 4,'T'             ;
-00E660  2  E4 E4              .word LBB_TAN           ; TAN
-00E662  2  04 41              .byte 4,'A'             ;
-00E664  2  98 E3              .word LBB_ATN           ; ATN
-00E666  2  05 50              .byte 5,'P'             ;
-00E668  2  71 E4              .word LBB_PEEK          ; PEEK
-00E66A  2  05 44              .byte 5,'D'             ;
-00E66C  2  D4 E3              .word LBB_DEEK          ; DEEK
-00E66E  2  05 53              .byte 5,'S'             ;
-00E670  2  B5 E4              .word LBB_SADD          ; SADD
-00E672  2  04 4C              .byte 4,'L'             ;
-00E674  2  31 E4              .word LBB_LEN           ; LEN
-00E676  2  05 53              .byte 5,'S'             ;
-00E678  2  D6 E4              .word LBB_STRS          ; STR$
-00E67A  2  04 56              .byte 4,'V'             ;
-00E67C  2  05 E5              .word LBB_VAL           ; VAL
-00E67E  2  04 41              .byte 4,'A'             ;
-00E680  2  94 E3              .word LBB_ASC           ; ASC
-00E682  2  07 55              .byte 7,'U'             ;
-00E684  2  F4 E4              .word LBB_UCASES        ; UCASE$
-00E686  2  07 4C              .byte 7,'L'             ;
-00E688  2  24 E4              .word LBB_LCASES        ; LCASE$
-00E68A  2  05 43              .byte 5,'C'             ;
-00E68C  2  BA E3              .word LBB_CHRS          ; CHR$
-00E68E  2  05 48              .byte 5,'H'             ;
-00E690  2  0C E4              .word LBB_HEXS          ; HEX$
-00E692  2  05 42              .byte 5,'B'             ;
-00E694  2  9D E3              .word LBB_BINS          ; BIN$
-00E696  2  07 42              .byte 7,'B'             ;
-00E698  2  AE E3              .word LBB_BITTST        ; BITTST
-00E69A  2  04 4D              .byte 4,'M'             ;
-00E69C  2  49 E4              .word LBB_MAX           ; MAX
-00E69E  2  04 4D              .byte 4,'M'             ;
-00E6A0  2  52 E4              .word LBB_MIN           ; MIN
-00E6A2  2  02 50              .byte 2,'P'             ;
-00E6A4  2  76 E4              .word LBB_PI            ; PI
-00E6A6  2  05 54              .byte 5,'T'             ;
-00E6A8  2  EE E4              .word LBB_TWOPI         ; TWOPI
-00E6AA  2  07 56              .byte 7,'V'             ;
-00E6AC  2  09 E5              .word LBB_VPTR          ; VARPTR
-00E6AE  2  06 4C              .byte 6,'L'             ;
-00E6B0  2  2B E4              .word LBB_LEFTS         ; LEFT$
-00E6B2  2  07 52              .byte 7,'R'             ;
-00E6B4  2  A6 E4              .word LBB_RIGHTS        ; RIGHT$
-00E6B6  2  05 4D              .byte 5,'M'             ;
-00E6B8  2  4D E4              .word LBB_MIDS          ; MID$
-00E6BA  2               
-00E6BA  2               ; BASIC messages, mostly error messages
-00E6BA  2               
-00E6BA  2               LAB_BAER:
-00E6BA  2  DE E6              .word ERR_NF            ;$00 NEXT without FOR
-00E6BC  2  EF E6              .word ERR_SN            ;$02 syntax
-00E6BE  2  F6 E6              .word ERR_RG            ;$04 RETURN without GOSUB
-00E6C0  2  0B E7              .word ERR_OD            ;$06 out of data
-00E6C2  2  17 E7              .word ERR_FC            ;$08 function call
-00E6C4  2  25 E7              .word ERR_OV            ;$0A overflow
-00E6C6  2  2E E7              .word ERR_OM            ;$0C out of memory
-00E6C8  2  3C E7              .word ERR_US            ;$0E undefined statement
-00E6CA  2  50 E7              .word ERR_BS            ;$10 array bounds
-00E6CC  2  5D E7              .word ERR_DD            ;$12 double dimension array
-00E6CE  2  6E E7              .word ERR_D0            ;$14 divide by 0
-00E6D0  2  7D E7              .word ERR_ID            ;$16 illegal direct
-00E6D2  2  8C E7              .word ERR_TM            ;$18 type mismatch
-00E6D4  2  9A E7              .word ERR_LS            ;$1A long string
-00E6D6  2  AA E7              .word ERR_ST            ;$1C string too complex
-00E6D8  2  BD E7              .word ERR_CN            ;$1E continue error
-00E6DA  2  CC E7              .word ERR_UF            ;$20 undefined function
-00E6DC  2  DF E7              .word ERR_LD            ;$22 LOOP without DO
-00E6DE  2               
-00E6DE  2               ; I may implement these two errors to force definition of variables and
-00E6DE  2               ; dimensioning of arrays before use.
-00E6DE  2               
-00E6DE  2               ;     .word ERR_UV            ;$24 undefined variable
-00E6DE  2               
-00E6DE  2               ; the above error has been tested and works (see code and comments below LAB_1D8B)
-00E6DE  2               
-00E6DE  2               ;     .word ERR_UA            ;$26 undimensioned array
-00E6DE  2               
-00E6DE  2  4E 45 58 54  ERR_NF:      .byte "NEXT without FOR",$00
-00E6E2  2  20 77 69 74  
-00E6E6  2  68 6F 75 74  
-00E6EF  2  53 79 6E 74  ERR_SN:      .byte "Syntax",$00
-00E6F3  2  61 78 00     
-00E6F6  2  52 45 54 55  ERR_RG:      .byte "RETURN without GOSUB",$00
-00E6FA  2  52 4E 20 77  
-00E6FE  2  69 74 68 6F  
-00E70B  2  4F 75 74 20  ERR_OD:      .byte "Out of DATA",$00
-00E70F  2  6F 66 20 44  
-00E713  2  41 54 41 00  
-00E717  2  46 75 6E 63  ERR_FC:      .byte "Function call",$00
-00E71B  2  74 69 6F 6E  
-00E71F  2  20 63 61 6C  
-00E725  2  4F 76 65 72  ERR_OV:      .byte "Overflow",$00
-00E729  2  66 6C 6F 77  
-00E72D  2  00           
-00E72E  2  4F 75 74 20  ERR_OM:      .byte "Out of memory",$00
-00E732  2  6F 66 20 6D  
-00E736  2  65 6D 6F 72  
-00E73C  2  55 6E 64 65  ERR_US:      .byte "Undefined statement",$00
-00E740  2  66 69 6E 65  
-00E744  2  64 20 73 74  
-00E750  2  41 72 72 61  ERR_BS:      .byte "Array bounds",$00
-00E754  2  79 20 62 6F  
-00E758  2  75 6E 64 73  
-00E75D  2  44 6F 75 62  ERR_DD:      .byte "Double dimension",$00
-00E761  2  6C 65 20 64  
-00E765  2  69 6D 65 6E  
-00E76E  2  44 69 76 69  ERR_D0:      .byte "Divide by zero",$00
-00E772  2  64 65 20 62  
-00E776  2  79 20 7A 65  
-00E77D  2  49 6C 6C 65  ERR_ID:      .byte "Illegal direct",$00
-00E781  2  67 61 6C 20  
-00E785  2  64 69 72 65  
-00E78C  2  54 79 70 65  ERR_TM:      .byte "Type mismatch",$00
-00E790  2  20 6D 69 73  
-00E794  2  6D 61 74 63  
-00E79A  2  53 74 72 69  ERR_LS:      .byte "String too long",$00
-00E79E  2  6E 67 20 74  
-00E7A2  2  6F 6F 20 6C  
-00E7AA  2  53 74 72 69  ERR_ST:      .byte "String too complex",$00
-00E7AE  2  6E 67 20 74  
-00E7B2  2  6F 6F 20 63  
-00E7BD  2  43 61 6E 27  ERR_CN:      .byte "Can't continue",$00
-00E7C1  2  74 20 63 6F  
-00E7C5  2  6E 74 69 6E  
-00E7CC  2  55 6E 64 65  ERR_UF:      .byte "Undefined function",$00
-00E7D0  2  66 69 6E 65  
-00E7D4  2  64 20 66 75  
-00E7DF  2  4C 4F 4F 50  ERR_LD:      .byte "LOOP without DO",$00
-00E7E3  2  20 77 69 74  
-00E7E7  2  68 6F 75 74  
-00E7EF  2               
-00E7EF  2               ;ERR_UV     .byte "Undefined variable",$00
-00E7EF  2               
-00E7EF  2               ; the above error has been tested and works (see code and comments below LAB_1D8B)
-00E7EF  2               
-00E7EF  2               ;ERR_UA     .byte "Undimensioned array",$00
-00E7EF  2               
-00E7EF  2  0D 0A 42 72  LAB_BMSG:    .byte $0D,$0A,"Break",$00
-00E7F3  2  65 61 6B 00  
-00E7F7  2  20 45 72 72  LAB_EMSG:    .byte " Error",$00
-00E7FB  2  6F 72 00     
-00E7FE  2  20 69 6E 20  LAB_LMSG:    .byte " in line ",$00
-00E802  2  6C 69 6E 65  
-00E806  2  20 00        
-00E808  2  0D 0A 52 65  LAB_RMSG:    .byte $0D,$0A,"Ready",$0D,$0A,$00
-00E80C  2  61 64 79 0D  
-00E810  2  0A 00        
-00E812  2               
-00E812  2  20 45 78 74  LAB_IMSG:    .byte " Extra ignored",$0D,$0A,$00
-00E816  2  72 61 20 69  
-00E81A  2  67 6E 6F 72  
-00E823  2  20 52 65 64  LAB_REDO:    .byte " Redo from start",$0D,$0A,$00
-00E827  2  6F 20 66 72  
-00E82B  2  6F 6D 20 73  
-00E836  2               
-00E836  2  44 65 72 69  .asciiz "Derived from EhBASIC"
-00E83A  2  76 65 64 20  
-00E83E  2  66 72 6F 6D  
-00E84B  2               
-00E84B  2               AA_end_basic:
-00E84B  2               
-00E84B  2               .segment "VEC_EHB"
-00E84B  2  rr rr        .word NMI
-00E84D  2  rr rr        .word RESET
-00E84F  2  rr rr        .word ISR
-00E851  2               
-00E851  1               
-00E851  1               .include "msbasic.s"
-00E851  2               ; Single-File Port from https://github.com/mist64/msbasic
-00E851  2               ; with some small influence by Ben Eaters fork
-00E851  2               ;
-00E851  2               ; ToDo:
-00E851  2               ;   - remove system-specific code, that doesn't match S65
-00E851  2               ;     - Investigate CBM1
-00E851  2               ;     - Investigate CBM2
-00E851  2               ;     - Investigate CONFIG_CBM_ALL
-00E851  2               ; Done:
-00E851  2               ;   - remove CONFIG_SMALL code reductions
-00E851  2               ;   - applied all CONFIG_2C and lower (most recent MS BASIC version)
-00E851  2               ;
-00E851  2               ; Goal:
-00E851  2               ; have MS Basic on a working stand as a single file to include.
-00E851  2               ; I don't care about "byte-identical" compilation
-00E851  2               
-00E851  2               .feature force_range
-00E851  2               ;.debuginfo +
-00E851  2               
-00E851  2               ;.setcpu "6502"
-00E851  2               .macpack longbranch
-00E851  3               .macro  jeq     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                       bne     *+5
-00E851  3                       jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               beq     Target
-00E851  3                       .else
-00E851  3                               bne     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jne     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               beq     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bne     Target
-00E851  3                       .else
-00E851  3                               beq     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jmi     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bpl     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bmi     Target
-00E851  3                       .else
-00E851  3                               bpl     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jpl     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bmi     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bpl     Target
-00E851  3                       .else
-00E851  3                               bmi     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jcs     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bcc     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bcs     Target
-00E851  3                       .else
-00E851  3                               bcc     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jcc     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bcs     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bcc     Target
-00E851  3                       .else
-00E851  3                               bcs     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jvs     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bvc     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bvs     Target
-00E851  3                       .else
-00E851  3                               bvc     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               .macro  jvc     Target
-00E851  3                       .if     .match(Target, 0)
-00E851  3                               bvs     *+5
-00E851  3                               jmp     Target
-00E851  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
-00E851  3                               bvc     Target
-00E851  3                       .else
-00E851  3                               bvs     *+5
-00E851  3                               jmp     Target
-00E851  3                       .endif
-00E851  3               .endmacro
-00E851  3               
-00E851  2               
-00E851  2               ; MS BASIC Defines (copied from CBM2-Defines)
-00E851  2               
-00E851  2               ;CONFIG_DATAFLG := 1
-00E851  2               CONFIG_EASTER_EGG := 1
-00E851  2               ;CONFIG_FILE := 1; support PRINT#, INPUT#, GET#, CMD
-00E851  2               CONFIG_NO_CR := 1; terminal doesn't need explicit CRs on line ends
-00E851  2               ;CONFIG_NO_LINE_EDITING := 1; support for "@", "_", BEL etc.
-00E851  2               ;CONFIG_NO_READ_Y_IS_ZERO_HACK := 1
-00E851  2               ;CONFIG_PEEK_SAVE_LINNUM := 1
-00E851  2               CONFIG_SCRTCH_ORDER := 2
-00E851  2               
-00E851  2               
-00E851  2               ZP_START0 = $00
-00E851  2               ZP_START1 = $02
-00E851  2               ZP_START2 = $0C
-00E851  2               ZP_START3 = $62
-00E851  2               ZP_START4 = $6D
-00E851  2               
-00E851  2               ; extra/override ZP variables
-00E851  2               ;CURDVC			:= $000E
-00E851  2               ;TISTR			:= $008D
-00E851  2               ;Z96				:= $0096
-00E851  2               ;POSX			:= $00C6
-00E851  2               ;TXPSV			:= LASTOP
-00E851  2               USR				:= GORESTART ; XXX
-00E851  2               
-00E851  2               ;CBM2 := 1
-00E851  2               ;CONFIG_CBM_ALL := 1
-00E851  2               
-00E851  2               ; inputbuffer
-00E851  2               ;INPUTBUFFER     := $0200
-00E851  2               
-00E851  2               ; constants
-00E851  2               SPACE_FOR_GOSUB := $3E
-00E851  2               STACK_TOP		:= $FA
-00E851  2               WIDTH			:= 40
-00E851  2               WIDTH2			:= 30
-00E851  2               
-00E851  2               RAMSTART2		:= $0900
-00E851  2               
-00E851  2               ; magic memory locations
-00E851  2               ;ENTROPY = $E844
-00E851  2               
-00E851  2               ; monitor functions
-00E851  2               ;OPEN	:= $FFC0
-00E851  2               ;CLOSE	:= $FFC3
-00E851  2               ;CHKIN	:= $FFC6
-00E851  2               ;CHKOUT	:= $FFC9
-00E851  2               ;CLRCH	:= $FFCC
-00E851  2               ;LOAD	:= $FFD5
-00E851  2               ;SAVE	:= $FFD8
-00E851  2               ;VERIFY	:= $FFDB
-00E851  2               ;SYS	:= $FFDE
-00E851  2               ;ISCNTC	:= $FFE1
-00E851  2               ;GETIN	:= $FFE4
-00E851  2               ;CLALL	:= $FFE7
-00E851  2               ;LE7F3	:= $E7F3; for CBM1
-00E851  2               MONCOUT	:= CHROUT
-00E851  2               MONRDKEY := CHRIN
-00E851  2               
-00E851  2               BYTES_FP		:= 5
-00E851  2               
-00E851  2               .ifndef BYTES_PER_ELEMENT
-00E851  2               BYTES_PER_ELEMENT := BYTES_FP
-00E851  2               .endif
-00E851  2               BYTES_PER_VARIABLE := BYTES_FP+2
-00E851  2               MANTISSA_BYTES	:= BYTES_FP-1
-00E851  2               BYTES_PER_FRAME := 2*BYTES_FP+8
-00E851  2               FOR_STACK1		:= 2*BYTES_FP+5
-00E851  2               FOR_STACK2		:= BYTES_FP+4
-00E851  2               
-00E851  2               .ifndef MAX_EXPON
-00E851  2               MAX_EXPON = 10
-00E851  2               .endif
-00E851  2               
-00E851  2               STACK           := $0100
-00E851  2               .ifndef STACK2
-00E851  2               STACK2          := STACK
-00E851  2               .endif
-00E851  2               
-00E851  2               .ifdef INPUTBUFFER
-00E851  2                 .if INPUTBUFFER >= $0100
-00E851  2               CONFIG_NO_INPUTBUFFER_ZP := 1
-00E851  2                 .endif
-00E851  2                 .if INPUTBUFFER = $0200
-00E851  2               CONFIG_INPUTBUFFER_0200 := 1
-00E851  2                 .endif
-00E851  2               .endif
-00E851  2               INPUTBUFFERX = INPUTBUFFER & $FF00
-00E851  2               
-00E851  2               CR=13
-00E851  2               LF=10
-00E851  2               
-00E851  2               .ifndef CRLF_1
-00E851  2               CRLF_1 := CR
-00E851  2               CRLF_2 := LF
-00E851  2               .endif
-00E851  2               
-00E851  2               ; Macros included for MS BASIC
-00E851  2               
-00E851  2               ; htasc - set the hi bit on the last byte of a string for termination
-00E851  2               ; (by Tom Greene)
-00E851  2               .macro htasc str
-00E851  2               	.repeat	.strlen(str)-1,I
-00E851  2               		.byte	.strat(str,I)
-00E851  2               	.endrep
-00E851  2               	.byte	.strat(str,.strlen(str)-1) | $80
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; For every token, a byte gets put into segment "DUMMY".
-00E851  2               ; This way, we count up with every token. The DUMMY segment
-00E851  2               ; doesn't get linked into the binary.
-00E851  2               .macro init_token_tables
-00E851  2                       .segment "MSBVECTORS"
-00E851  2               TOKEN_ADDRESS_TABLE:
-00E851  2                       .segment "MSBKEYWORDS"
-00E851  2               TOKEN_NAME_TABLE:
-00E851  2               		.segment "MSBDUMMY"
-00E851  2               DUMMY_START:
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; optionally define token symbol
-00E851  2               ; count up token number
-00E851  2               .macro define_token token
-00E851  2                       .segment "MSBDUMMY"
-00E851  2               		.ifnblank token
-00E851  2               			token := <(*-DUMMY_START)+$80
-00E851  2               		.endif
-00E851  2               		.res 1; count up in any case
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; lay down a keyword, optionally define a token symbol
-00E851  2               .macro keyword key, token
-00E851  2               		.segment "MSBKEYWORDS"
-00E851  2               		htasc	key
-00E851  2               		define_token token
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; lay down a keyword and an address (RTS style),
-00E851  2               ; optionally define a token symbol
-00E851  2               .macro keyword_rts key, vec, token
-00E851  2                       .segment "MSBVECTORS"
-00E851  2               		.word	vec-1
-00E851  2               		keyword key, token
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; lay down a keyword and an address,
-00E851  2               ; optionally define a token symbol
-00E851  2               .macro keyword_addr key, vec, token
-00E851  2                       .segment "MSBVECTORS"
-00E851  2               		.addr	vec
-00E851  2               		keyword key, token
-00E851  2               .endmacro
-00E851  2               
-00E851  2               .macro count_tokens
-00E851  2                       .segment "MSBDUMMY"
-00E851  2               		NUM_TOKENS := <(*-DUMMY_START)
-00E851  2               .endmacro
-00E851  2               
-00E851  2               .macro init_error_table
-00E851  2                       .segment "MSBERROR"
-00E851  2               ERROR_MESSAGES:
-00E851  2               .endmacro
-00E851  2               
-00E851  2               .macro define_error error, msg
-00E851  2                       .segment "MSBERROR"
-00E851  2               		error := <(*-ERROR_MESSAGES)
-00E851  2               		htasc msg
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ;---------------------------------------------
-00E851  2               ; set the MSB of every byte of a string
-00E851  2               .macro asc80 str
-00E851  2               	.repeat	.strlen(str),I
-00E851  2               		.byte	.strat(str,I)+$80
-00E851  2               	.endrep
-00E851  2               .endmacro
-00E851  2               
-00E851  2               ; MS BASIC ZP definitions
-00E851  2               
-00E851  2               .feature org_per_seg
+00E16B  2               
+00E16B  2               ; numeric constants and series
+00E16B  2               
+00E16B  2                                             ; constants and series for LOG(n)
+00E16B  2               LAB_25A0:
+00E16B  2  02                 .byte $02               ; counter
+00E16C  2  80 19 56 62        .byte $80,$19,$56,$62   ; 0.59898
+00E170  2  80 76 22 F3        .byte $80,$76,$22,$F3   ; 0.96147
+00E174  2               ;##   .byte $80,$76,$22,$F1   ; 0.96147
+00E174  2  82 38 AA 40        .byte $82,$38,$AA,$40   ; 2.88539
+00E178  2               ;##   .byte $82,$38,$AA,$45   ; 2.88539
+00E178  2               
+00E178  2               LAB_25AD:
+00E178  2  80 35 04 F3        .byte $80,$35,$04,$F3   ; 0.70711   1/root 2
+00E17C  2               LAB_25B1:
+00E17C  2  81 35 04 F3        .byte $81,$35,$04,$F3   ; 1.41421   root 2
+00E180  2               LAB_25B5:
+00E180  2  80 80 00 00        .byte $80,$80,$00,$00   ; -0.5
+00E184  2               LAB_25B9:
+00E184  2  80 31 72 18        .byte $80,$31,$72,$18   ; 0.69315   LOG(2)
+00E188  2               
+00E188  2                                             ; numeric PRINT constants
+00E188  2               LAB_2947:
+00E188  2  91 43 4F F8        .byte $91,$43,$4F,$F8   ; 99999.9375 (max value with at least one decimal)
+00E18C  2               LAB_294B:
+00E18C  2  94 74 23 F7        .byte $94,$74,$23,$F7   ; 999999.4375 (max value before scientific notation)
+00E190  2               LAB_294F:
+00E190  2  94 74 24 00        .byte $94,$74,$24,$00   ; 1000000
+00E194  2               
+00E194  2                                             ; EXP(n) constants and series
+00E194  2               LAB_2AFA:
+00E194  2  81 38 AA 3B        .byte $81,$38,$AA,$3B   ; 1.4427    (1/LOG base 2 e)
+00E198  2               LAB_2AFE:
+00E198  2  06                 .byte $06               ; counter
+00E199  2  74 63 90 8C        .byte $74,$63,$90,$8C   ; 2.17023e-4
+00E19D  2  77 23 0C AB        .byte $77,$23,$0C,$AB   ; 0.00124
+00E1A1  2  7A 1E 94 00        .byte $7A,$1E,$94,$00   ; 0.00968
+00E1A5  2  7C 63 42 80        .byte $7C,$63,$42,$80   ; 0.05548
+00E1A9  2  7E 75 FE D0        .byte $7E,$75,$FE,$D0   ; 0.24023
+00E1AD  2  80 31 72 15        .byte $80,$31,$72,$15   ; 0.69315
+00E1B1  2  81 00 00 00        .byte $81,$00,$00,$00   ; 1.00000
+00E1B5  2               
+00E1B5  2               ;##   .byte $07               ; counter
+00E1B5  2               ;##   .byte $74,$94,$2E,$40   ; -1/7! (-1/5040)
+00E1B5  2               ;##   .byte $77,$2E,$4F,$70   ;  1/6! ( 1/720)
+00E1B5  2               ;##   .byte $7A,$88,$02,$6E   ; -1/5! (-1/120)
+00E1B5  2               ;##   .byte $7C,$2A,$A0,$E6   ;  1/4! ( 1/24)
+00E1B5  2               ;##   .byte $7E,$AA,$AA,$50   ; -1/3! (-1/6)
+00E1B5  2               ;##   .byte $7F,$7F,$FF,$FF   ;  1/2! ( 1/2)
+00E1B5  2               ;##   .byte $81,$80,$00,$00   ; -1/1! (-1/1)
+00E1B5  2               ;##   .byte $81,$00,$00,$00   ;  1/0! ( 1/1)
+00E1B5  2               
+00E1B5  2                                             ; trigonometric constants and series
+00E1B5  2               LAB_2C78:
+00E1B5  2  81 49 0F DB        .byte $81,$49,$0F,$DB   ; 1.570796371 (pi/2) as floating #
+00E1B9  2               LAB_2C84:
+00E1B9  2  04                 .byte $04               ; counter
+00E1BA  2  86 1E D7 FB        .byte $86,$1E,$D7,$FB   ; 39.7109
+00E1BE  2               ;##   .byte $86,$1E,$D7,$BA   ; 39.7109
+00E1BE  2  87 99 26 65        .byte $87,$99,$26,$65   ;-76.575
+00E1C2  2               ;##   .byte $87,$99,$26,$64   ;-76.575
+00E1C2  2  87 23 34 58        .byte $87,$23,$34,$58   ; 81.6022
+00E1C6  2  86 A5 5D E1        .byte $86,$A5,$5D,$E1   ;-41.3417
+00E1CA  2               ;##   .byte $86,$A5,$5D,$E0   ;-41.3417
+00E1CA  2               LAB_2C7C:
+00E1CA  2  83 49 0F DB        .byte $83,$49,$0F,$DB   ; 6.28319 (2*pi) as floating #
+00E1CE  2               ;##   .byte $83,$49,$0F,$DA   ; 6.28319 (2*pi) as floating #
+00E1CE  2               
+00E1CE  2               LAB_2CC9:
+00E1CE  2  08                 .byte $08               ; counter
+00E1CF  2  78 3A C5 37        .byte $78,$3A,$C5,$37   ; 0.00285
+00E1D3  2  7B 83 A2 5C        .byte $7B,$83,$A2,$5C   ;-0.0160686
+00E1D7  2  7C 2E DD 4D        .byte $7C,$2E,$DD,$4D   ; 0.0426915
+00E1DB  2  7D 99 B0 1E        .byte $7D,$99,$B0,$1E   ;-0.0750429
+00E1DF  2  7D 59 ED 24        .byte $7D,$59,$ED,$24   ; 0.106409
+00E1E3  2  7E 91 72 00        .byte $7E,$91,$72,$00   ;-0.142036
+00E1E7  2  7E 4C B9 73        .byte $7E,$4C,$B9,$73   ; 0.199926
+00E1EB  2  7F AA AA 53        .byte $7F,$AA,$AA,$53   ;-0.333331
+00E1EF  2               
+00E1EF  2               ;##   .byte $08               ; counter
+00E1EF  2               ;##   .byte $78,$3B,$D7,$4A   ; 1/17
+00E1EF  2               ;##   .byte $7B,$84,$6E,$02   ;-1/15
+00E1EF  2               ;##   .byte $7C,$2F,$C1,$FE   ; 1/13
+00E1EF  2               ;##   .byte $7D,$9A,$31,$74   ;-1/11
+00E1EF  2               ;##   .byte $7D,$5A,$3D,$84   ; 1/9
+00E1EF  2               ;##   .byte $7E,$91,$7F,$C8   ;-1/7
+00E1EF  2               ;##   .byte $7E,$4C,$BB,$E4   ; 1/5
+00E1EF  2               ;##   .byte $7F,$AA,$AA,$6C   ;-1/3
+00E1EF  2               
+00E1EF  2               LAB_1D96    = *+1             ; $00,$00 used for undefined variables
+00E1EF  2               LAB_259C:
+00E1EF  2  81 00 00 00        .byte $81,$00,$00,$00   ; 1.000000, used for INC
+00E1F3  2               LAB_2AFD:
+00E1F3  2  81 80 00 00        .byte $81,$80,$00,$00   ; -1.00000, used for DEC. must be on the same page as +1.00
+00E1F7  2               
+00E1F7  2                                             ; misc constants
+00E1F7  2               LAB_1DF7:
+00E1F7  2  90                 .byte $90               ;-32768 (uses first three bytes from 0.5)
+00E1F8  2               LAB_2A96:
+00E1F8  2  80 00 00 00        .byte $80,$00,$00,$00   ; 0.5
+00E1FC  2               LAB_2C80:
+00E1FC  2  7F 00 00 00        .byte $7F,$00,$00,$00   ; 0.25
+00E200  2               LAB_26B5:
+00E200  2  84 20 00 00        .byte $84,$20,$00,$00   ; 10.0000 divide by 10 constant
+00E204  2               
+00E204  2               ; This table is used in converting numbers to ASCII.
+00E204  2               
+00E204  2               LAB_2A9A:
+00E204  2               LAB_2A9B = LAB_2A9A+1
+00E204  2               LAB_2A9C = LAB_2A9B+1
+00E204  2  FE 79 60           .byte $FE,$79,$60       ; -100000
+00E207  2  00 27 10           .byte $00,$27,$10       ; 10000
+00E20A  2  FF FC 18           .byte $FF,$FC,$18       ; -1000
+00E20D  2  00 00 64           .byte $00,$00,$64       ; 100
+00E210  2  FF FF F6           .byte $FF,$FF,$F6       ; -10
+00E213  2  00 00 01           .byte $00,$00,$01       ; 1
+00E216  2               
+00E216  2               LAB_CTBL:
+00E216  2  1C C5              .word LAB_END-1         ; END
+00E218  2  58 C4              .word LAB_FOR-1         ; FOR
+00E21A  2  64 CA              .word LAB_NEXT-1        ; NEXT
+00E21C  2  89 C6              .word LAB_DATA-1        ; DATA
+00E21E  2  47 C9              .word LAB_INPUT-1       ; INPUT
+00E220  2  6C CD              .word LAB_DIM-1         ; DIM
+00E222  2  66 C9              .word LAB_READ-1        ; READ
+00E224  2  B4 C7              .word LAB_LET-1         ; LET
+00E226  2  86 C7              .word LAB_DEC-1         ; DEC             new command
+00E228  2  E8 C5              .word LAB_GOTO-1        ; GOTO
+00E22A  2  A7 C5              .word LAB_RUN-1         ; RUN
+00E22C  2  B7 C6              .word LAB_IF-1          ; IF
+00E22E  2  3D C5              .word LAB_RESTORE-1     ; RESTORE         modified command
+00E230  2  CB C5              .word LAB_GOSUB-1       ; GOSUB
+00E232  2  73 DF              .word LAB_RETIRQ-1      ; RETIRQ          new command
+00E234  2  7F DF              .word LAB_RETNMI-1      ; RETNMI          new command
+00E236  2  74 C6              .word LAB_RETURN-1      ; RETURN
+00E238  2  1E C7              .word LAB_REM-1         ; REM
+00E23A  2  1A C5              .word LAB_STOP-1        ; STOP
+00E23C  2  27 C7              .word LAB_ON-1          ; ON              modified command
+00E23E  2  7B C5              .word LAB_NULL-1        ; NULL            modified command
+00E240  2  89 C7              .word LAB_INC-1         ; INC             new command
+00E242  2  95 D5              .word LAB_WAIT-1        ; WAIT
+00E244  2  FE E0              .word V_LOAD-1          ; LOAD
+00E246  2  01 E1              .word V_SAVE-1          ; SAVE
+00E248  2  81 D0              .word LAB_DEF-1         ; DEF
+00E24A  2  1A D5              .word LAB_POKE-1        ; POKE
+00E24C  2  36 D5              .word LAB_DOKE-1        ; DOKE            new command
+00E24E  2  83 D5              .word LAB_CALL-1        ; CALL            new command
+00E250  2  B1 C5              .word LAB_DO-1          ; DO              new command
+00E252  2  1A C6              .word LAB_LOOP-1        ; LOOP            new command
+00E254  2  55 C8              .word LAB_PRINT-1       ; PRINT
+00E256  2  81 C5              .word LAB_CONT-1        ; CONT
+00E258  2  A3 C3              .word LAB_LIST-1        ; LIST
+00E25A  2  A0 C3              .word LAB_CLEAR-1       ; CLEAR
+00E25C  2  50 C3              .word LAB_NEW-1         ; NEW
+00E25E  2  F4 DF              .word LAB_WDTH-1        ; WIDTH           new command
+00E260  2  24 C8              .word LAB_GET-1         ; GET             new command
+00E262  2  5B D5              .word LAB_SWAP-1        ; SWAP            new command
+00E264  2  8E DD              .word LAB_BITSET-1      ; BITSET          new command
+00E266  2  A2 DD              .word LAB_BITCLR-1      ; BITCLR          new command
+00E268  2  22 DF              .word LAB_IRQ-1         ; IRQ             new command
+00E26A  2  25 DF              .word LAB_NMI-1         ; NMI             new command
+00E26C  2               
+00E26C  2               ; function pre process routine table
+00E26C  2               
+00E26C  2               LAB_FTPL:
+00E26C  2               LAB_FTPM    = LAB_FTPL+$01
+00E26C  2  72 CC              .word LAB_PPFN-1        ; SGN(n)    process numeric expression in ()
+00E26E  2  72 CC              .word LAB_PPFN-1        ; INT(n)          "
+00E270  2  72 CC              .word LAB_PPFN-1        ; ABS(n)          "
+00E272  2  E8 CA              .word LAB_EVEZ-1        ; USR(x)    process any expression
+00E274  2  EB CB              .word LAB_1BF7-1        ; FRE(x)          "
+00E276  2  EB CB              .word LAB_1BF7-1        ; POS(x)          "
+00E278  2  72 CC              .word LAB_PPFN-1        ; SQR(n)    process numeric expression in ()
+00E27A  2  72 CC              .word LAB_PPFN-1        ; RND(n)          "
+00E27C  2  72 CC              .word LAB_PPFN-1        ; LOG(n)          "
+00E27E  2  72 CC              .word LAB_PPFN-1        ; EXP(n)          "
+00E280  2  72 CC              .word LAB_PPFN-1        ; COS(n)          "
+00E282  2  72 CC              .word LAB_PPFN-1        ; SIN(n)          "
+00E284  2  72 CC              .word LAB_PPFN-1        ; TAN(n)          "
+00E286  2  72 CC              .word LAB_PPFN-1        ; ATN(n)          "
+00E288  2  72 CC              .word LAB_PPFN-1        ; PEEK(n)         "
+00E28A  2  72 CC              .word LAB_PPFN-1        ; DEEK(n)         "
+00E28C  2  00 00              .word $0000             ; SADD()    none
+00E28E  2  6C CC              .word LAB_PPFS-1        ; LEN($)    process string expression in ()
+00E290  2  72 CC              .word LAB_PPFN-1        ; STR$(n)   process numeric expression in ()
+00E292  2  6C CC              .word LAB_PPFS-1        ; VAL($)    process string expression in ()
+00E294  2  6C CC              .word LAB_PPFS-1        ; ASC($)          "
+00E296  2  6C CC              .word LAB_PPFS-1        ; UCASE$($)       "
+00E298  2  6C CC              .word LAB_PPFS-1        ; LCASE$($)       "
+00E29A  2  72 CC              .word LAB_PPFN-1        ; CHR$(n)   process numeric expression in ()
+00E29C  2  99 CC              .word LAB_BHSS-1        ; HEX$(n)         "
+00E29E  2  99 CC              .word LAB_BHSS-1        ; BIN$(n)         "
+00E2A0  2  00 00              .word $0000             ; BITTST()  none
+00E2A2  2  8B DF              .word LAB_MMPP-1        ; MAX()     process numeric expression
+00E2A4  2  8B DF              .word LAB_MMPP-1        ; MIN()           "
+00E2A6  2  78 CC              .word LAB_PPBI-1        ; PI        advance pointer
+00E2A8  2  78 CC              .word LAB_PPBI-1        ; TWOPI           "
+00E2AA  2  00 00              .word $0000             ; VARPTR()  none
+00E2AC  2  7D CC              .word LAB_LRMS-1        ; LEFT$()   process string expression
+00E2AE  2  7D CC              .word LAB_LRMS-1        ; RIGHT$()        "
+00E2B0  2  7D CC              .word LAB_LRMS-1        ; MID$()          "
+00E2B2  2               
+00E2B2  2               ; action addresses for functions
+00E2B2  2               
+00E2B2  2               LAB_FTBL:
+00E2B2  2               LAB_FTBM    = LAB_FTBL+$01
+00E2B2  2  03 D9              .word LAB_SGN-1         ; SGN()
+00E2B4  2  8D D9              .word LAB_INT-1         ; INT()
+00E2B6  2  20 D9              .word LAB_ABS-1         ; ABS()
+00E2B8  2  59 DD              .word LAB_USR-1         ; USR()
+00E2BA  2  52 D0              .word LAB_FRE-1         ; FRE()
+00E2BC  2  71 D0              .word LAB_POS-1         ; POS()
+00E2BE  2  4A E0              .word LAB_SQR-1         ; SQR()
+00E2C0  2  A9 DC              .word LAB_RND-1         ; RND()           modified function
+00E2C2  2  07 D7              .word LAB_LOG-1         ; LOG()
+00E2C4  2  0B DC              .word LAB_EXP-1         ; EXP()
+00E2C6  2  DD DC              .word LAB_COS-1         ; COS()
+00E2C8  2  E4 DC              .word LAB_SIN-1         ; SIN()
+00E2CA  2  2D DD              .word LAB_TAN-1         ; TAN()
+00E2CC  2  5F DD              .word LAB_ATN-1         ; ATN()
+00E2CE  2  0F D5              .word LAB_PEEK-1        ; PEEK()
+00E2D0  2  23 D5              .word LAB_DEEK-1        ; DEEK()          new function
+00E2D2  2  68 D4              .word LAB_SADD-1        ; SADD()          new function
+00E2D4  2  81 D4              .word LAB_LENS-1        ; LEN()
+00E2D6  2  33 D1              .word LAB_STRS-1        ; STR$()
+00E2D8  2  AE D4              .word LAB_VAL-1         ; VAL()
+00E2DA  2  8C D4              .word LAB_ASC-1         ; ASC()
+00E2DC  2  46 D4              .word LAB_UCASE-1       ; UCASE$()        new function
+00E2DE  2  25 D4              .word LAB_LCASE-1       ; LCASE$()        new function
+00E2E0  2  97 D3              .word LAB_CHRS-1        ; CHR$()
+00E2E2  2  2F DE              .word LAB_HEXS-1        ; HEX$()          new function
+00E2E4  2  E0 DD              .word LAB_BINS-1        ; BIN$()          new function
+00E2E6  2  B8 DD              .word LAB_BTST-1        ; BITTST()        new function
+00E2E8  2  91 DF              .word LAB_MAX-1         ; MAX()           new function
+00E2EA  2  A1 DF              .word LAB_MIN-1         ; MIN()           new function
+00E2EC  2  E7 E0              .word LAB_PI-1          ; PI              new function
+00E2EE  2  F1 E0              .word LAB_TWOPI-1       ; TWOPI           new function
+00E2F0  2  D7 E0              .word LAB_VARPTR-1      ; VARPTR()        new function
+00E2F2  2  A9 D3              .word LAB_LEFT-1        ; LEFT$()
+00E2F4  2  B2 D3              .word LAB_RIGHT-1       ; RIGHT$()
+00E2F6  2  E1 D3              .word LAB_MIDS-1        ; MID$()
+00E2F8  2               
+00E2F8  2               ; hierarchy and action addresses for operator
+00E2F8  2               
+00E2F8  2               LAB_OPPT:
+00E2F8  2  79                 .byte $79               ; +
+00E2F9  2  CD D5              .word LAB_ADD-1
+00E2FB  2  79                 .byte $79               ; -
+00E2FC  2  B2 D5              .word LAB_SUBTRACT-1
+00E2FE  2  7B                 .byte $7B               ; *
+00E2FF  2  48 D7              .word LAB_MULTIPLY-1
+00E301  2  7B                 .byte $7B               ; /
+00E302  2  10 D8              .word LAB_DIVIDE-1
+00E304  2  7F                 .byte $7F               ; ^
+00E305  2  C7 DB              .word LAB_POWER-1
+00E307  2  50                 .byte $50               ; AND
+00E308  2  E2 CC              .word LAB_AND-1
+00E30A  2  46                 .byte $46               ; EOR             new operator
+00E30B  2  C8 CC              .word LAB_EOR-1
+00E30D  2  46                 .byte $46               ; OR
+00E30E  2  D5 CC              .word LAB_OR-1
+00E310  2  56                 .byte $56               ; >>              new operator
+00E311  2  8E CD              .word LAB_RSHIFT-1
+00E313  2  56                 .byte $56               ; <<              new operator
+00E314  2  76 CD              .word LAB_LSHIFT-1
+00E316  2  7D                 .byte $7D               ; >
+00E317  2  00 DC              .word LAB_GTHAN-1
+00E319  2  5A                 .byte $5A               ; =
+00E31A  2  16 CC              .word LAB_EQUAL-1
+00E31C  2  64                 .byte $64               ; <
+00E31D  2  03 CD              .word LAB_LTHAN-1
+00E31F  2               
+00E31F  2               ; keywords start with ..
+00E31F  2               ; this is the first character table and must be in alphabetic order
+00E31F  2               
+00E31F  2               TAB_1STC:
+00E31F  2  2A                 .byte "*"
+00E320  2  2B                 .byte "+"
+00E321  2  2D                 .byte "-"
+00E322  2  2F                 .byte "/"
+00E323  2  3C                 .byte "<"
+00E324  2  3D                 .byte "="
+00E325  2  3E                 .byte ">"
+00E326  2  3F                 .byte "?"
+00E327  2  41                 .byte "A"
+00E328  2  42                 .byte "B"
+00E329  2  43                 .byte "C"
+00E32A  2  44                 .byte "D"
+00E32B  2  45                 .byte "E"
+00E32C  2  46                 .byte "F"
+00E32D  2  47                 .byte "G"
+00E32E  2  48                 .byte "H"
+00E32F  2  49                 .byte "I"
+00E330  2  4C                 .byte "L"
+00E331  2  4D                 .byte "M"
+00E332  2  4E                 .byte "N"
+00E333  2  4F                 .byte "O"
+00E334  2  50                 .byte "P"
+00E335  2  52                 .byte "R"
+00E336  2  53                 .byte "S"
+00E337  2  54                 .byte "T"
+00E338  2  55                 .byte "U"
+00E339  2  56                 .byte "V"
+00E33A  2  57                 .byte "W"
+00E33B  2  5E                 .byte "^"
+00E33C  2  00                 .byte $00               ; table terminator
+00E33D  2               
+00E33D  2               ; pointers to keyword tables
+00E33D  2               
+00E33D  2               TAB_CHRT:
+00E33D  2  77 E3              .word TAB_STAR          ; table for "*"
+00E33F  2  79 E3              .word TAB_PLUS          ; table for "+"
+00E341  2  7B E3              .word TAB_MNUS          ; table for "-"
+00E343  2  7D E3              .word TAB_SLAS          ; table for "/"
+00E345  2  7F E3              .word TAB_LESS          ; table for "<"
+00E347  2  83 E3              .word TAB_EQUL          ; table for "="
+00E349  2  85 E3              .word TAB_MORE          ; table for ">"
+00E34B  2  89 E3              .word TAB_QEST          ; table for "?"
+00E34D  2  8B E3              .word TAB_ASCA          ; table for "A"
+00E34F  2  9B E3              .word TAB_ASCB          ; table for "B"
+00E351  2  B4 E3              .word TAB_ASCC          ; table for "C"
+00E353  2  CB E3              .word TAB_ASCD          ; table for "D"
+00E355  2  E4 E3              .word TAB_ASCE          ; table for "E"
+00E357  2  F3 E3              .word TAB_ASCF          ; table for "F"
+00E359  2  FD E3              .word TAB_ASCG          ; table for "G"
+00E35B  2  0A E4              .word TAB_ASCH          ; table for "H"
+00E35D  2  10 E4              .word TAB_ASCI          ; table for "I"
+00E35F  2  22 E4              .word TAB_ASCL          ; table for "L"
+00E361  2  47 E4              .word TAB_ASCM          ; table for "M"
+00E363  2  55 E4              .word TAB_ASCN          ; table for "N"
+00E365  2  67 E4              .word TAB_ASCO          ; table for "O"
+00E367  2  6F E4              .word TAB_ASCP          ; table for "P"
+00E369  2  84 E4              .word TAB_ASCR          ; table for "R"
+00E36B  2  B3 E4              .word TAB_ASCS          ; table for "S"
+00E36D  2  DE E4              .word TAB_ASCT          ; table for "T"
+00E36F  2  F2 E4              .word TAB_ASCU          ; table for "U"
+00E371  2  03 E5              .word TAB_ASCV          ; table for "V"
+00E373  2  0F E5              .word TAB_ASCW          ; table for "W"
+00E375  2  1E E5              .word TAB_POWR          ; table for "^"
+00E377  2               
+00E377  2               ; tables for each start character, note if a longer keyword with the same start
+00E377  2               ; letters as a shorter one exists then it must come first, else the list is in
+00E377  2               ; alphabetical order as follows ..
+00E377  2               
+00E377  2               ; [keyword,token
+00E377  2               ; [keyword,token]]
+00E377  2               ; end marker (#$00)
+00E377  2               
+00E377  2               TAB_STAR:
+00E377  2  B8 00              .byte TK_MUL,$00        ; *
+00E379  2               TAB_PLUS:
+00E379  2  B6 00              .byte TK_PLUS,$00       ; +
+00E37B  2               TAB_MNUS:
+00E37B  2  B7 00              .byte TK_MINUS,$00      ; -
+00E37D  2               TAB_SLAS:
+00E37D  2  B9 00              .byte TK_DIV,$00        ; /
+00E37F  2               TAB_LESS:
+00E37F  2               LBB_LSHIFT:
+00E37F  2  3C BF              .byte "<",TK_LSHIFT     ; <<  note - "<<" must come before "<"
+00E381  2  C2                 .byte TK_LT             ; <
+00E382  2  00                 .byte $00
+00E383  2               TAB_EQUL:
+00E383  2  C1 00              .byte TK_EQUAL,$00      ; =
+00E385  2               TAB_MORE:
+00E385  2               LBB_RSHIFT:
+00E385  2  3E BE              .byte ">",TK_RSHIFT     ; >>  note - ">>" must come before ">"
+00E387  2  C0                 .byte TK_GT             ; >
+00E388  2  00                 .byte $00
+00E389  2               TAB_QEST:
+00E389  2  9F 00              .byte TK_PRINT,$00      ; ?
+00E38B  2               TAB_ASCA:
+00E38B  2               LBB_ABS:
+00E38B  2  42 53 28 C5        .byte "BS(",TK_ABS      ; ABS(
+00E38F  2               LBB_AND:
+00E38F  2  4E 44 BB           .byte "ND",TK_AND       ; AND
+00E392  2               LBB_ASC:
+00E392  2  53 43 28 D7        .byte "SC(",TK_ASC      ; ASC(
+00E396  2               LBB_ATN:
+00E396  2  54 4E 28 D0        .byte "TN(",TK_ATN      ; ATN(
+00E39A  2  00                 .byte $00
+00E39B  2               TAB_ASCB:
+00E39B  2               LBB_BINS:
+00E39B  2  49 4E 24 28        .byte "IN$(",TK_BINS    ; BIN$(
+00E39F  2  DC           
+00E3A0  2               LBB_BITCLR:
+00E3A0  2  49 54 43 4C        .byte "ITCLR",TK_BITCLR ; BITCLR
+00E3A4  2  52 A8        
+00E3A6  2               LBB_BITSET:
+00E3A6  2  49 54 53 45        .byte "ITSET",TK_BITSET ; BITSET
+00E3AA  2  54 A7        
+00E3AC  2               LBB_BITTST:
+00E3AC  2  49 54 54 53        .byte "ITTST(",TK_BITTST
+00E3B0  2  54 28 DD     
+00E3B3  2                                             ; BITTST(
+00E3B3  2  00                 .byte $00
+00E3B4  2               TAB_ASCC:
+00E3B4  2               LBB_CALL:
+00E3B4  2  41 4C 4C 9C        .byte "ALL",TK_CALL     ; CALL
+00E3B8  2               LBB_CHRS:
+00E3B8  2  48 52 24 28        .byte "HR$(",TK_CHRS    ; CHR$(
+00E3BC  2  DA           
+00E3BD  2               LBB_CLEAR:
+00E3BD  2  4C 45 41 52        .byte "LEAR",TK_CLEAR   ; CLEAR
+00E3C1  2  A2           
+00E3C2  2               LBB_CONT:
+00E3C2  2  4F 4E 54 A0        .byte "ONT",TK_CONT     ; CONT
+00E3C6  2               LBB_COS:
+00E3C6  2  4F 53 28 CD        .byte "OS(",TK_COS      ; COS(
+00E3CA  2  00                 .byte $00
+00E3CB  2               TAB_ASCD:
+00E3CB  2               LBB_DATA:
+00E3CB  2  41 54 41 83        .byte "ATA",TK_DATA     ; DATA
+00E3CF  2               LBB_DEC:
+00E3CF  2  45 43 88           .byte "EC",TK_DEC       ; DEC
+00E3D2  2               LBB_DEEK:
+00E3D2  2  45 45 4B 28        .byte "EEK(",TK_DEEK    ; DEEK(
+00E3D6  2  D2           
+00E3D7  2               LBB_DEF:
+00E3D7  2  45 46 99           .byte "EF",TK_DEF       ; DEF
+00E3DA  2               LBB_DIM:
+00E3DA  2  49 4D 85           .byte "IM",TK_DIM       ; DIM
+00E3DD  2               LBB_DOKE:
+00E3DD  2  4F 4B 45 9B        .byte "OKE",TK_DOKE     ; DOKE note - "DOKE" must come before "DO"
+00E3E1  2               LBB_DO:
+00E3E1  2  4F 9D              .byte "O",TK_DO         ; DO
+00E3E3  2  00                 .byte $00
+00E3E4  2               TAB_ASCE:
+00E3E4  2               LBB_ELSE:
+00E3E4  2  4C 53 45 AC        .byte "LSE",TK_ELSE     ; ELSE
+00E3E8  2               LBB_END:
+00E3E8  2  4E 44 80           .byte "ND",TK_END       ; END
+00E3EB  2               LBB_EOR:
+00E3EB  2  4F 52 BC           .byte "OR",TK_EOR       ; EOR
+00E3EE  2               LBB_EXP:
+00E3EE  2  58 50 28 CC        .byte "XP(",TK_EXP      ; EXP(
+00E3F2  2  00                 .byte $00
+00E3F3  2               TAB_ASCF:
+00E3F3  2               LBB_FN:
+00E3F3  2  4E AE              .byte "N",TK_FN         ; FN
+00E3F5  2               LBB_FOR:
+00E3F5  2  4F 52 81           .byte "OR",TK_FOR       ; FOR
+00E3F8  2               LBB_FRE:
+00E3F8  2  52 45 28 C7        .byte "RE(",TK_FRE      ; FRE(
+00E3FC  2  00                 .byte $00
+00E3FD  2               TAB_ASCG:
+00E3FD  2               LBB_GET:
+00E3FD  2  45 54 A5           .byte "ET",TK_GET       ; GET
+00E400  2               LBB_GOSUB:
+00E400  2  4F 53 55 42        .byte "OSUB",TK_GOSUB   ; GOSUB
+00E404  2  8D           
+00E405  2               LBB_GOTO:
+00E405  2  4F 54 4F 89        .byte "OTO",TK_GOTO     ; GOTO
+00E409  2  00                 .byte $00
+00E40A  2               TAB_ASCH:
+00E40A  2               LBB_HEXS:
+00E40A  2  45 58 24 28        .byte "EX$(",TK_HEXS    ; HEX$(
+00E40E  2  DB           
+00E40F  2  00                 .byte $00
+00E410  2               TAB_ASCI:
+00E410  2               LBB_IF:
+00E410  2  46 8B              .byte "F",TK_IF         ; IF
+00E412  2               LBB_INC:
+00E412  2  4E 43 95           .byte "NC",TK_INC       ; INC
+00E415  2               LBB_INPUT:
+00E415  2  4E 50 55 54        .byte "NPUT",TK_INPUT   ; INPUT
+00E419  2  84           
+00E41A  2               LBB_INT:
+00E41A  2  4E 54 28 C4        .byte "NT(",TK_INT      ; INT(
+00E41E  2               LBB_IRQ:
+00E41E  2  52 51 A9           .byte "RQ",TK_IRQ       ; IRQ
+00E421  2  00                 .byte $00
+00E422  2               TAB_ASCL:
+00E422  2               LBB_LCASES:
+00E422  2  43 41 53 45        .byte "CASE$(",TK_LCASES
+00E426  2  24 28 D9     
+00E429  2                                             ; LCASE$(
+00E429  2               LBB_LEFTS:
+00E429  2  45 46 54 24        .byte "EFT$(",TK_LEFTS  ; LEFT$(
+00E42D  2  28 E3        
+00E42F  2               LBB_LEN:
+00E42F  2  45 4E 28 D4        .byte "EN(",TK_LEN      ; LEN(
+00E433  2               LBB_LET:
+00E433  2  45 54 87           .byte "ET",TK_LET       ; LET
+00E436  2               LBB_LIST:
+00E436  2  49 53 54 A1        .byte "IST",TK_LIST     ; LIST
+00E43A  2               LBB_LOAD:
+00E43A  2  4F 41 44 97        .byte "OAD",TK_LOAD     ; LOAD
+00E43E  2               LBB_LOG:
+00E43E  2  4F 47 28 CB        .byte "OG(",TK_LOG      ; LOG(
+00E442  2               LBB_LOOP:
+00E442  2  4F 4F 50 9E        .byte "OOP",TK_LOOP     ; LOOP
+00E446  2  00                 .byte $00
+00E447  2               TAB_ASCM:
+00E447  2               LBB_MAX:
+00E447  2  41 58 28 DE        .byte "AX(",TK_MAX      ; MAX(
+00E44B  2               LBB_MIDS:
+00E44B  2  49 44 24 28        .byte "ID$(",TK_MIDS    ; MID$(
+00E44F  2  E5           
+00E450  2               LBB_MIN:
+00E450  2  49 4E 28 DF        .byte "IN(",TK_MIN      ; MIN(
+00E454  2  00                 .byte $00
+00E455  2               TAB_ASCN:
+00E455  2               LBB_NEW:
+00E455  2  45 57 A3           .byte "EW",TK_NEW       ; NEW
+00E458  2               LBB_NEXT:
+00E458  2  45 58 54 82        .byte "EXT",TK_NEXT     ; NEXT
+00E45C  2               LBB_NMI:
+00E45C  2  4D 49 AA           .byte "MI",TK_NMI       ; NMI
+00E45F  2               LBB_NOT:
+00E45F  2  4F 54 B1           .byte "OT",TK_NOT       ; NOT
+00E462  2               LBB_NULL:
+00E462  2  55 4C 4C 94        .byte "ULL",TK_NULL     ; NULL
+00E466  2  00                 .byte $00
+00E467  2               TAB_ASCO:
+00E467  2               LBB_OFF:
+00E467  2  46 46 B5           .byte "FF",TK_OFF       ; OFF
+00E46A  2               LBB_ON:
+00E46A  2  4E 93              .byte "N",TK_ON         ; ON
+00E46C  2               LBB_OR:
+00E46C  2  52 BD              .byte "R",TK_OR         ; OR
+00E46E  2  00                 .byte $00
+00E46F  2               TAB_ASCP:
+00E46F  2               LBB_PEEK:
+00E46F  2  45 45 4B 28        .byte "EEK(",TK_PEEK    ; PEEK(
+00E473  2  D1           
+00E474  2               LBB_PI:
+00E474  2  49 E0              .byte "I",TK_PI         ; PI
+00E476  2               LBB_POKE:
+00E476  2  4F 4B 45 9A        .byte "OKE",TK_POKE     ; POKE
+00E47A  2               LBB_POS:
+00E47A  2  4F 53 28 C8        .byte "OS(",TK_POS      ; POS(
+00E47E  2               LBB_PRINT:
+00E47E  2  52 49 4E 54        .byte "RINT",TK_PRINT   ; PRINT
+00E482  2  9F           
+00E483  2  00                 .byte $00
+00E484  2               TAB_ASCR:
+00E484  2               LBB_READ:
+00E484  2  45 41 44 86        .byte "EAD",TK_READ     ; READ
+00E488  2               LBB_REM:
+00E488  2  45 4D 91           .byte "EM",TK_REM       ; REM
+00E48B  2               LBB_RESTORE:
+00E48B  2  45 53 54 4F        .byte "ESTORE",TK_RESTORE
+00E48F  2  52 45 8C     
+00E492  2                                             ; RESTORE
+00E492  2               LBB_RETIRQ:
+00E492  2  45 54 49 52        .byte "ETIRQ",TK_RETIRQ ; RETIRQ
+00E496  2  51 8E        
+00E498  2               LBB_RETNMI:
+00E498  2  45 54 4E 4D        .byte "ETNMI",TK_RETNMI ; RETNMI
+00E49C  2  49 8F        
+00E49E  2               LBB_RETURN:
+00E49E  2  45 54 55 52        .byte "ETURN",TK_RETURN ; RETURN
+00E4A2  2  4E 90        
+00E4A4  2               LBB_RIGHTS:
+00E4A4  2  49 47 48 54        .byte "IGHT$(",TK_RIGHTS
+00E4A8  2  24 28 E4     
+00E4AB  2                                             ; RIGHT$(
+00E4AB  2               LBB_RND:
+00E4AB  2  4E 44 28 CA        .byte "ND(",TK_RND      ; RND(
+00E4AF  2               LBB_RUN:
+00E4AF  2  55 4E 8A           .byte "UN",TK_RUN       ; RUN
+00E4B2  2  00                 .byte $00
+00E4B3  2               TAB_ASCS:
+00E4B3  2               LBB_SADD:
+00E4B3  2  41 44 44 28        .byte "ADD(",TK_SADD    ; SADD(
+00E4B7  2  D3           
+00E4B8  2               LBB_SAVE:
+00E4B8  2  41 56 45 98        .byte "AVE",TK_SAVE     ; SAVE
+00E4BC  2               LBB_SGN:
+00E4BC  2  47 4E 28 C3        .byte "GN(",TK_SGN      ; SGN(
+00E4C0  2               LBB_SIN:
+00E4C0  2  49 4E 28 CE        .byte "IN(",TK_SIN      ; SIN(
+00E4C4  2               LBB_SPC:
+00E4C4  2  50 43 28 AF        .byte "PC(",TK_SPC      ; SPC(
+00E4C8  2               LBB_SQR:
+00E4C8  2  51 52 28 C9        .byte "QR(",TK_SQR      ; SQR(
+00E4CC  2               LBB_STEP:
+00E4CC  2  54 45 50 B2        .byte "TEP",TK_STEP     ; STEP
+00E4D0  2               LBB_STOP:
+00E4D0  2  54 4F 50 92        .byte "TOP",TK_STOP     ; STOP
+00E4D4  2               LBB_STRS:
+00E4D4  2  54 52 24 28        .byte "TR$(",TK_STRS    ; STR$(
+00E4D8  2  D5           
+00E4D9  2               LBB_SWAP:
+00E4D9  2  57 41 50 A6        .byte "WAP",TK_SWAP     ; SWAP
+00E4DD  2  00                 .byte $00
+00E4DE  2               TAB_ASCT:
+00E4DE  2               LBB_TAB:
+00E4DE  2  41 42 28 AB        .byte "AB(",TK_TAB      ; TAB(
+00E4E2  2               LBB_TAN:
+00E4E2  2  41 4E 28 CF        .byte "AN(",TK_TAN      ; TAN(
+00E4E6  2               LBB_THEN:
+00E4E6  2  48 45 4E B0        .byte "HEN",TK_THEN     ; THEN
+00E4EA  2               LBB_TO:
+00E4EA  2  4F AD              .byte "O",TK_TO         ; TO
+00E4EC  2               LBB_TWOPI:
+00E4EC  2  57 4F 50 49        .byte "WOPI",TK_TWOPI   ; TWOPI
+00E4F0  2  E1           
+00E4F1  2  00                 .byte $00
+00E4F2  2               TAB_ASCU:
+00E4F2  2               LBB_UCASES:
+00E4F2  2  43 41 53 45        .byte "CASE$(",TK_UCASES
+00E4F6  2  24 28 D8     
+00E4F9  2                                             ; UCASE$(
+00E4F9  2               LBB_UNTIL:
+00E4F9  2  4E 54 49 4C        .byte "NTIL",TK_UNTIL   ; UNTIL
+00E4FD  2  B3           
+00E4FE  2               LBB_USR:
+00E4FE  2  53 52 28 C6        .byte "SR(",TK_USR      ; USR(
+00E502  2  00                 .byte $00
+00E503  2               TAB_ASCV:
+00E503  2               LBB_VAL:
+00E503  2  41 4C 28 D6        .byte "AL(",TK_VAL      ; VAL(
+00E507  2               LBB_VPTR:
+00E507  2  41 52 50 54        .byte "ARPTR(",TK_VPTR  ; VARPTR(
+00E50B  2  52 28 E2     
+00E50E  2  00                 .byte $00
+00E50F  2               TAB_ASCW:
+00E50F  2               LBB_WAIT:
+00E50F  2  41 49 54 96        .byte "AIT",TK_WAIT     ; WAIT
+00E513  2               LBB_WHILE:
+00E513  2  48 49 4C 45        .byte "HILE",TK_WHILE   ; WHILE
+00E517  2  B4           
+00E518  2               LBB_WIDTH:
+00E518  2  49 44 54 48        .byte "IDTH",TK_WIDTH   ; WIDTH
+00E51C  2  A4           
+00E51D  2  00                 .byte $00
+00E51E  2               TAB_POWR:
+00E51E  2  BA 00              .byte TK_POWER,$00      ; ^
+00E520  2               
+00E520  2               ; new decode table for LIST
+00E520  2               ; Table is ..
+00E520  2               ; byte - keyword length, keyword first character
+00E520  2               ; word - pointer to rest of keyword from dictionary
+00E520  2               
+00E520  2               ; note if length is 1 then the pointer is ignored
+00E520  2               
+00E520  2               LAB_KEYT:
+00E520  2  03 45              .byte 3,'E'
+00E522  2  E8 E3              .word LBB_END           ; END
+00E524  2  03 46              .byte 3,'F'
+00E526  2  F5 E3              .word LBB_FOR           ; FOR
+00E528  2  04 4E              .byte 4,'N'
+00E52A  2  58 E4              .word LBB_NEXT          ; NEXT
+00E52C  2  04 44              .byte 4,'D'
+00E52E  2  CB E3              .word LBB_DATA          ; DATA
+00E530  2  05 49              .byte 5,'I'
+00E532  2  15 E4              .word LBB_INPUT         ; INPUT
+00E534  2  03 44              .byte 3,'D'
+00E536  2  DA E3              .word LBB_DIM           ; DIM
+00E538  2  04 52              .byte 4,'R'
+00E53A  2  84 E4              .word LBB_READ          ; READ
+00E53C  2  03 4C              .byte 3,'L'
+00E53E  2  33 E4              .word LBB_LET           ; LET
+00E540  2  03 44              .byte 3,'D'
+00E542  2  CF E3              .word LBB_DEC           ; DEC
+00E544  2  04 47              .byte 4,'G'
+00E546  2  05 E4              .word LBB_GOTO          ; GOTO
+00E548  2  03 52              .byte 3,'R'
+00E54A  2  AF E4              .word LBB_RUN           ; RUN
+00E54C  2  02 49              .byte 2,'I'
+00E54E  2  10 E4              .word LBB_IF            ; IF
+00E550  2  07 52              .byte 7,'R'
+00E552  2  8B E4              .word LBB_RESTORE       ; RESTORE
+00E554  2  05 47              .byte 5,'G'
+00E556  2  00 E4              .word LBB_GOSUB         ; GOSUB
+00E558  2  06 52              .byte 6,'R'
+00E55A  2  92 E4              .word LBB_RETIRQ        ; RETIRQ
+00E55C  2  06 52              .byte 6,'R'
+00E55E  2  98 E4              .word LBB_RETNMI        ; RETNMI
+00E560  2  06 52              .byte 6,'R'
+00E562  2  9E E4              .word LBB_RETURN        ; RETURN
+00E564  2  03 52              .byte 3,'R'
+00E566  2  88 E4              .word LBB_REM           ; REM
+00E568  2  04 53              .byte 4,'S'
+00E56A  2  D0 E4              .word LBB_STOP          ; STOP
+00E56C  2  02 4F              .byte 2,'O'
+00E56E  2  6A E4              .word LBB_ON            ; ON
+00E570  2  04 4E              .byte 4,'N'
+00E572  2  62 E4              .word LBB_NULL          ; NULL
+00E574  2  03 49              .byte 3,'I'
+00E576  2  12 E4              .word LBB_INC           ; INC
+00E578  2  04 57              .byte 4,'W'
+00E57A  2  0F E5              .word LBB_WAIT          ; WAIT
+00E57C  2  04 4C              .byte 4,'L'
+00E57E  2  3A E4              .word LBB_LOAD          ; LOAD
+00E580  2  04 53              .byte 4,'S'
+00E582  2  B8 E4              .word LBB_SAVE          ; SAVE
+00E584  2  03 44              .byte 3,'D'
+00E586  2  D7 E3              .word LBB_DEF           ; DEF
+00E588  2  04 50              .byte 4,'P'
+00E58A  2  76 E4              .word LBB_POKE          ; POKE
+00E58C  2  04 44              .byte 4,'D'
+00E58E  2  DD E3              .word LBB_DOKE          ; DOKE
+00E590  2  04 43              .byte 4,'C'
+00E592  2  B4 E3              .word LBB_CALL          ; CALL
+00E594  2  02 44              .byte 2,'D'
+00E596  2  E1 E3              .word LBB_DO            ; DO
+00E598  2  04 4C              .byte 4,'L'
+00E59A  2  42 E4              .word LBB_LOOP          ; LOOP
+00E59C  2  05 50              .byte 5,'P'
+00E59E  2  7E E4              .word LBB_PRINT         ; PRINT
+00E5A0  2  04 43              .byte 4,'C'
+00E5A2  2  C2 E3              .word LBB_CONT          ; CONT
+00E5A4  2  04 4C              .byte 4,'L'
+00E5A6  2  36 E4              .word LBB_LIST          ; LIST
+00E5A8  2  05 43              .byte 5,'C'
+00E5AA  2  BD E3              .word LBB_CLEAR         ; CLEAR
+00E5AC  2  03 4E              .byte 3,'N'
+00E5AE  2  55 E4              .word LBB_NEW           ; NEW
+00E5B0  2  05 57              .byte 5,'W'
+00E5B2  2  18 E5              .word LBB_WIDTH         ; WIDTH
+00E5B4  2  03 47              .byte 3,'G'
+00E5B6  2  FD E3              .word LBB_GET           ; GET
+00E5B8  2  04 53              .byte 4,'S'
+00E5BA  2  D9 E4              .word LBB_SWAP          ; SWAP
+00E5BC  2  06 42              .byte 6,'B'
+00E5BE  2  A6 E3              .word LBB_BITSET        ; BITSET
+00E5C0  2  06 42              .byte 6,'B'
+00E5C2  2  A0 E3              .word LBB_BITCLR        ; BITCLR
+00E5C4  2  03 49              .byte 3,'I'
+00E5C6  2  1E E4              .word LBB_IRQ           ; IRQ
+00E5C8  2  03 4E              .byte 3,'N'
+00E5CA  2  5C E4              .word LBB_NMI           ; NMI
+00E5CC  2               
+00E5CC  2               ; secondary commands (can't start a statement)
+00E5CC  2               
+00E5CC  2  04 54              .byte 4,'T'
+00E5CE  2  DE E4              .word LBB_TAB           ; TAB
+00E5D0  2  04 45              .byte 4,'E'
+00E5D2  2  E4 E3              .word LBB_ELSE          ; ELSE
+00E5D4  2  02 54              .byte 2,'T'
+00E5D6  2  EA E4              .word LBB_TO            ; TO
+00E5D8  2  02 46              .byte 2,'F'
+00E5DA  2  F3 E3              .word LBB_FN            ; FN
+00E5DC  2  04 53              .byte 4,'S'
+00E5DE  2  C4 E4              .word LBB_SPC           ; SPC
+00E5E0  2  04 54              .byte 4,'T'
+00E5E2  2  E6 E4              .word LBB_THEN          ; THEN
+00E5E4  2  03 4E              .byte 3,'N'
+00E5E6  2  5F E4              .word LBB_NOT           ; NOT
+00E5E8  2  04 53              .byte 4,'S'
+00E5EA  2  CC E4              .word LBB_STEP          ; STEP
+00E5EC  2  05 55              .byte 5,'U'
+00E5EE  2  F9 E4              .word LBB_UNTIL         ; UNTIL
+00E5F0  2  05 57              .byte 5,'W'
+00E5F2  2  13 E5              .word LBB_WHILE         ; WHILE
+00E5F4  2  03 4F              .byte 3,'O'
+00E5F6  2  67 E4              .word LBB_OFF           ; OFF
+00E5F8  2               
+00E5F8  2               ; opperators
+00E5F8  2               
+00E5F8  2  01 2B              .byte 1,'+'
+00E5FA  2  00 00              .word $0000             ; +
+00E5FC  2  01 2D              .byte 1,'-'
+00E5FE  2  00 00              .word $0000             ; -
+00E600  2  01 2A              .byte 1,'*'
+00E602  2  00 00              .word $0000             ; *
+00E604  2  01 2F              .byte 1,'/'
+00E606  2  00 00              .word $0000             ; /
+00E608  2  01 5E              .byte 1,'^'
+00E60A  2  00 00              .word $0000             ; ^
+00E60C  2  03 41              .byte 3,'A'
+00E60E  2  8F E3              .word LBB_AND           ; AND
+00E610  2  03 45              .byte 3,'E'
+00E612  2  EB E3              .word LBB_EOR           ; EOR
+00E614  2  02 4F              .byte 2,'O'
+00E616  2  6C E4              .word LBB_OR            ; OR
+00E618  2  02 3E              .byte 2,'>'
+00E61A  2  85 E3              .word LBB_RSHIFT        ; >>
+00E61C  2  02 3C              .byte 2,'<'
+00E61E  2  7F E3              .word LBB_LSHIFT        ; <<
+00E620  2  01 3E              .byte 1,'>'
+00E622  2  00 00              .word $0000             ; >
+00E624  2  01 3D              .byte 1,'='
+00E626  2  00 00              .word $0000             ; =
+00E628  2  01 3C              .byte 1,'<'
+00E62A  2  00 00              .word $0000             ; <
+00E62C  2               
+00E62C  2               ; functions
+00E62C  2               
+00E62C  2  04 53              .byte 4,'S'             ;
+00E62E  2  BC E4              .word LBB_SGN           ; SGN
+00E630  2  04 49              .byte 4,'I'             ;
+00E632  2  1A E4              .word LBB_INT           ; INT
+00E634  2  04 41              .byte 4,'A'             ;
+00E636  2  8B E3              .word LBB_ABS           ; ABS
+00E638  2  04 55              .byte 4,'U'             ;
+00E63A  2  FE E4              .word LBB_USR           ; USR
+00E63C  2  04 46              .byte 4,'F'             ;
+00E63E  2  F8 E3              .word LBB_FRE           ; FRE
+00E640  2  04 50              .byte 4,'P'             ;
+00E642  2  7A E4              .word LBB_POS           ; POS
+00E644  2  04 53              .byte 4,'S'             ;
+00E646  2  C8 E4              .word LBB_SQR           ; SQR
+00E648  2  04 52              .byte 4,'R'             ;
+00E64A  2  AB E4              .word LBB_RND           ; RND
+00E64C  2  04 4C              .byte 4,'L'             ;
+00E64E  2  3E E4              .word LBB_LOG           ; LOG
+00E650  2  04 45              .byte 4,'E'             ;
+00E652  2  EE E3              .word LBB_EXP           ; EXP
+00E654  2  04 43              .byte 4,'C'             ;
+00E656  2  C6 E3              .word LBB_COS           ; COS
+00E658  2  04 53              .byte 4,'S'             ;
+00E65A  2  C0 E4              .word LBB_SIN           ; SIN
+00E65C  2  04 54              .byte 4,'T'             ;
+00E65E  2  E2 E4              .word LBB_TAN           ; TAN
+00E660  2  04 41              .byte 4,'A'             ;
+00E662  2  96 E3              .word LBB_ATN           ; ATN
+00E664  2  05 50              .byte 5,'P'             ;
+00E666  2  6F E4              .word LBB_PEEK          ; PEEK
+00E668  2  05 44              .byte 5,'D'             ;
+00E66A  2  D2 E3              .word LBB_DEEK          ; DEEK
+00E66C  2  05 53              .byte 5,'S'             ;
+00E66E  2  B3 E4              .word LBB_SADD          ; SADD
+00E670  2  04 4C              .byte 4,'L'             ;
+00E672  2  2F E4              .word LBB_LEN           ; LEN
+00E674  2  05 53              .byte 5,'S'             ;
+00E676  2  D4 E4              .word LBB_STRS          ; STR$
+00E678  2  04 56              .byte 4,'V'             ;
+00E67A  2  03 E5              .word LBB_VAL           ; VAL
+00E67C  2  04 41              .byte 4,'A'             ;
+00E67E  2  92 E3              .word LBB_ASC           ; ASC
+00E680  2  07 55              .byte 7,'U'             ;
+00E682  2  F2 E4              .word LBB_UCASES        ; UCASE$
+00E684  2  07 4C              .byte 7,'L'             ;
+00E686  2  22 E4              .word LBB_LCASES        ; LCASE$
+00E688  2  05 43              .byte 5,'C'             ;
+00E68A  2  B8 E3              .word LBB_CHRS          ; CHR$
+00E68C  2  05 48              .byte 5,'H'             ;
+00E68E  2  0A E4              .word LBB_HEXS          ; HEX$
+00E690  2  05 42              .byte 5,'B'             ;
+00E692  2  9B E3              .word LBB_BINS          ; BIN$
+00E694  2  07 42              .byte 7,'B'             ;
+00E696  2  AC E3              .word LBB_BITTST        ; BITTST
+00E698  2  04 4D              .byte 4,'M'             ;
+00E69A  2  47 E4              .word LBB_MAX           ; MAX
+00E69C  2  04 4D              .byte 4,'M'             ;
+00E69E  2  50 E4              .word LBB_MIN           ; MIN
+00E6A0  2  02 50              .byte 2,'P'             ;
+00E6A2  2  74 E4              .word LBB_PI            ; PI
+00E6A4  2  05 54              .byte 5,'T'             ;
+00E6A6  2  EC E4              .word LBB_TWOPI         ; TWOPI
+00E6A8  2  07 56              .byte 7,'V'             ;
+00E6AA  2  07 E5              .word LBB_VPTR          ; VARPTR
+00E6AC  2  06 4C              .byte 6,'L'             ;
+00E6AE  2  29 E4              .word LBB_LEFTS         ; LEFT$
+00E6B0  2  07 52              .byte 7,'R'             ;
+00E6B2  2  A4 E4              .word LBB_RIGHTS        ; RIGHT$
+00E6B4  2  05 4D              .byte 5,'M'             ;
+00E6B6  2  4B E4              .word LBB_MIDS          ; MID$
+00E6B8  2               
+00E6B8  2               ; BASIC messages, mostly error messages
+00E6B8  2               
+00E6B8  2               LAB_BAER:
+00E6B8  2  DC E6              .word ERR_NF            ;$00 NEXT without FOR
+00E6BA  2  ED E6              .word ERR_SN            ;$02 syntax
+00E6BC  2  F4 E6              .word ERR_RG            ;$04 RETURN without GOSUB
+00E6BE  2  09 E7              .word ERR_OD            ;$06 out of data
+00E6C0  2  15 E7              .word ERR_FC            ;$08 function call
+00E6C2  2  23 E7              .word ERR_OV            ;$0A overflow
+00E6C4  2  2C E7              .word ERR_OM            ;$0C out of memory
+00E6C6  2  3A E7              .word ERR_US            ;$0E undefined statement
+00E6C8  2  4E E7              .word ERR_BS            ;$10 array bounds
+00E6CA  2  5B E7              .word ERR_DD            ;$12 double dimension array
+00E6CC  2  6C E7              .word ERR_D0            ;$14 divide by 0
+00E6CE  2  7B E7              .word ERR_ID            ;$16 illegal direct
+00E6D0  2  8A E7              .word ERR_TM            ;$18 type mismatch
+00E6D2  2  98 E7              .word ERR_LS            ;$1A long string
+00E6D4  2  A8 E7              .word ERR_ST            ;$1C string too complex
+00E6D6  2  BB E7              .word ERR_CN            ;$1E continue error
+00E6D8  2  CA E7              .word ERR_UF            ;$20 undefined function
+00E6DA  2  DD E7              .word ERR_LD            ;$22 LOOP without DO
+00E6DC  2               
+00E6DC  2               ; I may implement these two errors to force definition of variables and
+00E6DC  2               ; dimensioning of arrays before use.
+00E6DC  2               
+00E6DC  2               ;     .word ERR_UV            ;$24 undefined variable
+00E6DC  2               
+00E6DC  2               ; the above error has been tested and works (see code and comments below LAB_1D8B)
+00E6DC  2               
+00E6DC  2               ;     .word ERR_UA            ;$26 undimensioned array
+00E6DC  2               
+00E6DC  2  4E 45 58 54  ERR_NF:      .byte "NEXT without FOR",$00
+00E6E0  2  20 77 69 74  
+00E6E4  2  68 6F 75 74  
+00E6ED  2  53 79 6E 74  ERR_SN:      .byte "Syntax",$00
+00E6F1  2  61 78 00     
+00E6F4  2  52 45 54 55  ERR_RG:      .byte "RETURN without GOSUB",$00
+00E6F8  2  52 4E 20 77  
+00E6FC  2  69 74 68 6F  
+00E709  2  4F 75 74 20  ERR_OD:      .byte "Out of DATA",$00
+00E70D  2  6F 66 20 44  
+00E711  2  41 54 41 00  
+00E715  2  46 75 6E 63  ERR_FC:      .byte "Function call",$00
+00E719  2  74 69 6F 6E  
+00E71D  2  20 63 61 6C  
+00E723  2  4F 76 65 72  ERR_OV:      .byte "Overflow",$00
+00E727  2  66 6C 6F 77  
+00E72B  2  00           
+00E72C  2  4F 75 74 20  ERR_OM:      .byte "Out of memory",$00
+00E730  2  6F 66 20 6D  
+00E734  2  65 6D 6F 72  
+00E73A  2  55 6E 64 65  ERR_US:      .byte "Undefined statement",$00
+00E73E  2  66 69 6E 65  
+00E742  2  64 20 73 74  
+00E74E  2  41 72 72 61  ERR_BS:      .byte "Array bounds",$00
+00E752  2  79 20 62 6F  
+00E756  2  75 6E 64 73  
+00E75B  2  44 6F 75 62  ERR_DD:      .byte "Double dimension",$00
+00E75F  2  6C 65 20 64  
+00E763  2  69 6D 65 6E  
+00E76C  2  44 69 76 69  ERR_D0:      .byte "Divide by zero",$00
+00E770  2  64 65 20 62  
+00E774  2  79 20 7A 65  
+00E77B  2  49 6C 6C 65  ERR_ID:      .byte "Illegal direct",$00
+00E77F  2  67 61 6C 20  
+00E783  2  64 69 72 65  
+00E78A  2  54 79 70 65  ERR_TM:      .byte "Type mismatch",$00
+00E78E  2  20 6D 69 73  
+00E792  2  6D 61 74 63  
+00E798  2  53 74 72 69  ERR_LS:      .byte "String too long",$00
+00E79C  2  6E 67 20 74  
+00E7A0  2  6F 6F 20 6C  
+00E7A8  2  53 74 72 69  ERR_ST:      .byte "String too complex",$00
+00E7AC  2  6E 67 20 74  
+00E7B0  2  6F 6F 20 63  
+00E7BB  2  43 61 6E 27  ERR_CN:      .byte "Can't continue",$00
+00E7BF  2  74 20 63 6F  
+00E7C3  2  6E 74 69 6E  
+00E7CA  2  55 6E 64 65  ERR_UF:      .byte "Undefined function",$00
+00E7CE  2  66 69 6E 65  
+00E7D2  2  64 20 66 75  
+00E7DD  2  4C 4F 4F 50  ERR_LD:      .byte "LOOP without DO",$00
+00E7E1  2  20 77 69 74  
+00E7E5  2  68 6F 75 74  
+00E7ED  2               
+00E7ED  2               ;ERR_UV     .byte "Undefined variable",$00
+00E7ED  2               
+00E7ED  2               ; the above error has been tested and works (see code and comments below LAB_1D8B)
+00E7ED  2               
+00E7ED  2               ;ERR_UA     .byte "Undimensioned array",$00
+00E7ED  2               
+00E7ED  2  0D 0A 42 72  LAB_BMSG:    .byte $0D,$0A,"Break",$00
+00E7F1  2  65 61 6B 00  
+00E7F5  2  20 45 72 72  LAB_EMSG:    .byte " Error",$00
+00E7F9  2  6F 72 00     
+00E7FC  2  20 69 6E 20  LAB_LMSG:    .byte " in line ",$00
+00E800  2  6C 69 6E 65  
+00E804  2  20 00        
+00E806  2  0D 0A 52 65  LAB_RMSG:    .byte $0D,$0A,"Ready",$0D,$0A,$00
+00E80A  2  61 64 79 0D  
+00E80E  2  0A 00        
+00E810  2               
+00E810  2  20 45 78 74  LAB_IMSG:    .byte " Extra ignored",$0D,$0A,$00
+00E814  2  72 61 20 69  
+00E818  2  67 6E 6F 72  
+00E821  2  20 52 65 64  LAB_REDO:    .byte " Redo from start",$0D,$0A,$00
+00E825  2  6F 20 66 72  
+00E829  2  6F 6D 20 73  
+00E834  2               
+00E834  2  44 65 72 69  .asciiz "Derived from EhBASIC"
+00E838  2  76 65 64 20  
+00E83C  2  66 72 6F 6D  
+00E849  2               
+00E849  2               AA_end_basic:
+00E849  2               
+00E849  2               .segment "VEC_EHB"
+00E849  2  rr rr        .word NMI
+00E84B  2  rr rr        .word RESET
+00E84D  2  rr rr        .word ISR
+00E84F  2               
+00E84F  1               
+00E84F  1               .include "msbasic.s"
+00E84F  2               ; Single-File Port from https://github.com/mist64/msbasic
+00E84F  2               ; with some small influence by Ben Eaters fork
+00E84F  2               ;
+00E84F  2               ; ToDo:
+00E84F  2               ;   - remove system-specific code, that doesn't match S65
+00E84F  2               ;     - Investigate CBM1
+00E84F  2               ;     - Investigate CBM2
+00E84F  2               ;     - Investigate CONFIG_CBM_ALL
+00E84F  2               ; Done:
+00E84F  2               ;   - remove CONFIG_SMALL code reductions
+00E84F  2               ;   - applied all CONFIG_2C and lower (most recent MS BASIC version of the repo)
+00E84F  2               ;
+00E84F  2               ; Goal:
+00E84F  2               ; have MS Basic on a working stand as a single file to include.
+00E84F  2               ; I don't care about "byte-identical" compilation
+00E84F  2               
+00E84F  2               .feature force_range
+00E84F  2               ;.debuginfo +
+00E84F  2               
+00E84F  2               ;.setcpu "6502"
+00E84F  2               .macpack longbranch
+00E84F  3               .macro  jeq     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                       bne     *+5
+00E84F  3                       jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               beq     Target
+00E84F  3                       .else
+00E84F  3                               bne     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jne     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               beq     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bne     Target
+00E84F  3                       .else
+00E84F  3                               beq     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jmi     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bpl     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bmi     Target
+00E84F  3                       .else
+00E84F  3                               bpl     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jpl     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bmi     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bpl     Target
+00E84F  3                       .else
+00E84F  3                               bmi     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jcs     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bcc     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bcs     Target
+00E84F  3                       .else
+00E84F  3                               bcc     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jcc     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bcs     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bcc     Target
+00E84F  3                       .else
+00E84F  3                               bcs     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jvs     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bvc     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bvs     Target
+00E84F  3                       .else
+00E84F  3                               bvc     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               .macro  jvc     Target
+00E84F  3                       .if     .match(Target, 0)
+00E84F  3                               bvs     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .elseif .def(Target) .and .const((*-2)-(Target)) .and ((*+2)-(Target) <= 127)
+00E84F  3                               bvc     Target
+00E84F  3                       .else
+00E84F  3                               bvs     *+5
+00E84F  3                               jmp     Target
+00E84F  3                       .endif
+00E84F  3               .endmacro
+00E84F  3               
+00E84F  2               
+00E84F  2               ; MS BASIC Defines (copied from CBM2-Defines)
+00E84F  2               
+00E84F  2               ;CONFIG_DATAFLG := 1
+00E84F  2               CONFIG_EASTER_EGG := 1
+00E84F  2               ;CONFIG_FILE := 1; support PRINT#, INPUT#, GET#, CMD
+00E84F  2               CONFIG_NO_CR := 1; terminal doesn't need explicit CRs on line ends
+00E84F  2               ;CONFIG_NO_LINE_EDITING := 1; support for "@", "_", BEL etc.
+00E84F  2               ;CONFIG_NO_READ_Y_IS_ZERO_HACK := 1
+00E84F  2               ;CONFIG_PEEK_SAVE_LINNUM := 1
+00E84F  2               CONFIG_SCRTCH_ORDER := 2
+00E84F  2               
+00E84F  2               
+00E84F  2               ZP_START0 = $00
+00E84F  2               ZP_START1 = $02
+00E84F  2               ZP_START2 = $0C
+00E84F  2               ZP_START3 = $62
+00E84F  2               ZP_START4 = $6D
+00E84F  2               
+00E84F  2               ; extra/override ZP variables
+00E84F  2               ;CURDVC			:= $000E
+00E84F  2               ;TISTR			:= $008D
+00E84F  2               ;Z96				:= $0096
+00E84F  2               ;POSX			:= $00C6
+00E84F  2               ;TXPSV			:= LASTOP
+00E84F  2               USR				:= GORESTART ; XXX
+00E84F  2               
+00E84F  2               ;CBM2 := 1
+00E84F  2               ;CONFIG_CBM_ALL := 1
+00E84F  2               
+00E84F  2               ; inputbuffer
+00E84F  2               ;INPUTBUFFER     := $0200
+00E84F  2               
+00E84F  2               ; constants
+00E84F  2               SPACE_FOR_GOSUB := $3E
+00E84F  2               STACK_TOP		:= $FA
+00E84F  2               WIDTH			:= 40
+00E84F  2               WIDTH2			:= 30
+00E84F  2               
+00E84F  2               RAMSTART2		:= $0900
+00E84F  2               
+00E84F  2               ; magic memory locations
+00E84F  2               ;ENTROPY = $E844
+00E84F  2               
+00E84F  2               ; monitor functions
+00E84F  2               ;OPEN	:= $FFC0
+00E84F  2               ;CLOSE	:= $FFC3
+00E84F  2               ;CHKIN	:= $FFC6
+00E84F  2               ;CHKOUT	:= $FFC9
+00E84F  2               ;CLRCH	:= $FFCC
+00E84F  2               ;LOAD	:= $FFD5
+00E84F  2               ;SAVE	:= $FFD8
+00E84F  2               ;VERIFY	:= $FFDB
+00E84F  2               ;SYS	:= $FFDE
+00E84F  2               ;ISCNTC	:= $FFE1
+00E84F  2               ;GETIN	:= $FFE4
+00E84F  2               ;CLALL	:= $FFE7
+00E84F  2               ;LE7F3	:= $E7F3; for CBM1
+00E84F  2               MONCOUT	:= CHROUT
+00E84F  2               MONRDKEY := CHRIN
+00E84F  2               
+00E84F  2               BYTES_FP		:= 5
+00E84F  2               
+00E84F  2               .ifndef BYTES_PER_ELEMENT
+00E84F  2               BYTES_PER_ELEMENT := BYTES_FP
+00E84F  2               .endif
+00E84F  2               BYTES_PER_VARIABLE := BYTES_FP+2
+00E84F  2               MANTISSA_BYTES	:= BYTES_FP-1
+00E84F  2               BYTES_PER_FRAME := 2*BYTES_FP+8
+00E84F  2               FOR_STACK1		:= 2*BYTES_FP+5
+00E84F  2               FOR_STACK2		:= BYTES_FP+4
+00E84F  2               
+00E84F  2               .ifndef MAX_EXPON
+00E84F  2               MAX_EXPON = 10
+00E84F  2               .endif
+00E84F  2               
+00E84F  2               STACK           := $0100
+00E84F  2               .ifndef STACK2
+00E84F  2               STACK2          := STACK
+00E84F  2               .endif
+00E84F  2               
+00E84F  2               .ifdef INPUTBUFFER
+00E84F  2                 .if INPUTBUFFER >= $0100
+00E84F  2               CONFIG_NO_INPUTBUFFER_ZP := 1
+00E84F  2                 .endif
+00E84F  2                 .if INPUTBUFFER = $0200
+00E84F  2               CONFIG_INPUTBUFFER_0200 := 1
+00E84F  2                 .endif
+00E84F  2               .endif
+00E84F  2               INPUTBUFFERX = INPUTBUFFER & $FF00
+00E84F  2               
+00E84F  2               CR=13
+00E84F  2               LF=10
+00E84F  2               
+00E84F  2               .ifndef CRLF_1
+00E84F  2               CRLF_1 := CR
+00E84F  2               CRLF_2 := LF
+00E84F  2               .endif
+00E84F  2               
+00E84F  2               ; Macros included for MS BASIC
+00E84F  2               
+00E84F  2               ; htasc - set the hi bit on the last byte of a string for termination
+00E84F  2               ; (by Tom Greene)
+00E84F  2               .macro htasc str
+00E84F  2               	.repeat	.strlen(str)-1,I
+00E84F  2               		.byte	.strat(str,I)
+00E84F  2               	.endrep
+00E84F  2               	.byte	.strat(str,.strlen(str)-1) | $80
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; For every token, a byte gets put into segment "DUMMY".
+00E84F  2               ; This way, we count up with every token. The DUMMY segment
+00E84F  2               ; doesn't get linked into the binary.
+00E84F  2               .macro init_token_tables
+00E84F  2                       .segment "MSBVECTORS"
+00E84F  2               TOKEN_ADDRESS_TABLE:
+00E84F  2                       .segment "MSBKEYWORDS"
+00E84F  2               TOKEN_NAME_TABLE:
+00E84F  2               		.segment "MSBDUMMY"
+00E84F  2               DUMMY_START:
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; optionally define token symbol
+00E84F  2               ; count up token number
+00E84F  2               .macro define_token token
+00E84F  2                       .segment "MSBDUMMY"
+00E84F  2               		.ifnblank token
+00E84F  2               			token := <(*-DUMMY_START)+$80
+00E84F  2               		.endif
+00E84F  2               		.res 1; count up in any case
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; lay down a keyword, optionally define a token symbol
+00E84F  2               .macro keyword key, token
+00E84F  2               		.segment "MSBKEYWORDS"
+00E84F  2               		htasc	key
+00E84F  2               		define_token token
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; lay down a keyword and an address (RTS style),
+00E84F  2               ; optionally define a token symbol
+00E84F  2               .macro keyword_rts key, vec, token
+00E84F  2                       .segment "MSBVECTORS"
+00E84F  2               		.word	vec-1
+00E84F  2               		keyword key, token
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; lay down a keyword and an address,
+00E84F  2               ; optionally define a token symbol
+00E84F  2               .macro keyword_addr key, vec, token
+00E84F  2                       .segment "MSBVECTORS"
+00E84F  2               		.addr	vec
+00E84F  2               		keyword key, token
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               .macro count_tokens
+00E84F  2                       .segment "MSBDUMMY"
+00E84F  2               		NUM_TOKENS := <(*-DUMMY_START)
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               .macro init_error_table
+00E84F  2                       .segment "MSBERROR"
+00E84F  2               ERROR_MESSAGES:
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               .macro define_error error, msg
+00E84F  2                       .segment "MSBERROR"
+00E84F  2               		error := <(*-ERROR_MESSAGES)
+00E84F  2               		htasc msg
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ;---------------------------------------------
+00E84F  2               ; set the MSB of every byte of a string
+00E84F  2               .macro asc80 str
+00E84F  2               	.repeat	.strlen(str),I
+00E84F  2               		.byte	.strat(str,I)+$80
+00E84F  2               	.endrep
+00E84F  2               .endmacro
+00E84F  2               
+00E84F  2               ; MS BASIC ZP definitions
+00E84F  2               
+00E84F  2               .feature org_per_seg
 000006r 2               .zeropage
 000000r 2               
 000000r 2               .org ZP_START1
