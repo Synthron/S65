@@ -3244,7 +3244,7 @@
 				)
 			)
 		)
-		(symbol "74xGxx:74AHC1G00"
+		(symbol "74xGxx:74AHC2G00"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -3256,7 +3256,7 @@
 					)
 				)
 			)
-			(property "Value" "74AHC1G00"
+			(property "Value" "74AHC2G00"
 				(at 0 -3.81 0)
 				(effects
 					(font
@@ -3273,7 +3273,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
+			(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT2G00.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3282,7 +3282,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Single NAND Gate, Low-Voltage CMOS"
+			(property "Description" "Dual NAND Gate, High-speed Si-gate CMOS"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3291,7 +3291,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "Single Gate NAND LVC CMOS"
+			(property "ki_keywords" "Dual Gate NAND LVC CMOS"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3300,7 +3300,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "SOT* SG-*"
+			(property "ki_fp_filters" "SSOP* VSSOP*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3309,7 +3309,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "74AHC1G00_0_1"
+			(symbol "74AHC2G00_1_1"
 				(arc
 					(start 0 -5.08)
 					(mid 5.0579 0)
@@ -3334,8 +3334,6 @@
 						(type background)
 					)
 				)
-			)
-			(symbol "74AHC1G00_1_1"
 				(pin input line
 					(at -15.24 2.54 0)
 					(length 7.62)
@@ -3372,10 +3370,54 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at 0 -10.16 90)
-					(length 5.08)
-					(name "GND"
+				(pin output inverted
+					(at 12.7 0 180)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "74AHC2G00_2_1"
+				(arc
+					(start 0 -5.08)
+					(mid 5.0579 0)
+					(end 0 5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08) (xy -7.62 -5.08) (xy -7.62 5.08) (xy 0 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin output inverted
+					(at 12.7 0 180)
+					(length 7.62)
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3390,10 +3432,61 @@
 						)
 					)
 				)
-				(pin output inverted
-					(at 12.7 0 180)
+				(pin input line
+					(at -15.24 2.54 0)
 					(length 7.62)
 					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -2.54 0)
+					(length 7.62)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "74AHC2G00_3_0"
+				(rectangle
+					(start -5.08 -5.08)
+					(end 5.08 5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "74AHC2G00_3_1"
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 5.08)
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3418,7 +3511,7 @@
 							)
 						)
 					)
-					(number "5"
+					(number "8"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -7947,6 +8040,12 @@
 		(color 0 0 0 0)
 		(uuid "d91bf014-9af9-4423-811e-0473d85a702c")
 	)
+	(junction
+		(at 134.62 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "eda16f02-d9eb-4fe3-9189-4767b033ed8c")
+	)
 	(no_connect
 		(at 132.08 96.52)
 		(uuid "0208bafb-15c9-4059-8361-064b8ce6ab6c")
@@ -8653,7 +8752,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 68.58) (xy 113.03 49.53)
+			(xy 93.98 68.58) (xy 93.98 49.53)
 		)
 		(stroke
 			(width 0)
@@ -8773,7 +8872,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 46.99) (xy 152.4 46.99)
+			(xy 146.05 46.99) (xy 152.4 46.99)
 		)
 		(stroke
 			(width 0)
@@ -8893,7 +8992,7 @@
 	)
 	(wire
 		(pts
-			(xy 134.62 93.98) (xy 134.62 68.58)
+			(xy 134.62 93.98) (xy 134.62 71.12)
 		)
 		(stroke
 			(width 0)
@@ -9381,6 +9480,16 @@
 		)
 		(uuid "36e3676f-05d0-4c38-b465-483a0e647d12")
 	)
+	(wire
+		(pts
+			(xy 110.49 172.72) (xy 110.49 175.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "37b91175-a905-4a3d-8440-af1718665f7a")
+	)
 	(bus
 		(pts
 			(xy 198.12 46.99) (xy 198.12 49.53)
@@ -9640,6 +9749,16 @@
 			(type default)
 		)
 		(uuid "49206412-825b-4862-9dcd-03aa56441b9f")
+	)
+	(wire
+		(pts
+			(xy 134.62 66.04) (xy 130.81 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "496682db-e8f3-49ee-9324-6703ccf6969d")
 	)
 	(bus
 		(pts
@@ -10453,6 +10572,16 @@
 	)
 	(wire
 		(pts
+			(xy 134.62 66.04) (xy 134.62 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "92803ae7-12aa-4d21-98ff-b53539be6abe")
+	)
+	(wire
+		(pts
 			(xy 172.72 102.87) (xy 180.34 102.87)
 		)
 		(stroke
@@ -10683,7 +10812,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 44.45) (xy 114.3 44.45)
+			(xy 93.98 44.45) (xy 118.11 44.45)
 		)
 		(stroke
 			(width 0)
@@ -11143,7 +11272,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 49.53) (xy 114.3 49.53)
+			(xy 93.98 49.53) (xy 118.11 49.53)
 		)
 		(stroke
 			(width 0)
@@ -11300,16 +11429,6 @@
 			(type default)
 		)
 		(uuid "d5f5a685-a125-457f-88eb-47d238692dbe")
-	)
-	(wire
-		(pts
-			(xy 134.62 68.58) (xy 113.03 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d640a20e-8341-4959-9766-880b707d2932")
 	)
 	(bus
 		(pts
@@ -11551,6 +11670,16 @@
 		)
 		(uuid "e977831a-b140-4536-acc8-4f3df5104492")
 	)
+	(wire
+		(pts
+			(xy 130.81 71.12) (xy 134.62 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9c672ff-3da3-48c0-bae9-d1802e5c4371")
+	)
 	(bus
 		(pts
 			(xy 241.3 38.1) (xy 241.3 40.64)
@@ -11630,6 +11759,16 @@
 			(type default)
 		)
 		(uuid "ef63caaf-da9f-4dbc-aee7-3a04c7e3aacb")
+	)
+	(wire
+		(pts
+			(xy 93.98 68.58) (xy 102.87 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ef6b3292-f6a8-42ef-a2dd-2dd76cc9fccd")
 	)
 	(wire
 		(pts
@@ -11803,6 +11942,16 @@
 	)
 	(wire
 		(pts
+			(xy 110.49 149.86) (xy 110.49 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe493e58-bca6-44c8-9269-6c5e69f13140")
+	)
+	(wire
+		(pts
 			(xy 163.83 185.42) (xy 163.83 186.69)
 		)
 		(stroke
@@ -11843,7 +11992,7 @@
 	)
 	(text "Address PORT 128@8\n-> BF08 - BF0F"
 		(exclude_from_sim no)
-		(at 109.982 76.962 0)
+		(at 93.218 84.582 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -12236,7 +12385,7 @@
 		(uuid "3513b52b-ab5d-42e2-a166-bd64547e5927")
 	)
 	(label "CLK"
-		(at 113.03 44.45 0)
+		(at 93.98 44.45 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -12665,7 +12814,7 @@
 		(uuid "8c0d75d1-946a-4a2b-8d5e-4ca4987fca7f")
 	)
 	(label "PORT_8"
-		(at 123.19 68.58 0)
+		(at 93.98 68.58 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -13794,6 +13943,91 @@
 		)
 	)
 	(symbol
+		(lib_id "74xGxx:74AHC2G00")
+		(at 133.35 46.99 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "17b1640c-1349-4e02-b2d4-109e7dfd7465")
+		(property "Reference" "U1"
+			(at 130.556 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74AHC2G00"
+			(at 132.334 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-8_3x3mm_P0.65mm"
+			(at 133.35 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT2G00.pdf"
+			(at 133.35 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual NAND Gate, High-speed Si-gate CMOS"
+			(at 133.35 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "df725d0f-0540-491b-88bc-c4e78f622a91")
+		)
+		(pin "7"
+			(uuid "dbbc29fd-4c55-4e5f-9617-158413238412")
+		)
+		(pin "1"
+			(uuid "7493e50e-c4ad-41d9-bc53-92e8f2d22a4a")
+		)
+		(pin "3"
+			(uuid "d584929d-59d8-4445-a374-9fefa681f703")
+		)
+		(pin "4"
+			(uuid "fed2812b-6496-447c-8c07-03cdde0173a6")
+		)
+		(pin "6"
+			(uuid "63ce7cd0-b341-4780-aa53-f57d5faa7339")
+		)
+		(pin "5"
+			(uuid "d80c0f0e-2fd0-44d7-974b-64c0ce837562")
+		)
+		(pin "8"
+			(uuid "fae6aceb-a1a4-414b-9427-570a39e8486e")
+		)
+		(instances
+			(project "IDE"
+				(path "/6555ffc8-6c1b-43e3-85dd-8b8a3124067a"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 162.56 115.57 0)
 		(unit 1)
@@ -13966,6 +14200,72 @@
 		)
 		(pin "1"
 			(uuid "028d9cf2-dc59-40f5-8d9c-a8a8d1f0bb34")
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 110.49 149.86 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1f359c05-18d1-4bcd-8939-5da7a23b9288")
+		(property "Reference" "#PWR0101"
+			(at 110.49 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 110.49 146.304 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 110.49 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 110.49 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c75d48ef-a349-479b-997c-486a187438e0")
+		)
+		(instances
+			(project "IDE"
+				(path "/6555ffc8-6c1b-43e3-85dd-8b8a3124067a"
+					(reference "#PWR0101")
+					(unit 1)
+				)
+			)
 		)
 	)
 	(symbol
@@ -14207,6 +14507,93 @@
 		)
 	)
 	(symbol
+		(lib_id "74xGxx:74AHC2G00")
+		(at 110.49 162.56 0)
+		(unit 3)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "299e5fc1-dcce-4888-bf51-1a86552ae4b6")
+		(property "Reference" "U1"
+			(at 112.776 155.448 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "74AHC2G00"
+			(at 106.172 182.626 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-8_3x3mm_P0.65mm"
+			(at 110.49 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT2G00.pdf"
+			(at 110.49 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual NAND Gate, High-speed Si-gate CMOS"
+			(at 110.49 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9fa9bf31-b678-41ad-af86-e78b845a74fb")
+		)
+		(pin "7"
+			(uuid "281c71b5-b74e-4e23-a3cd-8f735bd7ab76")
+		)
+		(pin "1"
+			(uuid "a73d0c47-bc81-42fa-8d0e-b331a62609f8")
+		)
+		(pin "3"
+			(uuid "d584929d-59d8-4445-a374-9fefa681f704")
+		)
+		(pin "4"
+			(uuid "716acfcf-dbbf-4911-91f0-6cbaf592a97e")
+		)
+		(pin "6"
+			(uuid "63ce7cd0-b341-4780-aa53-f57d5faa733a")
+		)
+		(pin "5"
+			(uuid "d80c0f0e-2fd0-44d7-974b-64c0ce837563")
+		)
+		(pin "8"
+			(uuid "0a05decc-b7d5-4f7c-9fe7-05faf7480723")
+		)
+		(instances
+			(project "IDE"
+				(path "/6555ffc8-6c1b-43e3-85dd-8b8a3124067a"
+					(reference "U1")
+					(unit 3)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 21.59 133.35 270)
 		(unit 1)
@@ -14267,7 +14654,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 104.14 149.86 0)
+		(at 96.52 149.86 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -14276,7 +14663,7 @@
 		(dnp no)
 		(uuid "2ae942e7-b5a5-46d6-9b68-28b8ad5ec7ac")
 		(property "Reference" "#PWR060"
-			(at 104.14 153.67 0)
+			(at 96.52 153.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14285,7 +14672,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 104.14 146.304 0)
+			(at 96.52 146.304 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14293,7 +14680,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 104.14 149.86 0)
+			(at 96.52 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14302,7 +14689,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 104.14 149.86 0)
+			(at 96.52 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14311,7 +14698,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 104.14 149.86 0)
+			(at 96.52 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14475,6 +14862,92 @@
 		)
 		(pin "4"
 			(uuid "a9ece858-4851-4e63-8cb7-85e6d80389f5")
+		)
+	)
+	(symbol
+		(lib_id "74xGxx:74AHC2G00")
+		(at 115.57 68.58 0)
+		(mirror y)
+		(unit 2)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2d513c9a-7c33-48fd-be54-ca7d0cfe0926")
+		(property "Reference" "U1"
+			(at 117.602 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "74AHC2G00"
+			(at 116.586 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-8_3x3mm_P0.65mm"
+			(at 115.57 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT2G00.pdf"
+			(at 115.57 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Dual NAND Gate, High-speed Si-gate CMOS"
+			(at 115.57 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9fa9bf31-b678-41ad-af86-e78b845a74fc")
+		)
+		(pin "7"
+			(uuid "281c71b5-b74e-4e23-a3cd-8f735bd7ab77")
+		)
+		(pin "1"
+			(uuid "a73d0c47-bc81-42fa-8d0e-b331a62609f9")
+		)
+		(pin "3"
+			(uuid "9298a749-a72c-4372-a932-83c86b99f062")
+		)
+		(pin "4"
+			(uuid "fed2812b-6496-447c-8c07-03cdde0173a8")
+		)
+		(pin "6"
+			(uuid "3a9e70a5-67f5-4877-813e-cfd1d118485e")
+		)
+		(pin "5"
+			(uuid "19ad8b71-1944-4265-8ac3-3ebbdd09ee7e")
+		)
+		(pin "8"
+			(uuid "fae6aceb-a1a4-414b-9427-570a39e84870")
+		)
+		(instances
+			(project "IDE"
+				(path "/6555ffc8-6c1b-43e3-85dd-8b8a3124067a"
+					(reference "U1")
+					(unit 2)
+				)
+			)
 		)
 	)
 	(symbol
@@ -16181,74 +16654,6 @@
 		)
 	)
 	(symbol
-		(lib_id "74xGxx:74AHC1G00")
-		(at 129.54 46.99 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6629130d-06c1-4c99-adf0-df22da3d5e90")
-		(property "Reference" "U1"
-			(at 122.682 39.878 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "74AHC1G00"
-			(at 120.65 54.356 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5_HandSoldering"
-			(at 129.54 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf"
-			(at 129.54 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Single NAND Gate, Low-Voltage CMOS"
-			(at 129.54 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "4754ba94-0350-45b8-8c75-7da87f21ea14")
-		)
-		(pin "1"
-			(uuid "ad8d5dc0-284a-4e68-82da-3b64f41bda4d")
-		)
-		(pin "2"
-			(uuid "0dc571cd-c535-4694-9648-6865ef099145")
-		)
-		(pin "4"
-			(uuid "20593e4b-3b68-4038-8053-72ac0600f0a1")
-		)
-		(pin "5"
-			(uuid "8df49a0d-8ad2-4b78-8f11-ca990ede2fef")
-		)
-	)
-	(symbol
 		(lib_id "Jumper:Jumper_2_Open")
 		(at 148.59 142.24 0)
 		(mirror x)
@@ -16843,7 +17248,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74AHCT04")
-		(at 104.14 162.56 0)
+		(at 96.52 162.56 0)
 		(unit 7)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16851,7 +17256,7 @@
 		(dnp no)
 		(uuid "73c6c57b-8920-4717-a8f4-1304c40886bf")
 		(property "Reference" "U3"
-			(at 107.442 153.162 0)
+			(at 99.822 153.162 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16859,7 +17264,7 @@
 			)
 		)
 		(property "Value" "74HCT04"
-			(at 104.394 162.56 0)
+			(at 96.774 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16867,7 +17272,7 @@
 			)
 		)
 		(property "Footprint" "Package_DIP:DIP-14_W7.62mm"
-			(at 104.14 162.56 0)
+			(at 96.52 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16876,7 +17281,7 @@
 			)
 		)
 		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT04.pdf"
-			(at 104.14 162.56 0)
+			(at 96.52 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16885,7 +17290,7 @@
 			)
 		)
 		(property "Description" "Hex Inverter"
-			(at 104.14 162.56 0)
+			(at 96.52 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17837,6 +18242,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 110.49 175.26 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "abd3365a-7de2-451d-9a65-d9a56a7dd461")
+		(property "Reference" "#PWR0102"
+			(at 110.49 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 110.49 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 110.49 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 110.49 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "21528c52-c51f-4065-89c8-59d9e072c882")
+		)
+		(instances
+			(project "IDE"
+				(path "/6555ffc8-6c1b-43e3-85dd-8b8a3124067a"
+					(reference "#PWR0102")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
 		(at 165.1 147.32 0)
 		(unit 1)
@@ -17894,65 +18366,6 @@
 		)
 		(pin "2"
 			(uuid "9b4c04c5-8a74-4b9f-a61b-a3e2e07473ff")
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 129.54 57.15 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "af5cd1ba-67c8-44ac-96cc-7413861f000d")
-		(property "Reference" "#PWR058"
-			(at 129.54 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 129.54 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 129.54 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 129.54 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 129.54 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "64bc361f-81d1-482f-b03c-f055944be6df")
 		)
 	)
 	(symbol
@@ -18134,7 +18547,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 104.14 175.26 0)
+		(at 96.52 175.26 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -18144,7 +18557,7 @@
 		(fields_autoplaced yes)
 		(uuid "c563d703-65d5-4e91-806f-8bc936f412fa")
 		(property "Reference" "#PWR061"
-			(at 104.14 181.61 0)
+			(at 96.52 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18153,7 +18566,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 104.14 180.34 0)
+			(at 96.52 180.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18161,7 +18574,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 104.14 175.26 0)
+			(at 96.52 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18170,7 +18583,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 104.14 175.26 0)
+			(at 96.52 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18179,7 +18592,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 104.14 175.26 0)
+			(at 96.52 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18404,64 +18817,6 @@
 		)
 		(pin "4"
 			(uuid "b8ca4303-7672-4d28-b755-db788a3c4d65")
-		)
-	)
-	(symbol
-		(lib_id "power:+5V")
-		(at 129.54 36.83 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d227d3d3-f14c-41fe-875a-4caca05d56dd")
-		(property "Reference" "#PWR059"
-			(at 129.54 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5V"
-			(at 129.54 33.274 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 129.54 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 129.54 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 129.54 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7134b970-4046-46b9-9fe6-00b938f4c49f")
 		)
 	)
 	(symbol
