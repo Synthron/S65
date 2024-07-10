@@ -18673,7 +18673,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
+		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
 			(at 275.59 229.87 0)
 			(effects
 				(font
@@ -19076,7 +19076,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_XKB_TS-1187A"
+		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
 			(at 275.59 222.25 0)
 			(effects
 				(font
