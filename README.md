@@ -1,4 +1,5 @@
 # S65xx Computer System
+
 Yet another 8bit Retro Computer
 
 Completely bloated, overkill and fully hackable!
@@ -20,13 +21,19 @@ Completely bloated, overkill and fully hackable!
   - [ ] File System
   - [ ] Operating System
 - Hardware
+  - General
+    - inner layers GND, outer layers 5V
   - [ ] Busboard
     - [ ] GND pour on top and bottom
     - [ ] Vias between signal traces
     - [ ] 3d models of modules importing to bus module
-  - [ ] CPU
-    - [ ] GND both inner layers, 5V outer layers, lots of vias
-    - [ ] 
+    - [ ] IO LED?
+  - [ ] TPI IDE
+    - [ ] IO between cap pins
+  - [ ] LPT
+    - [ ] correct address numbers on silkscreen
+  - [ ] SID
+    - [ ] bottom 9V, Top 5V
 
 ## Hardware
 
@@ -60,6 +67,7 @@ Completely bloated, overkill and fully hackable!
 - DOS-Like UI
 
 boot routine:
+
 - selftest
   - RAM Check
   - ROM Check + version
@@ -99,12 +107,12 @@ IO Space:
 | BF80  | BF87 | Simple IDE    | 8  |
 | BF88  | BF8F | CF Card       | 8  |
 | BF90  | BF9F | RTC           | 16 |
-| BFA0  | BFFF | ---           | 96 | 
+| BFA0  | BFFF | ---           | 96 |
 
 ## Interrupts
 
-The TPI Chip for the memory banks also functions as a priority interrupt controller, providing 5 seperate interrupt lines. 
-IRQ_0 is further divided into 8 lines for communication modules, giving an overall of 14 available IRQ-Lines. 
+The TPI Chip for the memory banks also functions as a priority interrupt controller, providing 5 seperate interrupt lines.  
+IRQ_0 is further divided into 8 lines for communication modules, giving an overall of 14 available IRQ-Lines.  
 
 These are currently used as follows:
 
