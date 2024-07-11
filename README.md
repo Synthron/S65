@@ -19,6 +19,14 @@ Completely bloated, overkill and fully hackable!
   - [ ] EhBasic
   - [ ] File System
   - [ ] Operating System
+- Hardware
+  - [ ] Busboard
+    - [ ] GND pour on top and bottom
+    - [ ] Vias between signal traces
+    - [ ] 3d models of modules importing to bus module
+  - [ ] CPU
+    - [ ] GND both inner layers, 5V outer layers, lots of vias
+    - [ ] 
 
 ## Hardware
 
