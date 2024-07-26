@@ -25,8 +25,6 @@ Completely bloated, overkill and fully hackable!
   - [ ] order parts
   - [ ] solder together
 
-
-
 ## Hardware
 
 - Modules
