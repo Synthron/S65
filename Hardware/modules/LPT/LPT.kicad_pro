@@ -63,7 +63,9 @@
           "width": 0.3
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "starved_thermal|141950001|86360000|03b8a2f9-06cb-4b88-ac20-c8281b558d3c|c1bedd6f-5d70-40e5-9979-912805e25772|B.Cu"
+      ],
       "meta": {
         "version": 2
       },
@@ -71,7 +73,7 @@
         "annular_width": "error",
         "clearance": "error",
         "connection_width": "warning",
-        "copper_edge_clearance": "error",
+        "copper_edge_clearance": "ignore",
         "copper_sliver": "warning",
         "courtyards_overlap": "error",
         "diff_pair_gap_out_of_range": "error",
@@ -134,7 +136,7 @@
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.2,
         "min_track_width": 0.1,
-        "min_via_annular_width": 0.13,
+        "min_via_annular_width": 0.075,
         "min_via_diameter": 0.2,
         "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
@@ -225,7 +227,7 @@
         },
         {
           "diameter": 0.46,
-          "drill": 0.2
+          "drill": 0.3
         },
         {
           "diameter": 1.5,
@@ -502,7 +504,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../Bus_Card/modules_3d/LPT.step",
       "svg": "",
       "vrml": ""
     },

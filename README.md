@@ -9,31 +9,23 @@ Completely bloated, overkill and fully hackable!
 - [x] Finish Hardware
 - Software
   - [ ] WozMon
-    - [ ] Implement Serial IO
-    - [ ] Implement Input Buffer
+    - [x] Implement Serial IO
+    - [x] Implement Input Buffer
     - [ ] extended for block write
   - [ ] Kernel Functions
     - [ ] General SysCalls
     - [ ] Hardware Drivers
-  - [ ] RAM-Kernel
-  - [ ] Basic
-  - [ ] EhBasic
+  - [x] RAM-Kernel
+  - [x] Basic
+  - [x] EhBasic
   - [ ] File System
   - [ ] Operating System
 - Hardware
-  - General
-    - inner layers GND, outer layers 5V
-  - [ ] Busboard
-    - [ ] GND pour on top and bottom
-    - [ ] Vias between signal traces
-    - [ ] 3d models of modules importing to bus module
-    - [ ] IO LED?
-  - [ ] TPI IDE
-    - [ ] IO between cap pins
-  - [ ] LPT
-    - [ ] correct address numbers on silkscreen
-  - [ ] SID
-    - [ ] bottom 9V, Top 5V
+  - [ ] order PCBs
+  - [ ] order parts
+  - [ ] solder together
+
+
 
 ## Hardware
 
@@ -101,8 +93,8 @@ IO Space:
 | BF40  | BF4F | VIA 3         | 16 |
 | BF50  | BF53 | ACIA 1        | 4  |
 | BF54  | BF57 | ACIA 2        | 4  |
-| BF58  | BF5B | ACIA 3        | 4  |
-| BF5C  | BF5F | ACIA 4        | 4  |
+| BF58  | BF5B | --- (ACIA 3)  | 4  |
+| BF5C  | BF5F | --- (ACIA 4)  | 4  |
 | BF60  | BF7F | SID 8580      | 32 |
 | BF80  | BF87 | Simple IDE    | 8  |
 | BF88  | BF8F | CF Card       | 8  |

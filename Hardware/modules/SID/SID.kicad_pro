@@ -502,9 +502,9 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../Bus_Card/modules_3d/SID.step",
       "svg": "",
-      "vrml": ""
+      "vrml": "../Bus_Card/modules_3d/SID.wrl"
     },
     "page_layout_descr_file": ""
   },

@@ -105,7 +105,7 @@
         "silk_over_copper": "warning",
         "silk_overlap": "warning",
         "skew_out_of_range": "error",
-        "solder_mask_bridge": "error",
+        "solder_mask_bridge": "ignore",
         "starved_thermal": "error",
         "text_height": "warning",
         "text_thickness": "warning",
@@ -134,7 +134,7 @@
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.2,
         "min_track_width": 0.1,
-        "min_via_annular_width": 0.13,
+        "min_via_annular_width": 0.075,
         "min_via_diameter": 0.2,
         "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
@@ -225,7 +225,7 @@
         },
         {
           "diameter": 0.46,
-          "drill": 0.2
+          "drill": 0.3
         },
         {
           "diameter": 1.5,
@@ -502,7 +502,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../Bus_Card/modules_3d/ROM.step",
       "svg": "",
       "vrml": ""
     },

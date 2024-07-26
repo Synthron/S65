@@ -230,6 +230,10 @@
         {
           "diameter": 1.5,
           "drill": 1.0
+        },
+        {
+          "diameter": 2.0,
+          "drill": 1.0
         }
       ],
       "zones_allow_external_fillets": false
@@ -502,7 +506,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../Bus_Card/modules_3d/Proto.step",
       "svg": "",
       "vrml": ""
     },
@@ -510,6 +514,7 @@
   },
   "schematic": {
     "annotate_start_num": 0,
+    "bom_export_filename": "",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
